@@ -1,0 +1,326 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project name="crossfit-reader" default="do.setup" basedir="."
+    xmlns:fx="javafx:com.sun.javafx.tools.ant"
+    xmlns:ivy="antlib:org.apache.ivy.ant"
+    xmlns:l4j="launch4j:net.sf.launch4j.ant">
+    
+    <tstamp>
+        <format property="currentdate" pattern="yyyy/MM/dd HH:mm:ss"/>
+    </tstamp>
+    
+    <property environment="env"/>
+    <property file="build.properties"/>
+    
+    <property name="src.path" value="${basedir}/${src.dir}"/>
+    <property name="src-rss.path" value="${basedir}/${src-rss.dir}"/>
+    <property name="src-build.path" value="${basedir}/${src-build.dir}"/>
+    <property name="bin.path" value="${basedir}/${bin.dir}"/>
+    <property name="archives.path" value="${basedir}/${archives.dir}"/>
+    <property name="classes.path" value="${basedir}/${classes.dir}"/>
+    <property name="ivy.path" value="${basedir}/${ivy.dir}"/>
+    <property name="lib.path" value="${basedir}/${lib.dir}"/>
+    <property name="exe.path" value="${basedir}/${exe.dir}"/>
+    <property name="exe-rss.path" value="${basedir}/${exe-rss.dir}"/>
+    <property name="setup.path" value="${basedir}/${setup.dir}"/>
+    <property name="setup-rss.path" value="${basedir}/${setup-rss.dir}"/>
+    
+    <!-- Build number -->
+    <condition property="app.release" value="${env.TRAVIS_BUILD_NUMBER}"><isset property="env.TRAVIS_BUILD_NUMBER"/></condition>
+    <condition property="app.release" value="${app.default.release}"><not><isset property="env.TRAVIS_BUILD_NUMBER"/></not></condition>
+    
+    <!-- innoextract -->
+    <condition property="innoextract" value="${lib.path}\innoextract\innoextract.exe"><os family="windows"/></condition>
+    <condition property="innoextract" value="innoextract"><os family="unix"/></condition>
+    
+    <!-- InnoSetup Compiler -->
+    <condition property="innosetupcompiler" value="${lib.path}\innosetup\app\ISCC.exe"><os family="windows"/></condition>
+    <condition property="innosetupcompiler" value="${wine} ${lib.path}/innosetup/app/ISCC.exe"><os family="unix"/></condition>
+    
+    <!-- Wine -->
+    <!-- /opt/wine-staging/bin/ -->
+    <condition property="wine" value="wine cmd.exe /c"><os family="unix"/></condition>
+    
+    <filterset id="filterset.app">
+        <filter token="APP_GUID" value="${app.guid}"/>
+        <filter token="APP_ID" value="${app.id}"/>
+        <filter token="APP_NAME" value="${app.name}"/>
+        <filter token="APP_DESC" value="${app.desc}"/>
+        <filter token="APP_VERSION" value="${app.version}"/>
+        <filter token="APP_RELEASE" value="${app.release}"/>
+        <filter token="APP_MANUFACTURER" value="${app.author}"/>
+        <filter token="APP_SETUPNAME" value="${app.setupname}"/>
+        <filter token="APP_PATH" value="${app.path}"/>
+        <filter token="APP_LOG_PATH" value="${app.logpath}"/>
+        <filter token="JAR_FILENAME" value="${jar.filename}"/>
+        <filter token="JAR_MAINCLASS" value="${jar.mainclass}"/>
+        <filter token="BIN_PATH" value="${bin.path}"/>
+        <filter token="EXE_PATH" value="${exe.path}"/>
+        <filter token="EXE_RSS_PATH" value="${exe-rss.path}"/>
+    </filterset>
+    
+    <property environment="env"/>
+    <path id="combined-PATH">
+        <pathelement path="${env.PATH}"/>
+        <pathelement path="${env.Path}"/>
+    </path>
+    <property name="PATH" refid="combined-PATH"/>
+    
+    <target name="preload">
+        <condition property="is.lib.loaded" value="true">
+            <istrue value="${is.lib.loaded}"/>
+        </condition>
+        <condition property="is.exe.loaded" value="true">
+            <istrue value="${is.exe.loaded}"/>
+        </condition>
+        <mkdir dir="${lib.path}"/>
+    </target>
+    
+    <target name="clean">
+        <delete includeemptydirs="true">
+            <fileset dir="${bin.path}">
+                <include name="**/*"/>
+                <exclude name="**/lib/**"/>
+            </fileset>
+        </delete>
+    </target>
+    
+    <target name="load.lib" depends="preload, load.lib.antcontrib, load.lib.ivy, load.lib.javafx, load.lib.launch4j, load.lib.innosetup" unless="is.lib.loaded">
+        <property name="is.lib.loaded" value="true"/>
+    </target>
+    
+    <target name="load.lib.antcontrib">
+        <echo message="Load ANT Contrib"/>
+        
+        <get dest="${lib.path}/ant-contrib.jar" src="${antcontrib.url}" skipexisting="true"/>
+        
+        <taskdef resource="net/sf/antcontrib/antlib.xml">
+            <classpath>
+                <pathelement location="${lib.path}/ant-contrib.jar" />
+            </classpath>
+        </taskdef>
+    </target>
+        
+    <target name="load.lib.ivy">
+        <echo message="Load Ivy"/>
+        <delete file="bin/.ivy_resolution_cache" failonerror="true" />
+        
+        <get dest="${lib.path}/ivy.jar" src="${ivy.url}" skipexisting="true"/>
+        
+        <taskdef resource="org/apache/ivy/ant/antlib.xml" uri="antlib:org.apache.ivy.ant">
+            <classpath>
+                <pathelement location="${lib.path}/ivy.jar" />
+            </classpath>
+        </taskdef>
+    </target>
+        
+    <target name="load.lib.javafx">
+        <echo message="Load JavaFX"/>
+        <path id="fx.classpath">
+            <pathelement location="${java.home}/../lib/ant-javafx.jar"/>
+            <pathelement location="${java.home}/lib/jfxrt.jar"/>
+        </path>
+        <echo message="fx.classpath: ${toString:fx.classpath}" />
+        <taskdef resource="com/sun/javafx/tools/ant/antlib.xml"
+            uri="javafx:com.sun.javafx.tools.ant"
+            classpathref="fx.classpath"
+        />
+    </target>
+        
+    <target name="load.lib.launch4j">
+        <echo message="Load Launch4j"/>
+        <copy file="${src-rss.path}/com/github/crazymax/crossfitreader/rss/img/icon.ico"
+            tofile="${exe-rss.path}/${app.id}.ico"/>
+        <copy file="${src-build.path}/launch4j.xml"
+            tofile="${exe-rss.path}/launch4j.xml">
+            <filterset refid="filterset.app" />
+        </copy>
+        <copy file="${src-build.path}/app.manifest"
+            tofile="${exe-rss.path}/${app.id}.manifest">
+            <filterset refid="filterset.app" />
+        </copy>
+        
+        <get dest="${lib.path}/launch4j.zip" src="${launch4j.url}" skipexisting="true"/>
+        <if>
+          <not><available file="${lib.path}/launch4j" type="dir" /></not>
+          <then>
+              <unzip src="${lib.path}/launch4j.zip" dest="${lib.path}"/>
+          </then>
+        </if>
+        
+        <taskdef name="l4j" classname="net.sf.launch4j.ant.Launch4jTask">
+            <classpath>
+                <pathelement location="${lib.path}/launch4j/launch4j.jar" />
+                <pathelement location="${lib.path}/launch4j/lib/xstream.jar" />
+            </classpath>
+        </taskdef>
+    </target>
+    
+    <target name="load.lib.innoextract">
+        <echo message="Load innoextract"/>
+        <get dest="${lib.path}/innoextract.zip" src="${innoextract.url}" skipexisting="true"/>
+        <if>
+          <not><available file="${lib.path}/innoextract" type="dir" /></not>
+          <then>
+              <unzip src="${lib.path}/innoextract.zip" dest="${lib.path}/innoextract"/>
+          </then>
+        </if>
+    </target>
+        
+    <target name="load.lib.innosetup" depends="load.lib.innoextract">
+        <echo message="Load InnoSetup"/>
+        <get dest="${lib.path}/innosetup.exe" src="${innosetup.url}" skipexisting="true"/>
+        <if>
+          <not><available file="${lib.path}/innosetup" type="dir" /></not>
+          <then>
+              <exec executable="${innoextract}">
+                  <arg value="-d"/>
+                  <arg value="${lib.path}/innosetup"/>
+                  <arg value="${lib.path}/innosetup.exe"/>
+              </exec>
+          </then>
+        </if>
+        
+        <copy file="${src-rss.path}/com/github/crazymax/crossfitreader/rss/img/icon.ico"
+            tofile="${setup-rss.path}/${app.id}.ico"/>
+        <copy file="${src-build.path}/setup-mini.bmp"
+            tofile="${setup-rss.path}/setup-mini.bmp"/>
+        <copy file="${src-build.path}/setup.bmp"
+            tofile="${setup-rss.path}/setup.bmp"/>
+        <copy file="${basedir}/LICENSE"
+            tofile="${setup-rss.path}/license.txt"/>
+        <copy file="${src-build.path}/setup.iss"
+            tofile="${setup-rss.path}/${app.id}.iss">
+            <filterset refid="filterset.app" />
+        </copy>
+    </target>
+        
+    <target name="ivy.retrieve" depends="load.lib">
+        <delete dir="${ivy.path}"/>
+        <mkdir dir="${ivy.path}"/>
+        
+        <ivy:resolve file="ivy.xml" log="info" />
+        <ivy:retrieve pattern="${ivy.path}/[artifact]-[revision].[ext]"
+            conf="master"
+            sync="true"
+            overwriteMode="newer"
+            type="jar,bundle"
+        />
+    </target>
+    
+    <target name="do.compile" depends="clean, load.lib, ivy.retrieve">
+        <mkdir dir="${classes.path}" />
+        
+        <javac
+            destdir="${classes.path}" 
+            encoding="${encoding}" debug="${debug}"
+            includeAntRuntime="false" fork="true"
+            memoryInitialSize="${java.memory.min}"
+            memoryMaximumSize="${java.memory.max}"
+            source="${javac.target}"
+            target="${javac.target}"
+        >
+            <src path="${src.path}"/>
+            <src path="${src-rss.path}"/>
+            <classpath>
+                <fileset dir="${ivy.path}">
+                    <include name="*"/>
+                </fileset>
+                <filelist>
+                    <file name="${java.home}/lib/jfxrt.jar"/>
+                </filelist>
+            </classpath>
+        </javac>
+    
+        <!-- Copy resources -->
+        <copy todir="${classes.path}">
+            <fileset dir="${src.path}">
+                <exclude name="**/*.java"/>
+            </fileset>
+            <fileset dir="${src-rss.path}">
+                <exclude name="**/*.java"/>
+            </fileset>
+        </copy>
+    </target>
+    
+    <target name="do.jar" depends="do.compile">
+        <mkdir dir="${archives.path}" />
+        
+        <fx:application id="fx.application"
+            name="${app.id}"
+            version="${app.version}.${app.release}"
+            mainClass="${jar.mainclass}"
+        />
+        
+        <echo message="Creating JAR ${jar.filename}"/>
+        <fx:jar destfile="${archives.path}/${jar.filename}">
+            <fx:application refid="fx.application"/>
+            <fx:resources>
+                <fx:fileset dir="${ivy.path}" includes="*.jar"/>
+            </fx:resources>
+            <fx:fileset dir="${classes.path}" includes="**"/>
+            <fx:manifest>
+                <attribute name="Project-Id" value="${app.id}"/>
+                <attribute name="Project-Name" value="${app.name}"/>
+                <attribute name="Project-Desc" value="${app.desc}"/>
+                <attribute name="Project-Version" value="${app.version}"/>
+                <attribute name="Project-Release" value="${app.release}"/>
+                <attribute name="Project-Guid" value="${app.guid}"/>
+                <attribute name="Project-Author" value="${app.author}"/>
+                <attribute name="Project-Url" value="${app.url}"/>
+                <attribute name="Built-Date" value="${currentdate}"/>
+            </fx:manifest>
+        </fx:jar>
+        
+        <!--echo message="Grouping in one JAR ${bin.path}/${app.id}.jar"/>
+        <jar destfile="${bin.path}/${app.id}.jar">
+            <zipgroupfileset dir="${archives.path}" includes="*.jar"/>
+            <zipgroupfileset dir="${ivy.path}" includes="*.jar"/>
+            <zipgroupfileset dir="${java.home}/lib" includes="jfxrt.jar"/>
+        </jar-->
+    </target>
+    
+    <target name="do.exe" depends="do.jar" unless="is.exe.loaded">
+        <mkdir dir="${exe.path}"/>
+        
+        <echo message="Copying files"/>
+        <copy todir="${exe.path}/app">
+            <fileset dir="${archives.path}" includes="*.jar"/>
+            <fileset dir="${ivy.path}" includes="*.jar"/>
+            <fileset dir="${java.home}/lib" includes="jfxrt.jar"/>
+        </copy>
+        <copy todir="${exe.path}">
+            <fileset dir="${java.home}/bin" includes="msvcr100.dll"/>
+        </copy>
+        
+        <echo message="Creating executable"/>
+        <l4j configFile="${exe-rss.path}/launch4j.xml"/>
+        
+        <property name="is.exe.loaded" value="true"/>
+    </target>
+    
+    <target name="do.setup" depends="do.exe">
+        <delete dir="${setup-rss.path}/${app.id}"/>
+        
+        <echo message="Copying executable"/>
+        <copy todir="${setup-rss.path}/${app.id}">
+            <fileset dir="${exe.path}"/>
+        </copy>
+        
+        <echo message="Copying JRE ${java.version}"/>
+        <copy todir="${setup-rss.path}/${app.id}/jre">
+            <fileset dir="${java.home}"/>
+        </copy>
+        
+        <echo message="Copying icon"/>
+        <copy file="${src-rss.path}/com/github/crazymax/crossfitreader/rss/img/icon.ico"
+            tofile="${setup-rss.path}/${app.id}/${app.id}.ico"/>
+        
+        <echo message="Compile setup"/>
+        <exec executable="${innosetupcompiler}">
+            <arg value="/O${setup.path}"/>
+            <arg value="/F${app.setupname}"/>
+            <arg value="${setup-rss.path}/${app.id}.iss"/>
+        </exec>
+    </target>
+    
+</project>
