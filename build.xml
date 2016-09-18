@@ -76,7 +76,7 @@
     </target>
     
     <target name="clean">
-        <delete includeemptydirs="true">
+        <delete includeemptydirs="true" failonerror="false">
             <fileset dir="${bin.path}">
                 <include name="**/*"/>
                 <exclude name="**/lib/**"/>
