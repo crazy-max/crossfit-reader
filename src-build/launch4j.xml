@@ -1,0 +1,35 @@
+<launch4jConfig>
+  <headerType>gui</headerType>
+  <dontWrapJar>true</dontWrapJar>
+  <classPath>
+    <mainClass>@JAR_MAINCLASS@</mainClass>
+    <cp>%EXEDIR%/app/*.jar</cp>
+  </classPath>
+  <outfile>@EXE_PATH@/@APP_ID@.exe</outfile>
+  <errTitle>@APP_NAME@</errTitle>
+  <chdir>.</chdir>
+  <icon>@EXE_RSS_PATH@/@APP_ID@.ico</icon>
+  <restartOnCrash>false</restartOnCrash>
+  <stayAlive>true</stayAlive>
+  <manifest>@EXE_RSS_PATH@/@APP_ID@.manifest</manifest>
+  <singleInstance>
+    <mutexName>@APP_ID@</mutexName>
+  </singleInstance>
+  <jre>
+    <path>jre</path>
+    <minVersion>1.7.0</minVersion>
+    <initialHeapSize>16</initialHeapSize>
+    <maxHeapSize>64</maxHeapSize>
+  </jre>
+  <versionInfo>
+    <fileVersion>@APP_VERSION@.@APP_RELEASE@.0</fileVersion>
+    <txtFileVersion>@APP_VERSION@.@APP_RELEASE@</txtFileVersion>
+    <fileDescription>@APP_DESC@</fileDescription>
+    <copyright>@APP_MANUFACTURER@</copyright>
+    <productVersion>@APP_VERSION@.@APP_RELEASE@.0</productVersion>
+    <txtProductVersion>@APP_VERSION@.@APP_RELEASE@</txtProductVersion>
+    <productName>@APP_NAME@</productName>
+    <internalName>@APP_ID@</internalName>
+    <originalFilename>@APP_ID@.exe</originalFilename>
+  </versionInfo>
+</launch4jConfig>

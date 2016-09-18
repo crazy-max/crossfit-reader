@@ -1,0 +1,15 @@
+language: java
+jdk: oraclejdk7
+addons:
+  apt:
+    packages:
+    - wine
+before_install:
+  - sudo apt-get update
+  - sudo add-apt-repository --yes ppa:arx/release
+  - sudo apt-get update -d
+  - sudo apt-get install -y -q innoextract wine python-software-properties
+  - wine --version
+  - innoextract --version
+script:
+  - ant do.setup
