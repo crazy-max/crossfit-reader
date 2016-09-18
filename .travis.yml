@@ -1,3 +1,4 @@
+sudo: required
 language: java
 jdk: oraclejdk7
 addons:
@@ -8,7 +9,7 @@ before_install:
   - sudo apt-get update
   - sudo add-apt-repository --yes ppa:arx/release
   - sudo apt-get update -d
-  - sudo apt-get install -y -q innoextract wine python-software-properties
+  - sudo apt-get install -y -q innoextract wine python-software-properties libc6:i386 libstdc++6:i386
   - wine --version
   - innoextract --version
 script:
