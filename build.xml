@@ -32,24 +32,13 @@
     <condition property="innoextract" value="${lib.path}\innoextract\innoextract.exe"><os family="windows"/></condition>
     <condition property="innoextract" value="innoextract"><os family="unix"/></condition>
     
-    <!-- InnoSetup Compiler -->
-    <condition property="innosetupcompiler" value="${lib.path}\innosetup\app\ISCC.exe"><os family="windows"/></condition>
-    <condition property="innosetupcompiler" value="${wine} ${lib.path}/innosetup/app/ISCC.exe"><os family="unix"/></condition>
-    
     <!-- Wine -->
     <!-- /opt/wine-staging/bin/ -->
     <condition property="wine" value="wine cmd.exe /c"><os family="unix"/></condition>
     
-    <!-- OS -->
-    <condition property="is.windows">
-        <os family="windows"/>
-    </condition>
-    <condition property="is.unix">
-        <os family="unix"/>
-    </condition>
-    <echo message="OS Name:         ${os.name}" />
-    <echo message="OS Architecture: ${os.arch}" />
-    <echo message="OS Version:      ${os.version}" />
+    <!-- InnoSetup Compiler -->
+    <condition property="innosetupcompiler" value="${lib.path}\innosetup\app\ISCC.exe"><os family="windows"/></condition>
+    <condition property="innosetupcompiler" value="${wine} ${lib.path}/innosetup/app/ISCC.exe"><os family="unix"/></condition>
     
     <filterset id="filterset.app">
         <filter token="APP_GUID" value="${app.guid}"/>
@@ -151,7 +140,7 @@
         </copy>
         
         <if>
-            <isset property="is.windows"/>
+            <os family="windows"/>
             <then>
                 <get dest="${lib.path}/launch4j.zip" src="${launch4j.win.url}" skipexisting="true"/>
                 <if>
