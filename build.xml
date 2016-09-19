@@ -349,18 +349,25 @@
             tofile="${setup-rss.path}/${app.id}/${app.id}.ico"/>
         
         <echo message="Compile setup"/>
-        <exec executable="${innosetupcompiler}" os="windows">
-            <arg value="/O${setup.path}"/>
-            <arg value="/F${app.setupname}"/>
-            <arg value="${setup-rss.path}/${app.id}.iss"/>
-        </exec>
-        <exec executable="wine" os="unix">
-            <arg value="${innosetupcompiler}"/>
-            <arg value="/O${setup.path}"/>
-            <arg value="/F${app.setupname}"/>
-            <arg value="${setup-rss.path}/${app.id}.iss"/>
-            <env key="WINEPREFIX" value="${user.home}/.wine"/>
-        </exec>
+        <if>
+            <os family="windows"/>
+            <then>
+                <exec executable="${innosetupcompiler}" dir="${setup-rss.path}">
+                    <arg value="/O${setup.path}"/>
+                    <arg value="/F${app.setupname}"/>
+                    <arg value="${setup-rss.path}/${app.id}.iss"/>
+                </exec>
+            </then>
+            <else>
+                <exec executable="wine" dir="${setup-rss.path}">
+                    <arg value="${innosetupcompiler}"/>
+                    <arg value="/O${setup.path}"/>
+                    <arg value="/F${app.setupname}"/>
+                    <arg value="${setup-rss.path}/${app.id}.iss"/>
+                    <env key="WINEPREFIX" value="${user.home}/.wine"/>
+                </exec>
+            </else>
+        </if>
     </target>
     
 </project>
