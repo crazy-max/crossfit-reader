@@ -360,7 +360,12 @@
             </then>
             <else>
                 <exec executable="wine" dir="${setup-rss.path}">
-                    <arg value="${innosetupcompiler} /O${setup.path} /F${app.setupname} ${setup-rss.path}/${app.id}.iss"/>
+                    <arg value="cmd.exe"/>
+                    <arg value="/c"/>
+                    <arg value="${innosetupcompiler}"/>
+                    <arg value="/O${setup.path}"/>
+                    <arg value="/F${app.setupname}"/>
+                    <arg value="${setup-rss.path}/${app.id}.iss"/>
                 </exec>
             </else>
         </if>
