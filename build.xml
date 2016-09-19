@@ -32,12 +32,9 @@
     <condition property="innoextract" value="${lib.path}\innoextract\innoextract.exe"><os family="windows"/></condition>
     <condition property="innoextract" value="innoextract"><os family="unix"/></condition>
     
-    <!-- Wine -->
-    <condition property="wine" value="wine"><os family="unix"/></condition>
-    
     <!-- InnoSetup Compiler -->
     <condition property="innosetupcompiler" value="${lib.path}\innosetup\app\ISCC.exe"><os family="windows"/></condition>
-    <condition property="innosetupcompiler" value="${lib.path}/innosetup/app/ISCC.exe"><os family="unix"/></condition>
+    <condition property="innosetupcompiler" value="wine ${lib.path}/innosetup/app/ISCC.exe"><os family="unix"/></condition>
     
     <filterset id="filterset.app">
         <filter token="APP_GUID" value="${app.guid}"/>
@@ -352,24 +349,7 @@
             tofile="${setup-rss.path}/${app.id}/${app.id}.ico"/>
         
         <echo message="Compile setup"/>
-        <if>
-            <os family="windows"/>
-            <then>
-                <exec executable="${innosetupcompiler}">
-                    <arg value="/O${setup.path}"/>
-                    <arg value="/F${app.setupname}"/>
-                    <arg value="${setup-rss.path}/${app.id}.iss"/>
-                </exec>
-            </then>
-            <else>
-                <exec executable="${wine}">
-                    <arg value="${innosetupcompiler}"/>
-                    <arg value="/O${setup.path}"/>
-                    <arg value="/F${app.setupname}"/>
-                    <arg value="${setup-rss.path}/${app.id}.iss"/>
-                </exec>
-            </else>
-        </if>
+        <exec command="${innosetupcompiler} /O${setup.path} /F${app.setupname} ${setup-rss.path}/${app.id}.iss"/>
     </target>
     
 </project>
