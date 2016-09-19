@@ -8,4 +8,4 @@ before_install:
   - wine --version
   - innoextract --version
 script:
-  - ant do.setup
+  - ant -v do.setup

@@ -361,10 +361,9 @@
             <else>
                 <exec executable="wine" dir="${setup-rss.path}">
                     <arg value="${innosetupcompiler}"/>
-                    <arg value="/O${setup.path}"/>
-                    <arg value="/F${app.setupname}"/>
+                    <!--arg value="/O${setup.path}"/>
+                    <arg value="/F${app.setupname}"/-->
                     <arg value="${setup-rss.path}/${app.id}.iss"/>
-                    <env key="WINEPREFIX" value="${user.home}/.wine"/>
                 </exec>
             </else>
         </if>
