@@ -151,7 +151,7 @@
                 </if>
             </then>
             <else>
-                <get dest="${lib.path}/launch4j.tgz" src="${launch4j.lin.url}" skipexisting="true"/>
+                <get dest="${lib.path}/launch4j.tgz" src="${launch4j.linux.url}" skipexisting="true"/>
                 <if>
                   <not><available file="${lib.path}/launch4j" type="dir" /></not>
                   <then>
