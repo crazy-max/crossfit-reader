@@ -293,7 +293,7 @@
         </copy>
         
         <echo message="Creating executable"/>
-        <l4j configFile="${exe-rss.path}/launch4j.xml"/>
+        <l4j bindir="${lib.path}/launch4j/bin" configFile="${exe-rss.path}/launch4j.xml"/>
         
         <property name="is.exe.loaded" value="true"/>
     </target>
