@@ -167,6 +167,8 @@
                   <not><available file="${lib.path}/launch4j" type="dir" /></not>
                   <then>
                       <untar src="${lib.path}/launch4j.tgz" dest="${lib.path}" compression="gzip"/>
+                      <chmod file="${lib.path}/launch4j/bin/ld" perm="755"/>
+                      <chmod file="${lib.path}/launch4j/bin/windres" perm="755"/>
                   </then>
                 </if>
             </else>
