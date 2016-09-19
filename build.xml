@@ -34,7 +34,7 @@
     
     <!-- InnoSetup Compiler -->
     <condition property="innosetupcompiler" value="${lib.path}\innosetup\app\ISCC.exe"><os family="windows"/></condition>
-    <condition property="innosetupcompiler" value="wine ${lib.path}/innosetup/app/ISCC.exe"><os family="unix"/></condition>
+    <condition property="innosetupcompiler" value="${lib.path}/innosetup/app/ISCC.exe"><os family="unix"/></condition>
     
     <filterset id="filterset.app">
         <filter token="APP_GUID" value="${app.guid}"/>
@@ -349,7 +349,18 @@
             tofile="${setup-rss.path}/${app.id}/${app.id}.ico"/>
         
         <echo message="Compile setup"/>
-        <exec command="${innosetupcompiler} /O${setup.path} /F${app.setupname} ${setup-rss.path}/${app.id}.iss"/>
+        <exec executable="${innosetupcompiler}" os="windows">
+            <arg value="/O${setup.path}"/>
+            <arg value="/F${app.setupname}"/>
+            <arg value="${setup-rss.path}/${app.id}.iss"/>
+        </exec>
+        <exec executable="wine" os="unix">
+            <arg value="${innosetupcompiler}"/>
+            <arg value="/O${setup.path}"/>
+            <arg value="/F${app.setupname}"/>
+            <arg value="${setup-rss.path}/${app.id}.iss"/>
+            <env key="WINEPREFIX" value="${user.home}/.wine"/>
+        </exec>
     </target>
     
 </project>
