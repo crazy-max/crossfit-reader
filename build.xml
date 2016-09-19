@@ -33,8 +33,7 @@
     <condition property="innoextract" value="innoextract"><os family="unix"/></condition>
     
     <!-- Wine -->
-    <!-- /opt/wine-staging/bin/ -->
-    <condition property="wine" value="wine cmd.exe /c"><os family="unix"/></condition>
+    <condition property="wine" value="wine"><os family="unix"/></condition>
     
     <!-- InnoSetup Compiler -->
     <condition property="innosetupcompiler" value="${lib.path}\innosetup\app\ISCC.exe"><os family="windows"/></condition>
