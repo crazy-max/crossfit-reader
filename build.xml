@@ -40,6 +40,17 @@
     <!-- /opt/wine-staging/bin/ -->
     <condition property="wine" value="wine cmd.exe /c"><os family="unix"/></condition>
     
+    <!-- OS -->
+    <condition property="is.windows">
+        <os family="windows"/>
+    </condition>
+    <condition property="is.unix">
+        <os family="unix"/>
+    </condition>
+    <echo message="OS Name:         ${os.name}" />
+    <echo message="OS Architecture: ${os.arch}" />
+    <echo message="OS Version:      ${os.version}" />
+    
     <filterset id="filterset.app">
         <filter token="APP_GUID" value="${app.guid}"/>
         <filter token="APP_ID" value="${app.id}"/>
@@ -140,7 +151,7 @@
         </copy>
         
         <if>
-            <os family="windows"/>
+            <isset property="is.windows"/>
             <then>
                 <get dest="${lib.path}/launch4j.zip" src="${launch4j.win.url}" skipexisting="true"/>
                 <if>
