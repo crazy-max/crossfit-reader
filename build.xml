@@ -37,7 +37,7 @@
     
     <!-- InnoSetup Compiler -->
     <condition property="innosetupcompiler" value="${lib.path}\innosetup\app\ISCC.exe"><os family="windows"/></condition>
-    <condition property="innosetupcompiler" value="${wine} ${lib.path}/innosetup/app/ISCC.exe"><os family="unix"/></condition>
+    <condition property="innosetupcompiler" value="${lib.path}/innosetup/app/ISCC.exe"><os family="unix"/></condition>
     
     <filterset id="filterset.app">
         <filter token="APP_GUID" value="${app.guid}"/>
@@ -208,7 +208,7 @@
               </exec>
           </then>
         </if>
-        <fail message="File ${lib.path}/launch4j/bin/windres.exe not found">
+        <fail message="File ${lib.path}/innosetup/app/ISCC.exe not found">
             <condition>
                 <not>
                     <available file="${lib.path}/innosetup/app/ISCC.exe" />
@@ -352,11 +352,24 @@
             tofile="${setup-rss.path}/${app.id}/${app.id}.ico"/>
         
         <echo message="Compile setup"/>
-        <exec executable="${innosetupcompiler}">
-            <arg value="/O${setup.path}"/>
-            <arg value="/F${app.setupname}"/>
-            <arg value="${setup-rss.path}/${app.id}.iss"/>
-        </exec>
+        <if>
+            <os family="windows"/>
+            <then>
+                <exec executable="${innosetupcompiler}">
+                    <arg value="/O${setup.path}"/>
+                    <arg value="/F${app.setupname}"/>
+                    <arg value="${setup-rss.path}/${app.id}.iss"/>
+                </exec>
+            </then>
+            <else>
+                <exec executable="${wine}">
+                    <arg value="${innosetupcompiler}"/>
+                    <arg value="/O${setup.path}"/>
+                    <arg value="/F${app.setupname}"/>
+                    <arg value="${setup-rss.path}/${app.id}.iss"/>
+                </exec>
+            </else>
+        </if>
     </target>
     
 </project>
