@@ -146,73 +146,6 @@ public class Util {
         return value;
     }
     
-    public static boolean isWindows() {
-        String osName = System.getProperty("os.name").toLowerCase();
-        if (osName.indexOf("windows") > -1) {
-            return true;
-        }
-        return false;
-    }
-    
-    /**
-     * Reboot the computer
-     * @throws IOException
-     */
-    public static void rebootComputer() {
-        try {
-            final List<String> args = new ArrayList<String>();
-            args.add("/r");
-            args.add("/t");
-            args.add("2");
-            args.add("/f");
-            
-            Util.execSilent("shutdown", args);
-        } catch (IOException e) {
-            Util.logError(Util.i18n("util.error.reboot"), e);
-        }
-    }
-    
-    /**
-     * Check if the process is started
-     * @param exeName
-     */
-    public static boolean isExeLaunched(final String exeName) {
-        boolean launched = false;
-        Process p;
-        try {
-            p = Runtime.getRuntime().exec(System.getenv("windir") + "\\system32\\" + "tasklist.exe");
-            BufferedReader input = new BufferedReader(new InputStreamReader(p.getInputStream()));
-            String line;
-            while ((line = input.readLine()) != null) {
-                if (line.toLowerCase().contains(exeName.toLowerCase())) {
-                    launched = true;
-                    break;
-                }
-            }
-            input.close();
-            return launched;
-        } catch (IOException e) {
-            return false;
-        }
-    }
-    
-    /**
-     * Kill a Windows process
-     * @param pid
-     */
-    public static void killProcess(final int pid) {
-        try {
-            final List<String> args = new ArrayList<String>();
-            args.add("/pid");
-            args.add(String.valueOf(pid));
-            args.add("/f");
-            
-            Util.execSilent("taskkill", args);
-        } catch (IOException e) {
-            Util.logError(String.format(Util.i18n("util.error.killproc"), String.valueOf(pid)), e);
-        }
-    }
-    
     public static boolean isProcessRunning(final int pid)
             throws IOException {
         try {
@@ -225,29 +158,6 @@ public class Util {
         } catch (IOException e) {
             Util.logError(String.format(Util.i18n("util.error.procrunning"), String.valueOf(pid)), e);
             return false;
-        }
-    }
-    
-    /**
-     * Check Windows XP OS
-     */
-    public static boolean isWindowsXp() {
-        return System.getProperty("os.name").equalsIgnoreCase("windows xp");
-    }
-    
-    public static boolean startApp() {
-        try {
-            Util.exec(Main.appPath + "/" + Main.appId + ".exe", null, false, false);
-        } catch (IOException e) {
-            Util.logError(Util.i18n("util.error.startapp"), e);
-        }
-        return false;
-    }
-    
-    public static void stopApp() {
-        final File pidFile = getPidFile();
-        if (pidFile.exists()) {
-            pidFile.delete();
         }
     }
     
