@@ -139,12 +139,26 @@
             <filterset refid="filterset.app" />
         </copy>
         
-        <get dest="${lib.path}/launch4j.zip" src="${launch4j.url}" skipexisting="true"/>
         <if>
-          <not><available file="${lib.path}/launch4j" type="dir" /></not>
-          <then>
-              <unzip src="${lib.path}/launch4j.zip" dest="${lib.path}"/>
-          </then>
+            <os family="windows"/>
+            <then>
+                <get dest="${lib.path}/launch4j.zip" src="${launch4j.win.url}" skipexisting="true"/>
+                <if>
+                  <not><available file="${lib.path}/launch4j" type="dir" /></not>
+                  <then>
+                      <unzip src="${lib.path}/launch4j.zip" dest="${lib.path}"/>
+                  </then>
+                </if>
+            </then>
+            <else>
+                <get dest="${lib.path}/launch4j.tgz" src="${launch4j.lin.url}" skipexisting="true"/>
+                <if>
+                  <not><available file="${lib.path}/launch4j" type="dir" /></not>
+                  <then>
+                      <untar src="${lib.path}/launch4j.tgz" dest="${lib.path}" compression="gzip"/>
+                  </then>
+                </if>
+            </else>
         </if>
         
         <taskdef name="l4j" classname="net.sf.launch4j.ant.Launch4jTask">

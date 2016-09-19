@@ -7,7 +7,7 @@ import javax.xml.bind.annotation.XmlAccessorType;
 import javax.xml.bind.annotation.XmlRootElement;
 
 /**
- * Booking User model
+ * User model
  * @author crazy-max
  * @license MIT License
  * @link https://github.com/crazy-max/crossfit-reader
@@ -34,6 +34,7 @@ public class User {
     private List<String> subscriptions;
     private List<String> rules;
     private String login;
+    private List<Booking> bookings;
     
     public int getId() {
         return id;
@@ -178,6 +179,14 @@ public class User {
     public void setLogin(String login) {
         this.login = login;
     }
+    
+    public List<Booking> getBookings() {
+        return bookings;
+    }
+
+    public void setBookings(List<Booking> bookings) {
+        this.bookings = bookings;
+    }
 
     @Override
     public String toString() {
@@ -185,6 +194,6 @@ public class User {
                 + ", nickName=" + nickName + ", address=" + address + ", zipCode=" + zipCode + ", city=" + city
                 + ", telephonNumber=" + telephonNumber + ", cardUuid=" + cardUuid + ", email=" + email + ", locked="
                 + locked + ", enabled=" + enabled + ", langKey=" + langKey + ", roles=" + roles + ", subscriptions="
-                + subscriptions + ", rules=" + rules + ", login=" + login + "]";
+                + subscriptions + ", rules=" + rules + ", login=" + login + ", bookings=" + bookings + "]";
     }
 }
