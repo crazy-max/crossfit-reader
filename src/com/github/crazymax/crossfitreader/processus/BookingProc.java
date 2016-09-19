@@ -14,6 +14,7 @@ import org.apache.log4j.Logger;
 import org.glassfish.jersey.client.ClientConfig;
 import org.glassfish.jersey.client.ClientProperties;
 
+import com.github.crazymax.crossfitreader.Main;
 import com.github.crazymax.crossfitreader.booking.User;
 import com.github.crazymax.crossfitreader.util.Util;
 
@@ -27,10 +28,6 @@ public class BookingProc {
     
     private static final Logger LOGGER = Logger.getLogger(BookingProc.class);
     
-    private static class BookingProcessusHandler {
-        private final static BookingProc instance = new BookingProc();
-    }
-    
     private String baseUrl;
     private String apiKey;
     private String userProfilePath;
@@ -40,6 +37,10 @@ public class BookingProc {
     private String removeCardPath;
     
     private final Client client;
+    
+    private static class BookingProcessusHandler {
+        private final static BookingProc instance = new BookingProc();
+    }
     
     public static BookingProc getInstance() {
         return BookingProcessusHandler.instance;
@@ -77,13 +78,34 @@ public class BookingProc {
             return null;
         }
         
-        LOGGER.debug(getBuilder(userListPath).get(String.class));
+        if (Main.envDev) {
+            LOGGER.debug(getBuilder(userListPath).get(String.class));
+        }
         
         final List<User> userList = getBuilder(userListPath).get(new GenericType<List<User>>() {});
         LOGGER.info(userList.size() + " users found");
         LOGGER.debug(Arrays.toString(userList.toArray(new User[userList.size()])));
         
         return userList;
+    }
+    
+    public User scanCard(final String cardUid) {
+        final String adr = String.format(scanCardPath, cardUid);
+        final Response response = getBuilder(adr).get();
+        if (response.getStatus() != 200) {
+            Util.logError("HTTP error code : " + response.getStatus() + " " + response.getStatusInfo().getReasonPhrase());
+            return null;
+        }
+        
+        if (Main.envDev) {
+            LOGGER.debug(getBuilder(adr).get(String.class));
+        }
+        
+        final User user = getBuilder(adr).get(new GenericType<User>() {});
+        LOGGER.info("User '" + user.getFirstName() + " " + user.getLastName() + " scanned his card!");
+        LOGGER.debug(user);
+        
+        return user;
     }
     
     public boolean associateCard(final String userId, final String cardUid) {
@@ -93,16 +115,9 @@ public class BookingProc {
         return response.getStatus() == 200;
     }
     
-    public boolean removeCard(final String userId, final String cardUid) {
+    public boolean removeCard(final String userId) {
         final Response response = getBuilder(String.format(removeCardPath, userId))
-                .put(Entity.text(cardUid), Response.class);
-        
-        return response.getStatus() == 200;
-    }
-    
-    public boolean scanCard(final String userId, final String cardUid) {
-        final Response response = getBuilder(String.format(scanCardPath))
-                .put(Entity.text(cardUid), Response.class);
+                .put(Entity.text(""), Response.class);
         
         return response.getStatus() == 200;
     }

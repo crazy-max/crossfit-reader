@@ -33,12 +33,12 @@ public class ConfigProc {
     private static final String PROP_BOOKING_ASSOCIATE_CARD_PATH = "bookingAssociateCardPath";
     private static final String PROP_BOOKING_REMOVE_CARD_PATH = "bookingRemoveCardPath";
     
+    private Path configPath;
+    private Configuration config = new Configuration();
+    
     private static class ConfigProcHandler {
         private final static ConfigProc instance = new ConfigProc();
     }
-    
-    private Path configPath;
-    private Configuration config = new Configuration();
     
     public static ConfigProc getInstance() {
         return ConfigProcHandler.instance;

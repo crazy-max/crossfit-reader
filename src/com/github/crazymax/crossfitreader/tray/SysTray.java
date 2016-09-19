@@ -21,13 +21,16 @@ import javax.swing.JPopupMenu;
 import org.apache.log4j.Logger;
 
 import com.github.crazymax.crossfitreader.Main;
+import com.github.crazymax.crossfitreader.booking.User;
 import com.github.crazymax.crossfitreader.device.Device;
 import com.github.crazymax.crossfitreader.device.DeviceListener;
 import com.github.crazymax.crossfitreader.exception.FindDeviceException;
+import com.github.crazymax.crossfitreader.processus.BookingProc;
 import com.github.crazymax.crossfitreader.tray.menu.TrayMenuCardManager;
 import com.github.crazymax.crossfitreader.tray.menu.TrayMenuCardUid;
 import com.github.crazymax.crossfitreader.tray.menu.TrayMenuExit;
 import com.github.crazymax.crossfitreader.util.Util;
+import com.google.common.base.Strings;
 
 /**
  * System Tray icon notification
@@ -47,10 +50,6 @@ public class SysTray implements DeviceListener {
     private JPopupMenu popupMenu;
     private JDialog hiddenDialog;
     
-    private TrayMenuExit trayMenuExit;
-    private TrayMenuCardManager trayMenuAssociate;
-    private TrayMenuCardUid trayMenuCardUid;
-    
     private SysTray() {
         super();
     }
@@ -67,12 +66,12 @@ public class SysTray implements DeviceListener {
         trayIcon = new TrayIcon(Util.ICON_BLUE_32.getImage(), Main.appName, null);
         trayIcon.setImageAutoSize(true);
         
-        trayMenuExit = new TrayMenuExit(instance);
-        trayMenuAssociate = new TrayMenuCardManager(instance);
-        trayMenuCardUid = new TrayMenuCardUid(instance);
+        final TrayMenuExit trayMenuExit = new TrayMenuExit(instance);
+        final TrayMenuCardManager trayMenuCardManager = new TrayMenuCardManager(instance);
+        final TrayMenuCardUid trayMenuCardUid = new TrayMenuCardUid(instance);
         
         popupMenu = new JPopupMenu();
-        popupMenu.add(trayMenuAssociate);
+        popupMenu.add(trayMenuCardManager);
         popupMenu.add(trayMenuCardUid);
         popupMenu.addSeparator();
         popupMenu.add(trayMenuExit);
@@ -161,11 +160,27 @@ public class SysTray implements DeviceListener {
     
     @Override
     public void cardInserted(final Card card, final String cardUid) {
+        String errorMsg = null;
+        final User userScan = BookingProc.getInstance().scanCard(cardUid);
+        if (userScan == null) {
+            errorMsg = String.format(Util.i18n("systray.scan.unknowncard"), cardUid);
+        } else if (userScan.getBookings() == null || userScan.getBookings().size() <= 0) {
+            errorMsg = String.format(Util.i18n("systray.scan.noresa"), userScan.getFirstName(), userScan.getLastName());
+        }
+        
+        if (!Strings.isNullOrEmpty(errorMsg)) {
+            Util.playSound(Util.getRssFile("sounds/mirror-shattering.wav"));
+            showErrorTooltip(errorMsg);
+            return;
+        }
+        
         Util.playSound(Util.getRssFile("sounds/cash-register.wav"));
+        showInfoTooltip(String.format(Util.i18n("systray.scan.welcome"), userScan.getFirstName(), userScan.getLastName()));
     }
     
     @Override
     public void cardRemoved() {
+        // N/A
     }
     
     public void addCardListener() {

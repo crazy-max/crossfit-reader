@@ -30,8 +30,6 @@ import javax.swing.SwingWorker;
 import javax.swing.border.EmptyBorder;
 import javax.swing.text.DefaultEditorKit;
 
-import org.apache.log4j.Logger;
-
 import com.github.crazymax.crossfitreader.device.Device;
 import com.github.crazymax.crossfitreader.device.DeviceListener;
 import com.github.crazymax.crossfitreader.enums.CardUidLayoutEnum;
@@ -50,16 +48,14 @@ public final class CardUidDialog
     
     private static final long serialVersionUID = -3969093045340980759L;
 
-    private static final Logger LOGGER = Logger.getLogger(CardUidDialog.class);
-    
     private static final List<Image> ICONS = Arrays.asList(
             Util.ICON_BLUE_16.getImage(),
             Util.ICON_BLUE_32.getImage(),
             Util.ICON_BLUE_48.getImage()
     );
     
-    final static int CONTENT_WIDTH = 500;
-    final static int CONTENT_HEIGHT = 210;
+    private static final int CONTENT_WIDTH = 500;
+    private static final int CONTENT_HEIGHT = 210;
     
     private SysTray systray;
     private Device device;
@@ -148,7 +144,9 @@ public final class CardUidDialog
         uidField.setHorizontalAlignment(JLabel.CENTER);
         uidField.setPreferredSize(new Dimension(150, 40));
         uidField.addFocusListener(new FocusListener() {
-            @Override public void focusLost(final FocusEvent pE) {}
+            @Override public void focusLost(final FocusEvent pE) {
+                // N/A
+            }
             @Override public void focusGained(final FocusEvent pE) {
                 uidField.selectAll();
             }
@@ -216,5 +214,6 @@ public final class CardUidDialog
     
     @Override
     public void cardRemoved() {
+        // N/A
     }
 }

@@ -33,8 +33,6 @@ import javax.swing.JPanel;
 import javax.swing.SwingWorker;
 import javax.swing.border.EmptyBorder;
 
-import org.apache.log4j.Logger;
-
 import com.github.crazymax.crossfitreader.booking.User;
 import com.github.crazymax.crossfitreader.booking.UserComparator;
 import com.github.crazymax.crossfitreader.device.Device;
@@ -58,16 +56,14 @@ public final class CardManagerDialog
     
     private static final long serialVersionUID = -4658875207238213753L;
     
-    private static final Logger LOGGER = Logger.getLogger(CardManagerDialog.class);
-    
     private static final List<Image> ICONS = Arrays.asList(
             Util.ICON_BLUE_16.getImage(),
             Util.ICON_BLUE_32.getImage(),
             Util.ICON_BLUE_48.getImage()
     );
     
-    final static int CONTENT_WIDTH = 500;
-    final static int CONTENT_HEIGHT = 210;
+    private static final int CONTENT_WIDTH = 500;
+    private static final int CONTENT_HEIGHT = 210;
     
     private SysTray systray;
     private Device device;
@@ -240,8 +236,7 @@ public final class CardManagerDialog
         btnRemove.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(final ActionEvent e) {
-                currentScanType = CardScanTypeEnum.REMOVE;
-                switchLayout(CardManagerLayoutEnum.SCAN_CARD);
+                removeCard();
             }
         });
         final JPanel panelBtnActions = new JPanel();
@@ -348,16 +343,14 @@ public final class CardManagerDialog
     }
     
     private void removeCard() {
-        final boolean result = bookingProc.removeCard(String.valueOf(selectedUser.getId()), currentUid);
+        final boolean result = bookingProc.removeCard(String.valueOf(selectedUser.getId()));
         if (result) {
             Util.showInfoDialog(String.format(Util.i18n("cardmanager.remove.success"),
-                    currentUid,
                     selectedUser.getFirstName(),
                     selectedUser.getLastName()));
             close();
         } else {
             Util.showErrorDialog(Util.i18n("cardmanager.remove.error"));
-            switchLayout(CardManagerLayoutEnum.SELECT_USER);
         }
     }
     
@@ -375,13 +368,12 @@ public final class CardManagerDialog
         if (currentLayout == CardManagerLayoutEnum.SCAN_CARD) {
             if (currentScanType == CardScanTypeEnum.ASSOCIATE) {
                 associateCard();
-            } else if (currentScanType == CardScanTypeEnum.ASSOCIATE) {
-                removeCard();
             }
         }
     }
     
     @Override
     public void cardRemoved() {
+        // N/A
     }
 }
