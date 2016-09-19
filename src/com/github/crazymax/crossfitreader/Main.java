@@ -103,7 +103,7 @@ public class Main
         SwingUtilities.invokeLater(new Runnable() {
             @Override
             public void run() {
-                Main main = new Main(args);
+                Main main = new Main();
                 main.setOpaque(true);
                 
                 // Start app
@@ -122,7 +122,7 @@ public class Main
         });
     }
     
-    public Main(final String[] args) {
+    public Main() {
         try {
             ConfigProc.getInstance().loadConfig();
         } catch (Throwable t) {

@@ -148,6 +148,13 @@
                       <unzip src="${lib.path}/launch4j.zip" dest="${lib.path}"/>
                   </then>
                 </if>
+                <fail message="File ${lib.path}/launch4j/bin/windres.exe not found">
+                    <condition>
+                        <not>
+                            <available file="${lib.path}/launch4j/bin/windres.exe" />
+                        </not>
+                    </condition>
+                </fail>
             </then>
             <else>
                 <get dest="${lib.path}/launch4j.tgz" src="${launch4j.linux.url}" skipexisting="true"/>
@@ -159,6 +166,13 @@
                       <chmod file="${lib.path}/launch4j/bin/windres" perm="755"/>
                   </then>
                 </if>
+                <fail message="File ${lib.path}/launch4j/bin/windres not found">
+                    <condition>
+                        <not>
+                            <available file="${lib.path}/launch4j/bin/windres" />
+                        </not>
+                    </condition>
+                </fail>
             </else>
         </if>
         
@@ -194,6 +208,13 @@
               </exec>
           </then>
         </if>
+        <fail message="File ${lib.path}/launch4j/bin/windres.exe not found">
+            <condition>
+                <not>
+                    <available file="${lib.path}/innosetup/app/ISCC.exe" />
+                </not>
+            </condition>
+        </fail>
         
         <copy file="${src-rss.path}/com/github/crazymax/crossfitreader/rss/img/icon.ico"
             tofile="${setup-rss.path}/${app.id}.ico"/>
