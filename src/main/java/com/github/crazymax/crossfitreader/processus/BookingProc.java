@@ -14,8 +14,8 @@ import org.apache.log4j.Logger;
 import org.glassfish.jersey.client.ClientConfig;
 import org.glassfish.jersey.client.ClientProperties;
 
-import com.github.crazymax.crossfitreader.Main;
 import com.github.crazymax.crossfitreader.booking.User;
+import com.github.crazymax.crossfitreader.Main;
 import com.github.crazymax.crossfitreader.util.Util;
 
 /**
@@ -93,7 +93,7 @@ public class BookingProc {
         final String adr = String.format(scanCardPath, cardUid);
         final Response response = getBuilder(adr).get();
         if (response.getStatus() != 200) {
-            Util.logError("HTTP error code : " + response.getStatus() + " " + response.getStatusInfo().getReasonPhrase());
+            LOGGER.warn("scanCard error : HTTP " + response.getStatus() + " " + response.getStatusInfo().getReasonPhrase());
             return null;
         }
         
@@ -112,13 +112,23 @@ public class BookingProc {
         final Response response = getBuilder(String.format(associateCardPath, userId))
                 .put(Entity.text(cardUid), Response.class);
         
-        return response.getStatus() == 200;
+        if (response.getStatus() != 200) {
+            Util.logError("HTTP error code : " + response.getStatus() + " " + response.getStatusInfo().getReasonPhrase());
+            return false;
+        }
+        
+        return true;
     }
     
     public boolean removeCard(final String userId) {
         final Response response = getBuilder(String.format(removeCardPath, userId))
                 .put(Entity.text(""), Response.class);
         
-        return response.getStatus() == 200;
+        if (response.getStatus() != 200) {
+            Util.logError("HTTP error code : " + response.getStatus() + " " + response.getStatusInfo().getReasonPhrase());
+            return false;
+        }
+        
+        return true;
     }
 }

@@ -6,7 +6,7 @@ import javax.swing.JList;
 import javax.swing.plaf.basic.BasicComboBoxRenderer;
 
 import com.github.crazymax.crossfitreader.booking.User;
-import com.github.crazymax.crossfitreader.util.Util;
+import com.github.crazymax.crossfitreader.util.Resources;
 import com.google.common.base.Strings;
 
 /**
@@ -29,9 +29,9 @@ public class UserRenderer extends BasicComboBoxRenderer {
             User user = (User) value;
             setText(user.getLastName() + " " + user.getFirstName());
             if (Strings.isNullOrEmpty(user.getCardUuid())) {
-                setIcon(Util.ICON_BULLET_GREEN);
+                setIcon(Resources.ICON_BULLET_GREEN);
             } else {
-                setIcon(Util.ICON_BULLET_RED);
+                setIcon(Resources.ICON_BULLET_RED);
             }
         } else {
             setIcon(null);

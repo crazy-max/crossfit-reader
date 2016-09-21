@@ -34,6 +34,7 @@ import com.github.crazymax.crossfitreader.device.Device;
 import com.github.crazymax.crossfitreader.device.DeviceListener;
 import com.github.crazymax.crossfitreader.enums.CardUidLayoutEnum;
 import com.github.crazymax.crossfitreader.tray.SysTray;
+import com.github.crazymax.crossfitreader.util.Resources;
 import com.github.crazymax.crossfitreader.util.Util;
 
 /**
@@ -49,9 +50,9 @@ public final class CardUidDialog
     private static final long serialVersionUID = -3969093045340980759L;
 
     private static final List<Image> ICONS = Arrays.asList(
-            Util.ICON_BLUE_16.getImage(),
-            Util.ICON_BLUE_32.getImage(),
-            Util.ICON_BLUE_48.getImage()
+            Resources.ICON_BLUE_16.getImage(),
+            Resources.ICON_BLUE_32.getImage(),
+            Resources.ICON_BLUE_48.getImage()
     );
     
     private static final int CONTENT_WIDTH = 500;
@@ -80,7 +81,7 @@ public final class CardUidDialog
         panneauPrincipal.setOpaque(true);
         panneauPrincipal.add(cards, BorderLayout.CENTER);
         
-        ((java.awt.Frame)getOwner()).setIconImage(Util.ICON_BLUE_32.getImage());
+        ((java.awt.Frame)getOwner()).setIconImage(Resources.ICON_BLUE_32.getImage());
         setTitle(title);
         setContentPane(panneauPrincipal);
         setLocationRelativeTo(null);
@@ -116,7 +117,7 @@ public final class CardUidDialog
         
         // Loading icon
         final JLabel labelResultScanCard = new JLabel();
-        labelResultScanCard.setIcon(Util.ICON_LOADER);
+        labelResultScanCard.setIcon(Resources.ICON_LOADER);
         labelResultScanCard.setHorizontalAlignment(JLabel.CENTER);
         
         final JPanel panelScanCard = new JPanel(new BorderLayout());

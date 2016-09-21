@@ -1,6 +1,8 @@
 sudo: required
 language: java
-jdk: oraclejdk7
+jdk:
+  - oraclejdk8
+  - openjdk8
 before_install:
   - sudo add-apt-repository -y ppa:arx/release
   - sudo add-apt-repository -y ppa:ubuntu-wine/ppa

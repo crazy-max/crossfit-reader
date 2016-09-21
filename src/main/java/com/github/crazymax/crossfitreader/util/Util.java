@@ -17,7 +17,6 @@ import java.nio.file.Files;
 import java.nio.file.Path;
 import java.util.ArrayList;
 import java.util.List;
-import java.util.ResourceBundle;
 
 import javax.smartcardio.Card;
 import javax.smartcardio.CardChannel;
@@ -34,7 +33,6 @@ import javax.sound.sampled.DataLine;
 import javax.sound.sampled.LineUnavailableException;
 import javax.sound.sampled.SourceDataLine;
 import javax.sound.sampled.UnsupportedAudioFileException;
-import javax.swing.ImageIcon;
 import javax.swing.JOptionPane;
 
 import org.apache.commons.io.FileUtils;
@@ -57,41 +55,7 @@ public class Util {
     
     private static final Logger LOGGER = Logger.getLogger(Util.class);
     
-    private static final ResourceBundle RESOURCE_BUNDLE = ResourceBundle
-            .getBundle(Main.class.getPackage().getName() + ".bundles.crossfitreader");
-    
     private static final byte[] APDU_GET_DATA = { (byte) 0xFF, (byte) 0xCA, (byte) 0x00, (byte) 0x00, (byte) 0x00 };
-    
-    public static final ImageIcon ICON_BLUE_16 = new ImageIcon(
-            Main.class.getResource("rss/img/icon_blue_16.png"));
-    public static final ImageIcon ICON_BLUE_32 = new ImageIcon(
-            Main.class.getResource("rss/img/icon_blue_32.png"));
-    public static final ImageIcon ICON_BLUE_48 = new ImageIcon(
-            Main.class.getResource("rss/img/icon_blue_48.png"));
-    public static final ImageIcon ICON_BLUE_128 = new ImageIcon(
-            Main.class.getResource("rss/img/icon_blue_128.png"));
-    public static final ImageIcon ICON_RED_16 = new ImageIcon(
-            Main.class.getResource("rss/img/icon_red_16.png"));
-    public static final ImageIcon ICON_RED_32 = new ImageIcon(
-            Main.class.getResource("rss/img/icon_red_32.png"));
-    public static final ImageIcon ICON_RED_48 = new ImageIcon(
-            Main.class.getResource("rss/img/icon_red_48.png"));
-    public static final ImageIcon ICON_RED_128 = new ImageIcon(
-            Main.class.getResource("rss/img/icon_red_128.png"));
-    
-    public static final ImageIcon ICON_LOADER = new ImageIcon(
-            Main.class.getResource("rss/img/loader.gif"));
-    
-    public static final ImageIcon ICON_BULLET_GREEN = new ImageIcon(
-            Main.class.getResource("rss/img/bullet_green.png"));
-    public static final ImageIcon ICON_BULLET_RED = new ImageIcon(
-            Main.class.getResource("rss/img/bullet_red.png"));
-    
-    public static final ImageIcon ICON_ADD_24 = new ImageIcon(
-            Main.class.getResource("rss/img/add_24.png"));
-    public static final ImageIcon ICON_REMOVE_24 = new ImageIcon(
-            Main.class.getResource("rss/img/remove_24.png"));
-    
     
     private Util() {
         super();
@@ -138,7 +102,7 @@ public class Util {
     public static String i18n(final String key) {
         String value;
         try {
-            value = RESOURCE_BUNDLE.getString(key);
+            value = Resources.BUNDLE.getString(key);
         } catch (Exception e) {
             LOGGER.error(e.getMessage());
             value = key;
