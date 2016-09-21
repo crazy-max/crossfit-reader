@@ -1,7 +1,12 @@
 #!/bin/sh
 unset DISPLAY
+
 outputpath=$1
 setupname=$2
 scriptname=$3
+echo "ISCC OutputPath: $outputpath"
+echo "ISCC SetupName: $setupname"
+echo "ISCC ScriptName: $scriptname"
+
 [ -f "$scriptname" ] && scriptname=$(winepath -w "$scriptname")
 wine "C:\innosetup\ISCC.exe" /O"$outputpath" /F"$setupname" "$scriptname"
