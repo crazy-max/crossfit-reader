@@ -135,7 +135,7 @@ public class Main
         final String className = Main.class.getSimpleName() + ".class";
         final String classPath = Main.class.getResource(className).toString();
         final String jarPath = Main.class.getProtectionDomain().getCodeSource().getLocation().getFile();
-        final String rssFilter = "com/github/crazymax/crossfitreader/rss/";
+        final String rssFilter = "com/github/crazymax/crossfitreader/ext/";
         
         appPid = Util.getPID();
         appPath = Paths.get(System.getProperty("user.dir"));
@@ -153,7 +153,11 @@ public class Main
         }
         
         if (envDev) {
-            appRssPath = Paths.get(System.getProperty("user.dir")).resolve("src-rss").resolve(rssFilter);
+            appRssPath = Paths.get(System.getProperty("user.dir"))
+                    .resolve("src")
+                    .resolve("main")
+                    .resolve("resources")
+                    .resolve(rssFilter);
             return;
         }
         
@@ -169,7 +173,7 @@ public class Main
         rootLogger.addAppender(fileAppender);
         
         // Extract resources
-        appRssPath = appPath.resolve("rss");
+        appRssPath = appPath.resolve("ext");
         if (!Files.exists(appRssPath)) {
             try {
                 if (!appRssPath.toFile().exists()) {
@@ -243,6 +247,7 @@ public class Main
     
     private static void logInfos() {
         final String[] infos = {
+                "Java:     " + System.getProperty("java.version"),
                 "Envdev:   " + (envDev ? "yes" : "no"),
                 "Id:       " + appId,
                 "Name:     " + appName,

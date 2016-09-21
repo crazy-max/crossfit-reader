@@ -1,0 +1,7 @@
+#!/bin/sh
+unset DISPLAY
+outputpath=$1
+setupname=$2
+scriptname=$3
+[ -f "$scriptname" ] && scriptname=$(winepath -w "$scriptname")
+wine "C:\innosetup\ISCC.exe" /O"$outputpath" /F"$setupname" "$scriptname"

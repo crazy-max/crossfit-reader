@@ -41,6 +41,7 @@ import com.github.crazymax.crossfitreader.enums.CardManagerLayoutEnum;
 import com.github.crazymax.crossfitreader.enums.CardScanTypeEnum;
 import com.github.crazymax.crossfitreader.processus.BookingProc;
 import com.github.crazymax.crossfitreader.tray.SysTray;
+import com.github.crazymax.crossfitreader.util.Resources;
 import com.github.crazymax.crossfitreader.util.Util;
 import com.google.common.base.Strings;
 
@@ -57,9 +58,9 @@ public final class CardManagerDialog
     private static final long serialVersionUID = -4658875207238213753L;
     
     private static final List<Image> ICONS = Arrays.asList(
-            Util.ICON_BLUE_16.getImage(),
-            Util.ICON_BLUE_32.getImage(),
-            Util.ICON_BLUE_48.getImage()
+            Resources.ICON_BLUE_16.getImage(),
+            Resources.ICON_BLUE_32.getImage(),
+            Resources.ICON_BLUE_48.getImage()
     );
     
     private static final int CONTENT_WIDTH = 500;
@@ -96,7 +97,7 @@ public final class CardManagerDialog
         panneauPrincipal.setOpaque(true);
         panneauPrincipal.add(cards, BorderLayout.CENTER);
         
-        ((java.awt.Frame)getOwner()).setIconImage(Util.ICON_BLUE_32.getImage());
+        ((java.awt.Frame)getOwner()).setIconImage(Resources.ICON_BLUE_32.getImage());
         setTitle(title);
         setContentPane(panneauPrincipal);
         setLocationRelativeTo(null);
@@ -162,7 +163,7 @@ public final class CardManagerDialog
         
         // Icone chargement
         JLabel loader = new JLabel();
-        loader.setIcon(Util.ICON_LOADER);
+        loader.setIcon(Resources.ICON_LOADER);
         loader.setHorizontalAlignment(JLabel.CENTER);
         
         JPanel panel = new JPanel(new BorderLayout());
@@ -222,7 +223,7 @@ public final class CardManagerDialog
         // Buttons actions
         final JButton btnAssociate = new JButton(Util.i18n("cardmanager.card.associate"));
         btnAssociate.setEnabled(false);
-        btnAssociate.setIcon(Util.ICON_ADD_24);
+        btnAssociate.setIcon(Resources.ICON_ADD_24);
         btnAssociate.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(final ActionEvent e) {
@@ -232,7 +233,7 @@ public final class CardManagerDialog
         });
         final JButton btnRemove = new JButton(Util.i18n("cardmanager.card.remove"));
         btnRemove.setEnabled(false);
-        btnRemove.setIcon(Util.ICON_REMOVE_24);
+        btnRemove.setIcon(Resources.ICON_REMOVE_24);
         btnRemove.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(final ActionEvent e) {
@@ -304,7 +305,7 @@ public final class CardManagerDialog
         
         // Loading icon
         final JLabel labelResultScanCard = new JLabel();
-        labelResultScanCard.setIcon(Util.ICON_LOADER);
+        labelResultScanCard.setIcon(Resources.ICON_LOADER);
         labelResultScanCard.setHorizontalAlignment(JLabel.CENTER);
         
         final JPanel panelScanCard = new JPanel(new BorderLayout());

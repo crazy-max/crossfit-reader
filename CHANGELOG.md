@@ -1,5 +1,10 @@
 # Changelog
 
+## 1.2.0 (2016/09/19)
+
+* Upgrade to Java 1.8
+* New way to build setup with Travis
+
 ## 1.1.0 (2016/09/19)
 
 * Review Launch4j build process

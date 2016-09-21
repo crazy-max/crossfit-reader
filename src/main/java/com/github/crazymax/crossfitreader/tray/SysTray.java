@@ -29,6 +29,7 @@ import com.github.crazymax.crossfitreader.processus.BookingProc;
 import com.github.crazymax.crossfitreader.tray.menu.TrayMenuCardManager;
 import com.github.crazymax.crossfitreader.tray.menu.TrayMenuCardUid;
 import com.github.crazymax.crossfitreader.tray.menu.TrayMenuExit;
+import com.github.crazymax.crossfitreader.util.Resources;
 import com.github.crazymax.crossfitreader.util.Util;
 import com.google.common.base.Strings;
 
@@ -63,7 +64,7 @@ public class SysTray implements DeviceListener {
     
     public void init() {
         systemTray = SystemTray.getSystemTray();
-        trayIcon = new TrayIcon(Util.ICON_BLUE_32.getImage(), Main.appName, null);
+        trayIcon = new TrayIcon(Resources.ICON_BLUE_32.getImage(), Main.appName, null);
         trayIcon.setImageAutoSize(true);
         
         final TrayMenuExit trayMenuExit = new TrayMenuExit(instance);
@@ -99,10 +100,10 @@ public class SysTray implements DeviceListener {
                 device = new Device(Util.getTerminal());
                 addCardListener();
                 showInfoTooltip(Util.i18n("systray.device.found"));
-                Util.playSound(Util.getRssFile("sounds/success.wav"));
+                Util.playSound(Resources.SOUND_SUCCESS);
             } catch (FindDeviceException e1) {
                 showErrorTooltip(Util.i18n("systray.device.error"));
-                Util.playSound(Util.getRssFile("sounds/ko.wav"));
+                Util.playSound(Resources.SOUND_KO);
                 LOGGER.error(e1.getMessage(), e1);
                 removeTray();
                 System.exit(0);
@@ -114,9 +115,9 @@ public class SysTray implements DeviceListener {
                 @Override
                 public void run() {
                     if (Util.isTerminalPlugged()) {
-                        setImage(Util.ICON_BLUE_32.getImage());
+                        setImage(Resources.ICON_BLUE_32.getImage());
                     } else {
-                        setImage(Util.ICON_RED_32.getImage());
+                        setImage(Resources.ICON_RED_32.getImage());
                     }
                 }
             }, 0, 500, TimeUnit.MILLISECONDS);
@@ -169,13 +170,13 @@ public class SysTray implements DeviceListener {
         }
         
         if (!Strings.isNullOrEmpty(errorMsg)) {
-            Util.playSound(Util.getRssFile("sounds/mirror-shattering.wav"));
             showErrorTooltip(errorMsg);
+            Util.playSound(Resources.SOUND_MIRROR_SHATTERING);
             return;
         }
         
-        Util.playSound(Util.getRssFile("sounds/cash-register.wav"));
         showInfoTooltip(String.format(Util.i18n("systray.scan.welcome"), userScan.getFirstName(), userScan.getLastName()));
+        Util.playSound(Resources.SOUND_CASH_REGISTER);
     }
     
     @Override
