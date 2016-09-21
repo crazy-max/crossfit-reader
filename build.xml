@@ -199,7 +199,7 @@
             <not><os family="windows"/></not>
             <then>
                 <mkdir dir="~/.wine/drive_c/inno"/>
-                <copy file="${src-build.path}/iscc" tofile="${setup-rss.path}/iscc"/>
+                <copy file="${src-build.path}/iscc" tofile="/usr/local/bin/iscc"/>
                 <chmod file="${setup-rss.path}/iscc" perm="700"/>
             </then>
         </if>
@@ -362,7 +362,7 @@
                 </exec>
             </then>
             <else>
-                <exec executable="${setup-rss.path}/iscc" dir="${setup-rss.path}">
+                <exec executable="iscc" dir="${setup-rss.path}">
                     <arg value="${setup.path}"/>
                     <arg value="${app.setupname}"/>
                     <arg value="${setup-rss.path}/${app.id}.iss"/>
