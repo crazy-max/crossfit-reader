@@ -11,4 +11,4 @@ echo "ISCC ScriptName: $scriptname"
 chown -R `who am i | awk '{print $1}'`. ~/".wine"
 
 [ -f "$scriptname" ] && scriptname=$(winepath -w "$scriptname")
-wine "C:\innosetup\ISCC.exe" /O"$outputpath" /F"$setupname" "$scriptname"
+wine "C:\innosetup\app\ISCC.exe" /O"$outputpath" /F"$setupname" "$scriptname"
