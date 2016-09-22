@@ -199,8 +199,8 @@
             <not><os family="windows"/></not>
             <then>
                 <mkdir dir="${innosetup.path}"/>
-                <copy file="${src-build.path}/iscc" tofile="/usr/local/bin/iscc"/>
-                <chmod file="/usr/local/bin/iscc" perm="700"/>
+                <copy file="${src-build.path}/iscc" tofile="${setup-rss.path}/iscc"/>
+                <chmod file="${setup-rss.path}/iscc" perm="700"/>
             </then>
         </if>
         <if>
