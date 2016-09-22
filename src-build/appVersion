@@ -1,9 +1,10 @@
 #!/bin/sh
 
+function get_property {
+    grep "^$2=" "$1" | cut -d'=' -f2
+}
+
 buildPath=$(pwd)
 echo "BuildPath: $buildPath"
 
-cat "$buildPath/build.properties" | sed 's/\./_/g' > "$buildPath/build.properties.shell"
-. "$buildPath/build.properties.shell"
-
-echo $app_version
+echo $(get_property "$buildPath/build.properties" "app.version")
