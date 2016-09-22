@@ -42,9 +42,9 @@
     <condition property="innosetup.path" value="${lib.path}\innosetup"><os family="windows"/></condition>
     <condition property="innosetup.path" value="${wine.path}/innosetup"><istrue value="${is.travis}"/></condition>
     
-    <!-- Windows JDK Path -->
-    <condition property="jdk.path" value="${java.home}"><os family="windows"/></condition>
-    <condition property="jdk.path" value="${wine.path}/jdk"><istrue value="${is.travis}"/></condition>
+    <!-- Windows JRE Path -->
+    <condition property="jre.path" value="${java.home}"><os family="windows"/></condition>
+    <condition property="jre.path" value="${wine.path}/jdk/jre"><istrue value="${is.travis}"/></condition>
     
     <echo message="Start building..." />
     <echo message="* Name    : ${app.name} " />
@@ -118,10 +118,10 @@
             <arg value="${wine.path}"/>
             <arg value="${winjdk.url}"/>
         </exec>
-        <fail message="File ${jdk.path}/jre/bin/javaw.exe not found">
+        <fail message="File ${jre.path}/bin/javaw.exe not found">
             <condition>
                 <not>
-                    <available file="${jdk.path}/jre/bin/javaw.exe" />
+                    <available file="${jre.path}/bin/javaw.exe" />
                 </not>
             </condition>
         </fail>
@@ -375,7 +375,7 @@
         
         <echo message="Copying Windows JRE"/>
         <copy todir="${setup-rss.path}/${app.id}/jre">
-            <fileset dir="${jdk.path}/jre"/>
+            <fileset dir="${jre.path}"/>
         </copy>
         
         <echo message="Copying icon"/>
@@ -400,6 +400,13 @@
                 </exec>
             </else>
         </if>
+        <fail message="File ${setup.path}/${app.setupname}.exe not found">
+            <condition>
+                <not>
+                    <available file="${setup.path}/${app.setupname}.exe" />
+                </not>
+            </condition>
+        </fail>
     </target>
     
 </project>
