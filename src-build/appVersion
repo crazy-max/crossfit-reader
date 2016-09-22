@@ -1,5 +1,0 @@
-#!/bin/sh
-
-buildPath=$(pwd)
-appVersion=`sed '/^\#/d' $buildPath/build.properties | grep 'app.version' | tail -n 1 | cut -d "=" -f2- | sed 's/^[[:space:]]*//;s/[[:space:]]*$//'`
-echo $appVersion
