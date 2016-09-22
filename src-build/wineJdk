@@ -8,3 +8,6 @@ echo "* JdkUrl: $jdkUrl"
 
 wget -q -c -O "$winePath/jdk.exe" --no-check-certificate --no-cookies --header "Cookie: oraclelicense=accept-securebackup-cookie" "$jdkUrl"
 DISPLAY=:99.0 wine "C:\jdk.exe" /s
+sleep 10
+ls -al $winePath
+ls -al $winePath/jdk
