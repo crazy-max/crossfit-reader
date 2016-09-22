@@ -10,4 +10,5 @@ wget -q -c -O "$winePath/jdk.exe" --no-check-certificate --no-cookies --header "
 DISPLAY=:99.0 wine "C:\jdk.exe" /s
 sleep 10
 ls -al $winePath
-ls -al $winePath/jdk
+ls -al "$winePath/Program Files (x86)"
+ls -al "$winePath/Program Files"
