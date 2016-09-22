@@ -34,7 +34,7 @@
     
     <!-- InnoSetup Path -->
     <condition property="innosetup.path" value="${lib.path}\innosetup"><os family="windows"/></condition>
-    <condition property="innosetup.path" value="~/.wine/drive_c/innosetup"><os family="unix"/></condition>
+    <condition property="innosetup.path" value="${user.home}/.wine/drive_c/innosetup"><os family="unix"/></condition>
     
     <filterset id="filterset.app">
         <filter token="APP_GUID" value="${app.guid}"/>
@@ -198,13 +198,13 @@
         <if>
             <not><os family="windows"/></not>
             <then>
-                <mkdir dir="~/.wine/drive_c/inno"/>
+                <mkdir dir="${innosetup.path}"/>
                 <copy file="${src-build.path}/iscc" tofile="/usr/local/bin/iscc"/>
                 <chmod file="${setup-rss.path}/iscc" perm="700"/>
             </then>
         </if>
         <if>
-          <not><available file="${innosetup.path}" type="dir" /></not>
+          <not><available file="${innosetup.path}/app" type="dir" /></not>
           <then>
               <exec executable="${innoextract}">
                   <arg value="-d"/>
