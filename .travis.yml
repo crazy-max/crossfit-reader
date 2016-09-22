@@ -13,4 +13,4 @@ before_install:
   - innoextract --version
 
 script:
-  - ant do.setup
+  - sudo ant do.setup
