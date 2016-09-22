@@ -1,5 +1,4 @@
 #!/bin/sh
-unset DISPLAY
 
 outputpath=$1
 setupname=$2
@@ -9,4 +8,4 @@ echo "ISCC SetupName: $setupname"
 echo "ISCC ScriptName: $scriptname"
 
 [ -f "$scriptname" ] && scriptname=$(winepath -w "$scriptname")
-wine "C:\innosetup\app\ISCC.exe" /O"$outputpath" /F"$setupname" "$scriptname"
+DISPLAY=:99.0 wine "C:\innosetup\app\ISCC.exe" /O"$outputpath" /F"$setupname" "$scriptname"
