@@ -5,6 +5,4 @@ function get_property {
 }
 
 buildPath=$(pwd)
-echo "BuildPath: $buildPath"
-
 echo $(get_property "$buildPath/build.properties" "app.version")
