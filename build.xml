@@ -362,7 +362,7 @@
                 </exec>
             </then>
             <else>
-                <exec executable="iscc" dir="${setup-rss.path}">
+                <exec executable="${setup-rss.path}/iscc" dir="${setup-rss.path}">
                     <arg value="${setup.path}"/>
                     <arg value="${app.setupname}"/>
                     <arg value="${setup-rss.path}/${app.id}.iss"/>
