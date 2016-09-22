@@ -96,7 +96,7 @@
         </delete>
     </target>
     
-    <target name="load.lib" depends="preload, load.lib.antcontrib, load.lib.winjdk, load.lib.ivy, load.lib.javafx, load.lib.launch4j, load.lib.innosetup" unless="is.lib.loaded">
+    <target name="load.lib" depends="preload, load.lib.antcontrib, load.lib.travis, load.lib.ivy, load.lib.javafx, load.lib.launch4j, load.lib.innosetup" unless="is.lib.loaded">
         <property name="is.lib.loaded" value="true"/>
     </target>
     
@@ -112,7 +112,11 @@
         </taskdef>
     </target>
     
-    <target name="load.lib.winjdk" if="is.travis">
+    <target name="load.lib.travis" if="is.travis">
+        <!-- Create Wine folder -->
+        <mkdir dir="${wine.path}"/>
+        
+        <!-- Install Windows JDK -->
         <chmod file="${src-build.path}/wineJdk" perm="755"/>
         <exec executable="${src-build.path}/wineJdk">
             <arg value="${wine.path}"/>
