@@ -6,5 +6,5 @@ jdkUrl=$2
 echo "* WinePath: $winePath"
 echo "* JdkUrl: $jdkUrl"
 
-wget -q --show-progress -c -O "$winePath/jdk.exe" --no-check-certificate --no-cookies --header "Cookie: oraclelicense=accept-securebackup-cookie" "$jdkUrl"
+wget -q -c -O "$winePath/jdk.exe" --no-check-certificate --no-cookies --header "Cookie: oraclelicense=accept-securebackup-cookie" "$jdkUrl"
 DISPLAY=:99.0 wine "C:\jdk.exe" /s
