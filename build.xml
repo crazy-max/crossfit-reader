@@ -24,17 +24,27 @@
     <property name="setup.path" value="${basedir}/${setup.dir}"/>
     <property name="setup-rss.path" value="${basedir}/${setup-rss.dir}"/>
     
+    <!-- Travis -->
+    <condition property="is.travis"><isset property="env.TRAVIS_BUILD_NUMBER"/></condition>
+    
+    <!-- Wine Path -->
+    <condition property="wine.path" value="${user.home}/.wine/drive_c"><istrue value="${is.travis}"/></condition>
+    
+    <!-- JRE Path -->
+    <condition property="jre.path" value="${java.home}"><os family="windows"/></condition>
+    <condition property="jre.path" value="${wine.path}/jdk/jre"><istrue value="${is.travis}"/></condition>
+    
     <!-- Build number -->
     <condition property="app.release" value="${env.TRAVIS_BUILD_NUMBER}"><isset property="env.TRAVIS_BUILD_NUMBER"/></condition>
     <condition property="app.release" value="${app.default.release}"><not><isset property="env.TRAVIS_BUILD_NUMBER"/></not></condition>
     
     <!-- innoextract -->
     <condition property="innoextract" value="${lib.path}\innoextract\innoextract.exe"><os family="windows"/></condition>
-    <condition property="innoextract" value="innoextract"><os family="unix"/></condition>
+    <condition property="innoextract" value="innoextract"><istrue value="${is.travis}"/></condition>
     
     <!-- InnoSetup Path -->
     <condition property="innosetup.path" value="${lib.path}\innosetup"><os family="windows"/></condition>
-    <condition property="innosetup.path" value="${user.home}/.wine/drive_c/innosetup"><os family="unix"/></condition>
+    <condition property="innosetup.path" value="${wine.path}/innosetup"><os family="unix"/></condition>
     
     <echo message="*** Release" />
     <echo message="* Name    : ${app.name} " />
@@ -85,7 +95,7 @@
         </delete>
     </target>
     
-    <target name="load.lib" depends="preload, load.lib.antcontrib, load.lib.ivy, load.lib.javafx, load.lib.launch4j, load.lib.innosetup" unless="is.lib.loaded">
+    <target name="load.lib" depends="preload, load.lib.antcontrib, load.lib.travis, load.lib.ivy, load.lib.javafx, load.lib.launch4j, load.lib.innosetup" unless="is.lib.loaded">
         <property name="is.lib.loaded" value="true"/>
     </target>
     
@@ -99,6 +109,16 @@
                 <pathelement location="${lib.path}/ant-contrib.jar" />
             </classpath>
         </taskdef>
+    </target>
+    
+    <target name="load.lib.travis" if="is.travis">
+        <mkdir dir="${wine.path}"/>
+        
+        <chmod file="${src-build.path}/wineJdk" perm="755"/>
+        <exec executable="${src-build.path}/wineJdk">
+            <arg value="${wine.path}"/>
+            <arg value="${jdk.url}"/>
+        </exec>
     </target>
         
     <target name="load.lib.ivy">
@@ -205,7 +225,7 @@
             <then>
                 <mkdir dir="${innosetup.path}"/>
                 <copy file="${src-build.path}/iscc" tofile="${setup-rss.path}/iscc"/>
-                <chmod file="${setup-rss.path}/iscc" perm="700"/>
+                <chmod file="${setup-rss.path}/iscc" perm="755"/>
             </then>
         </if>
         <if>
@@ -349,7 +369,7 @@
         
         <echo message="Copying JRE ${java.version}"/>
         <copy todir="${setup-rss.path}/${app.id}/jre">
-            <fileset dir="${java.home}"/>
+            <fileset dir="${jre.path}"/>
         </copy>
         
         <echo message="Copying icon"/>
