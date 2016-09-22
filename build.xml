@@ -200,7 +200,7 @@
             <then>
                 <mkdir dir="${innosetup.path}"/>
                 <copy file="${src-build.path}/iscc" tofile="/usr/local/bin/iscc"/>
-                <chmod file="${setup-rss.path}/iscc" perm="700"/>
+                <chmod file="/usr/local/bin/iscc" perm="700"/>
             </then>
         </if>
         <if>
