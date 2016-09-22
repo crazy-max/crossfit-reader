@@ -36,6 +36,11 @@
     <condition property="innosetup.path" value="${lib.path}\innosetup"><os family="windows"/></condition>
     <condition property="innosetup.path" value="${user.home}/.wine/drive_c/innosetup"><os family="unix"/></condition>
     
+    <echo message="*** Release" />
+    <echo message="* Name    : ${app.name} " />
+    <echo message="* Version : ${app.version} " />
+    <echo message="* Release : ${app.release} " />
+    
     <filterset id="filterset.app">
         <filter token="APP_GUID" value="${app.guid}"/>
         <filter token="APP_ID" value="${app.id}"/>
