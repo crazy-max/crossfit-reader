@@ -13,7 +13,7 @@ before_install:
 - innoextract --version
 # App version to env
 - chmod +x src-build/appVersion
-- export APP_VERSION=$(src-build/appVersion)
+- export APP_VERSION=$(bash src-build/appVersion)
 
 script:
 - ant do.setup
