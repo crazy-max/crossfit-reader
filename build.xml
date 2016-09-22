@@ -30,10 +30,6 @@
     <!-- Wine Path -->
     <condition property="wine.path" value="${user.home}/.wine/drive_c"><istrue value="${is.travis}"/></condition>
     
-    <!-- JRE Path -->
-    <condition property="jre.path" value="${java.home}"><os family="windows"/></condition>
-    <condition property="jre.path" value="${wine.path}/jdk/jre"><istrue value="${is.travis}"/></condition>
-    
     <!-- Build number -->
     <condition property="app.release" value="${env.TRAVIS_BUILD_NUMBER}"><isset property="env.TRAVIS_BUILD_NUMBER"/></condition>
     <condition property="app.release" value="${app.default.release}"><not><isset property="env.TRAVIS_BUILD_NUMBER"/></not></condition>
@@ -95,7 +91,7 @@
         </delete>
     </target>
     
-    <target name="load.lib" depends="preload, load.lib.antcontrib, load.lib.travis, load.lib.ivy, load.lib.javafx, load.lib.launch4j, load.lib.innosetup" unless="is.lib.loaded">
+    <target name="load.lib" depends="preload, load.lib.antcontrib, load.lib.winjre, load.lib.ivy, load.lib.javafx, load.lib.launch4j, load.lib.innosetup" unless="is.lib.loaded">
         <property name="is.lib.loaded" value="true"/>
     </target>
     
@@ -111,16 +107,23 @@
         </taskdef>
     </target>
     
-    <target name="load.lib.travis" if="is.travis">
-        <mkdir dir="${wine.path}"/>
-        
-        <chmod file="${src-build.path}/wineJdk" perm="755"/>
-        <exec executable="${src-build.path}/wineJdk">
-            <arg value="${wine.path}"/>
-            <arg value="${jdk.url}"/>
-        </exec>
+    <target name="load.lib.winjre">
+        <get dest="${lib.path}/winjre.zip" src="${winjre.url}" skipexisting="true"/>
+        <if>
+          <not><available file="${lib.path}/jre" type="dir" /></not>
+          <then>
+              <unzip src="${lib.path}/winjre.zip" dest="${lib.path}"/>
+          </then>
+        </if>
+        <fail message="File ${lib.path}/jre/bin/javaw.exe not found">
+            <condition>
+                <not>
+                    <available file="${lib.path}/jre/bin/javaw.exe" />
+                </not>
+            </condition>
+        </fail>
     </target>
-        
+    
     <target name="load.lib.ivy">
         <echo message="Load Ivy"/>
         <delete file="bin/.ivy_resolution_cache" failonerror="true" />
@@ -367,9 +370,9 @@
             <fileset dir="${exe.path}"/>
         </copy>
         
-        <echo message="Copying JRE ${java.version}"/>
+        <echo message="Copying Windows JRE"/>
         <copy todir="${setup-rss.path}/${app.id}/jre">
-            <fileset dir="${jre.path}"/>
+            <fileset dir="${lib.path}/jre"/>
         </copy>
         
         <echo message="Copying icon"/>
