@@ -11,9 +11,7 @@ before_install:
 - sudo apt-get install -y -q innoextract wine python-software-properties
 - wine --version
 - innoextract --version
-# App version to env
-- chmod +x src-build/appVersion
-- export APP_VERSION=$(bash src-build/appVersion) && echo $APP_VERSION
+- export APP_VERSION=`sed '/^\#/d' build.properties | grep '^app.version' | tail -n 1 | cut -d "=" -f2- | sed 's/^[[:space:]]*//;s/[[:space:]]*$//'` && echo $APP_VERSION
 
 script:
 - ant do.setup
