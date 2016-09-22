@@ -17,7 +17,7 @@
   </singleInstance>
   <jre>
     <path>jre</path>
-    <minVersion>1.7.0</minVersion>
+    <minVersion>1.8.0</minVersion>
     <initialHeapSize>16</initialHeapSize>
     <maxHeapSize>64</maxHeapSize>
   </jre>
