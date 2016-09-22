@@ -1,8 +1,5 @@
 #!/bin/sh
 
-function get_property {
-    grep "^$2=" "$1" | cut -d'=' -f2
-}
-
 buildPath=$(pwd)
-echo $(get_property "$buildPath/build.properties" "app.version")
+appVersion=`sed '/^\#/d' $buildPath/build.properties | grep 'app.version' | tail -n 1 | cut -d "=" -f2- | sed 's/^[[:space:]]*//;s/[[:space:]]*$//'`
+echo $appVersion
