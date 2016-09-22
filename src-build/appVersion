@@ -1,0 +1,9 @@
+#!/bin/sh
+
+buildPath=$(pwd)
+echo "BuildPath: $buildPath"
+
+cat "$buildPath/build.properties" | sed 's/\./_/g' > "$buildPath/build.properties.shell"
+. "$buildPath/build.properties.shell"
+
+echo $app_version

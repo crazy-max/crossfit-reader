@@ -11,15 +11,18 @@ before_install:
 - sudo apt-get install -y -q innoextract wine python-software-properties
 - wine --version
 - innoextract --version
+# App version to env
+- chmod +x src-build/appVersion
+- export APP_VERSION=$(src-build/appVersion)
 
 script:
 - ant do.setup
 
-deploy:
-  provider: releases
-  api_key:
-    secure: Dqiw1Dxjzx8th7XEZDofrkqNOVVizt96wfzjKC5MkX5fJmBwXtIFoRyxPeOPRKB3GCKmO2rzQSuLS1vzQfcWbxpzsKwQpPQcc68FlR1wukzc+CnNHw7BkSRCqUCR4BdB8UkDczyxvVGleE2WK/KjuOAyaRsJQmmWJ5thgzJD54rzqohL9XWpLY2jcIhFSQ6XgkBcJ5KYnFQgfkaIvtTvr4qdb4HB3H6AazExuYV+Azj8w54A4gbAPHEvZFm7NiZ0EAU/g8oguLcvOXC8RFkAf37z7RVVJC8DjhoYC2j/JyuViZ8OLp4QTgi3qEciQpTY8IxEHN7yoCWWuziARCGFOytMhE7H3yganRNWLr1wn3idK7C3y2n/l19/GZ1i5gbUhLMGXvZ4JVFSmLXKT0y3VLqMLjv69p98aY13oYgOt/VsU0lt90BAT07nEqNcJ8H+TQ3sW8qX4vMm8BYLLrdsFfWp3aB5ZIAPf2yNwTyjInASo8TG9JpBQqe03nIWjZZQmJ0KW22ZBzIuZm5aiUrEWtH0NPLTwIAvQWEIr3Vc2MC/HNwcTjnYpgkoViFkB1+pITVIrXgVbEC/Bk//2Lkc3txhyoYe2WpfIgAC++QhMz2wfI3tkJL+oDJ5ElP6KqG7LXGypFNxjzEnRGDUsuPOpkfwuKL3DU8LwJ8LDvPwFH0=
-  file: ${HOME}/build/crazy-max/crossfit-reader/bin/setup/crossfit-reader-setup.exe
-  skip_cleanup: true
-  on:
-    repo: crazy-max/crossfit-reader
+#deploy:
+#  provider: releases
+#  api_key:
+#    secure: Dqiw1Dxjzx8th7XEZDofrkqNOVVizt96wfzjKC5MkX5fJmBwXtIFoRyxPeOPRKB3GCKmO2rzQSuLS1vzQfcWbxpzsKwQpPQcc68FlR1wukzc+CnNHw7BkSRCqUCR4BdB8UkDczyxvVGleE2WK/KjuOAyaRsJQmmWJ5thgzJD54rzqohL9XWpLY2jcIhFSQ6XgkBcJ5KYnFQgfkaIvtTvr4qdb4HB3H6AazExuYV+Azj8w54A4gbAPHEvZFm7NiZ0EAU/g8oguLcvOXC8RFkAf37z7RVVJC8DjhoYC2j/JyuViZ8OLp4QTgi3qEciQpTY8IxEHN7yoCWWuziARCGFOytMhE7H3yganRNWLr1wn3idK7C3y2n/l19/GZ1i5gbUhLMGXvZ4JVFSmLXKT0y3VLqMLjv69p98aY13oYgOt/VsU0lt90BAT07nEqNcJ8H+TQ3sW8qX4vMm8BYLLrdsFfWp3aB5ZIAPf2yNwTyjInASo8TG9JpBQqe03nIWjZZQmJ0KW22ZBzIuZm5aiUrEWtH0NPLTwIAvQWEIr3Vc2MC/HNwcTjnYpgkoViFkB1+pITVIrXgVbEC/Bk//2Lkc3txhyoYe2WpfIgAC++QhMz2wfI3tkJL+oDJ5ElP6KqG7LXGypFNxjzEnRGDUsuPOpkfwuKL3DU8LwJ8LDvPwFH0=
+#  file: ${HOME}/build/crazy-max/crossfit-reader/bin/setup/crossfit-reader-setup.exe
+#  skip_cleanup: true
+#  on:
+#    repo: crazy-max/crossfit-reader
