@@ -16,7 +16,6 @@ before_install:
 - export DISPLAY=:99.0
 - sh -e /etc/init.d/xvfb start
 - sleep 3
-- WINEARCH=win32 WINEPREFIX=~/.wine winecfg
 - wine --version
 - innoextract --version
 - export APP_VERSION=`sed '/^\#/d' build.properties | grep '^app.version' | tail -n 1 | cut -d "=" -f2- | sed 's/^[[:space:]]*//;s/[[:space:]]*$//'`
