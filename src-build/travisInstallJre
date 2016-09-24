@@ -7,7 +7,7 @@ echo "* ExtractPath: $extractPath"
 echo "* JreUrl: $jreUrl"
 
 cd $extractPath
-wget -q -c -O jre.tar.gz --no-check-certificate --no-cookies --header "Cookie: oraclelicense=accept-securebackup-cookie" "$jreUrl"
+wget -c -O jre.tar.gz --no-check-certificate --no-cookies --header "Cookie: oraclelicense=accept-securebackup-cookie" "$jreUrl"
 ls -al
 file jre.tar.gz
-tar xvf jre.tar.gz
+tar zxvf jre.tar.gz
