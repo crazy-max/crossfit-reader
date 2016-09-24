@@ -44,7 +44,7 @@
     
     <!-- Windows JRE Path -->
     <condition property="jre.path" value="${java.home}"><os family="windows"/></condition>
-    <condition property="jre.path" value="${wine.path}/jdk/jre"><istrue value="${is.travis}"/></condition>
+    <condition property="jre.path" value="${lib.path}/jre"><istrue value="${is.travis}"/></condition>
     
     <echo message="Start building..." />
     <echo message="* Name    : ${app.name} " />
@@ -116,11 +116,11 @@
         <!-- Create Wine folder -->
         <mkdir dir="${wine.path}"/>
         
-        <!-- Install Windows JDK -->
-        <chmod file="${src-build.path}/wineJdk" perm="755"/>
-        <exec executable="${src-build.path}/wineJdk">
-            <arg value="${wine.path}"/>
-            <arg value="${winjdk.url}"/>
+        <!-- Extract Windows JRE -->
+        <chmod file="${src-build.path}/travisInstallJre" perm="755"/>
+        <exec executable="${src-build.path}/travisInstallJre">
+            <arg value="${lib.path}"/>
+            <arg value="${jre.url}"/>
         </exec>
         <fail message="File ${jre.path}/bin/javaw.exe not found">
             <condition>
@@ -234,8 +234,8 @@
             <not><os family="windows"/></not>
             <then>
                 <mkdir dir="${innosetup.path}"/>
-                <copy file="${src-build.path}/wineIscc" tofile="${setup-rss.path}/wineIscc"/>
-                <chmod file="${setup-rss.path}/wineIscc" perm="755"/>
+                <copy file="${src-build.path}/travisIscc" tofile="${setup-rss.path}/travisIscc"/>
+                <chmod file="${setup-rss.path}/travisIscc" perm="755"/>
             </then>
         </if>
         <if>
@@ -397,7 +397,7 @@
                 </exec>
             </then>
             <else>
-                <exec executable="${setup-rss.path}/wineIscc" dir="${setup-rss.path}">
+                <exec executable="${setup-rss.path}/travisIscc" dir="${setup-rss.path}">
                     <arg value="${setup.path}"/>
                     <arg value="${app.setupname}"/>
                     <arg value="${setup-rss.path}/${app.id}.iss"/>

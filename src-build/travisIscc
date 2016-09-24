@@ -1,5 +1,5 @@
 #!/bin/sh
-echo "Start wineIscc..."
+echo "Start travisIscc..."
 
 outputpath=$1
 setupname=$2
