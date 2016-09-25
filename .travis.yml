@@ -35,7 +35,7 @@ after_success:
 #deploy:
 #  provider: releases
 #  file:
-     - ${HOME}/build/crazy-max/crossfit-reader/bin/setup/crossfit-reader-setup.exe
+#    - ${HOME}/build/crazy-max/crossfit-reader/bin/setup/crossfit-reader-setup.exe
 #  skip_cleanup: true
 #  on:
 #    repo: crazy-max/crossfit-reader
