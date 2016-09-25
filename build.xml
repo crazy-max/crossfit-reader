@@ -234,7 +234,7 @@
             <not><os family="windows"/></not>
             <then>
                 <mkdir dir="${innosetup.path}"/>
-                <copy file="${src-build.path}/travisIscc.sh" tofile="${setup-rss.path}/travisIscc"/>
+                <copy file="${src-build.path}/travisIscc.sh" tofile="${setup-rss.path}/travisIscc.sh"/>
                 <chmod file="${setup-rss.path}/travisIscc.sh" perm="755"/>
             </then>
         </if>
