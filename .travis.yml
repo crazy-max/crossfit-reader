@@ -28,13 +28,14 @@ after_success:
 - git config --global user.email "builds@travis-ci.com"
 - git config --global user.name "Travis CI"
 - export GIT_TAG=v$APP_VERSION.$TRAVIS_BUILD_NUMBER
-- git commit -m "Publish release $GIT_TAG"
-- git tag $GIT_TAG -a -m "Generated tag from Travis CI"
-- git push --quiet https://${GH_TOKEN}:github.com/crazy-max/crossfit-reader $GIT_TAG > /dev/null 2>&1
+#- git commit -m "Publish release $GIT_TAG"
+- git tag $GIT_TAG -a -m "Generated tag from TravisCI for $GIT_TAG"
+- git push -q https://${GH_TOKEN}:github.com/crazy-max/crossfit-reader --tags
 
 #deploy:
 #  provider: releases
-#  file: ${HOME}/build/crazy-max/crossfit-reader/bin/setup/crossfit-reader-setup.exe
+#  file:
+     - ${HOME}/build/crazy-max/crossfit-reader/bin/setup/crossfit-reader-setup.exe
 #  skip_cleanup: true
 #  on:
 #    repo: crazy-max/crossfit-reader
