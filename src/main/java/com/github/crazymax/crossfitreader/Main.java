@@ -39,7 +39,7 @@ import com.github.crazymax.crossfitreader.util.Util;
  * Main class
  * @author crazy-max
  * @license MIT License
- * @link https://github.com/crazy-max/crossfit-readerr
+ \* @link https://github.com/crazy-max/crossfit-reader
  */
 public class Main
         extends JPanel {
