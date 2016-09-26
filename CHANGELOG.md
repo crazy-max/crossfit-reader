@@ -2,6 +2,7 @@
 
 ## 1.3 (2016/09/26)
 
+* Add gradle dependencies
 * Create tag and deploy release through Travis
 * Remove ext folder on Uninstall
 * Better output for Configuration

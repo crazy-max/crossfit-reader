@@ -1,5 +1,6 @@
 apply plugin: 'java'
 
+ant.lifecycleLogLevel = "INFO"
 ant.importBuild('build.xml') { antTargetName ->
   'ant-' + antTargetName
 }
