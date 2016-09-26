@@ -14,9 +14,8 @@ import org.apache.log4j.Logger;
 import org.glassfish.jersey.client.ClientConfig;
 import org.glassfish.jersey.client.ClientProperties;
 
-import com.github.crazymax.crossfitreader.booking.User;
 import com.github.crazymax.crossfitreader.Main;
-import com.github.crazymax.crossfitreader.util.Util;
+import com.github.crazymax.crossfitreader.booking.User;
 
 /**
  * Booking WS client proc
@@ -74,7 +73,7 @@ public class BookingProc {
     public List<User> getUserList() {
         final Response response = getBuilder(userListPath).get();
         if (response.getStatus() != 200) {
-            Util.logError("HTTP error code : " + response.getStatus() + " " + response.getStatusInfo().getReasonPhrase());
+            LOGGER.error("HTTP error code : " + response.getStatus() + " " + response.getStatusInfo().getReasonPhrase());
             return null;
         }
         
@@ -113,7 +112,7 @@ public class BookingProc {
                 .put(Entity.text(cardUid), Response.class);
         
         if (response.getStatus() != 200) {
-            Util.logError("HTTP error code : " + response.getStatus() + " " + response.getStatusInfo().getReasonPhrase());
+            LOGGER.error("HTTP error code : " + response.getStatus() + " " + response.getStatusInfo().getReasonPhrase());
             return false;
         }
         
@@ -125,7 +124,7 @@ public class BookingProc {
                 .put(Entity.text(""), Response.class);
         
         if (response.getStatus() != 200) {
-            Util.logError("HTTP error code : " + response.getStatus() + " " + response.getStatusInfo().getReasonPhrase());
+            LOGGER.error("HTTP error code : " + response.getStatus() + " " + response.getStatusInfo().getReasonPhrase());
             return false;
         }
         
