@@ -5,7 +5,7 @@ dist: trusty
 
 env:
   global:
-    secure: Dqiw1Dxjzx8th7XEZDofrkqNOVVizt96wfzjKC5MkX5fJmBwXtIFoRyxPeOPRKB3GCKmO2rzQSuLS1vzQfcWbxpzsKwQpPQcc68FlR1wukzc+CnNHw7BkSRCqUCR4BdB8UkDczyxvVGleE2WK/KjuOAyaRsJQmmWJ5thgzJD54rzqohL9XWpLY2jcIhFSQ6XgkBcJ5KYnFQgfkaIvtTvr4qdb4HB3H6AazExuYV+Azj8w54A4gbAPHEvZFm7NiZ0EAU/g8oguLcvOXC8RFkAf37z7RVVJC8DjhoYC2j/JyuViZ8OLp4QTgi3qEciQpTY8IxEHN7yoCWWuziARCGFOytMhE7H3yganRNWLr1wn3idK7C3y2n/l19/GZ1i5gbUhLMGXvZ4JVFSmLXKT0y3VLqMLjv69p98aY13oYgOt/VsU0lt90BAT07nEqNcJ8H+TQ3sW8qX4vMm8BYLLrdsFfWp3aB5ZIAPf2yNwTyjInASo8TG9JpBQqe03nIWjZZQmJ0KW22ZBzIuZm5aiUrEWtH0NPLTwIAvQWEIr3Vc2MC/HNwcTjnYpgkoViFkB1+pITVIrXgVbEC/Bk//2Lkc3txhyoYe2WpfIgAC++QhMz2wfI3tkJL+oDJ5ElP6KqG7LXGypFNxjzEnRGDUsuPOpkfwuKL3DU8LwJ8LDvPwFH0=
+    secure: "Lvg5wIyBz1w85QBUJzeFxcQ1hmt/l5GIRw8dgANdiWsoWcayLu7FBQCnEfmN3g6Tr0rIDaiGr2SST6xJxhCFnD1TQ9Vl/1DoLvWy2uNcpaGzgAqVO9paBrGcpjx+urs9jS5IMI8idGJpOeQfr2zQ+4Q5eRI7wrPc7X9g/HDHwafNz8NYiuVTBEwlksywQxLzWCBiISwSw8dpuGdc2DCkCx+qSdycVt9RCRTSYx9ge2i5HHP0exgmsgP00Z/2iOqHHx+KjbdyajOezGf+zyGo8fHDkwKMIgSKf4NLZHZQxLAdCXQQhC7m1+KkD4bVF4iHFIWZn5WxpxBayLIcQg+Jffw8spY1+loEYo66BsMpUsN4M+aFk2Jkj+JktmC+nZsl/MNfSrpbfRelx/dlH2pki+bt1jpIypQxfs/oYxhTM+IA619aGVHypmvX1sr8B2WkRfk+6t2iv/wZ8hn3jII2Zzy/vtXThiEVix7y8EBVRF5CXkr97APEuuagVQjhFcjWdjYPmdiZC63T5weUpSR6h/OeJYza+Y6U0t4QmfDb2sZVT2vbVLfVLo3SX3bFFe+V+5T6ZzqV/bQuRxpzLsPu0HuLW80hwJcmowZG4Q4sDfS1vNhe/puKDgQP6t5YYr1Xz544sfFBTo+W0igiVQdGO3ovRnae18wl4zepyhZX7bc="
 
 before_install:
 - sudo dpkg --add-architecture i386
@@ -28,9 +28,8 @@ after_success:
 - git config --global user.email "builds@travis-ci.com"
 - git config --global user.name "Travis CI"
 - export GIT_TAG=v$APP_VERSION.$TRAVIS_BUILD_NUMBER
-#- git commit -m "Publish release $GIT_TAG"
 - git tag $GIT_TAG -a -m "Generated tag from TravisCI for $GIT_TAG"
-- git push -q https://${GH_TOKEN}:github.com/crazy-max/crossfit-reader --tags
+- git push -q https://${GH_TOKEN}@github.com/crazy-max/crossfit-reader --tags
 
 #deploy:
 #  provider: releases
