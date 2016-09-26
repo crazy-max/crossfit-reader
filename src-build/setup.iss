@@ -68,7 +68,7 @@ Name: "{commonprograms}\{#AppName}\{#AppName}"; Filename: "{app}\{#AppId}.exe"; 
 Name: "{commonprograms}\{#AppName}\Uninstall {#AppName}"; Filename: "{uninstallexe}"
 
 [UninstallDelete]
-Type: filesandordirs; Name: "{app}\rss"
+Type: filesandordirs; Name: "{app}\ext"
 
 [CustomMessages]
 AlreadyUpdated={#AppName} est deja en version {#AppVersion} ou plus recent.
