@@ -15,7 +15,7 @@ Card reader application for ACR122U device affiliate to the [CrossFit Nancy](htt
 
 * ACR122U compliant
 * Supported tags: Mifare Classic 1K (only)
-* JRE 7.0 or later
+* Java 1.8
 * Windows 7 operating system or later
 * Apache Ant, Apache Ivy and InnoSetup to build the project 
 * Read card UID
