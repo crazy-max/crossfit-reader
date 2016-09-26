@@ -18,7 +18,7 @@ before_install:
 - echo $APP_VERSION
 
 script:
-- ant do.setup
+- gradle ant-clean getDeps ant-release
 
 before_deploy:
 - git config --global user.email "builds@travis-ci.com"

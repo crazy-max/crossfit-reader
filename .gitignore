@@ -11,3 +11,7 @@ local.properties
 .loadpath
 .recommenders
 *.launch
+
+# Gradle
+.gradle/
+build/

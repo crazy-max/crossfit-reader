@@ -247,18 +247,19 @@ public class Main
     
     private static void logInfos() {
         final String[] infos = {
-                "Java:     " + System.getProperty("java.version"),
-                "Envdev:   " + (envDev ? "yes" : "no"),
-                "Id:       " + appId,
-                "Name:     " + appName,
-                "Desc:     " + appDesc,
-                "Version:  " + appVersion,
-                "GUID:     " + appGuid,
-                "Author:   " + appAuthor,
-                "Url:      " + appUrl,
-                "Path:     " + appPath,
-                "RSS Path: " + appRssPath,
-                "PID:      " + appPid
+                "Java:        " + System.getProperty("java.version"),
+                "Envdev:      " + (envDev ? "yes" : "no"),
+                "Id:          " + appId,
+                "Name:        " + appName,
+                "Desc:        " + appDesc,
+                "Version:     " + appVersion,
+                "NameVersion: " + appNameVersion,
+                "GUID:        " + appGuid,
+                "Author:      " + appAuthor,
+                "Url:         " + appUrl,
+                "Path:        " + appPath,
+                "Ext Path:    " + appRssPath,
+                "PID:         " + appPid
         };
         
         for (final String info : infos) {
