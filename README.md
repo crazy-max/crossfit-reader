@@ -1,7 +1,7 @@
 [![Latest release](https://img.shields.io/github/release/crazy-max/crossfit-reader.svg?style=flat-square)](https://github.com/crazy-max/crossfit-reader/releases)
 [![Build Status](https://img.shields.io/travis/crazy-max/crossfit-reader/master.svg?style=flat-square)](https://travis-ci.org/crazy-max/crossfit-reader)
 [![Code Quality](https://img.shields.io/codacy/grade/6763a20f5eb9423b9b0cf06738c85a4e.svg?style=flat-square)](https://www.codacy.com/app/crazy-max/crossfit-reader)
-[![Dependency Status](https://www.versioneye.com/user/projects/57e91e61bd6fa600316f90cb/badge.svg?style=flat-square)](https://www.versioneye.com/user/projects/57e91e61bd6fa600316f90cb)
+[![Dependency Status](https://www.versioneye.com/user/projects/57e9398cbd6fa600512e3dab/badge.svg?style=flat-square)](https://www.versioneye.com/user/projects/57e91e61bd6fa600316f90cb)
 [![Donate Paypal](https://img.shields.io/badge/donate-paypal-blue.svg?style=flat-square)](https://www.paypal.me/crazyws)
 
 # Crossfit Reader
