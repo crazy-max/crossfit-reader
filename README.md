@@ -46,3 +46,4 @@ The [ACR122U](http://www.acs.com.hk/en/products/3/acr122u-usb-nfc-reader/) is ma
 
 MIT. See `LICENSE` for more details.<br />
 Icons credit to [Recep Kütük](http://recepkutuk.com/).
+
