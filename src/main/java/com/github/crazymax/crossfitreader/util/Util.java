@@ -156,7 +156,7 @@ public class Util {
             if (!pidFile.exists()) {
                 return false;
             }
-            final int pid = Integer.valueOf(FileUtils.readFileToString(pidFile));
+            final int pid = Integer.valueOf(FileUtils.readFileToString(pidFile, "UTF-8"));
             LOGGER.debug("PID found: " + pid);
             if (isProcessRunning(pid)) {
                 LOGGER.debug("Process already running: " + pid);
@@ -370,9 +370,9 @@ public class Util {
                 JOptionPane.ERROR_MESSAGE);
     }
     
-    public static void showInfoDialog(String title, final String message) {
-        title = Strings.isNullOrEmpty(title) ? "" : " - " + title;
-        JOptionPane.showMessageDialog(null, message, Main.appNameVersion + title,
+    public static void showInfoDialog(final String title, final String message) {
+        JOptionPane.showMessageDialog(null, message,
+                Main.appNameVersion + (Strings.isNullOrEmpty(title) ? "" : " - " + title),
                 JOptionPane.INFORMATION_MESSAGE);
     }
     
