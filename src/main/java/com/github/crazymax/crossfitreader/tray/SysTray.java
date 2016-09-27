@@ -165,8 +165,10 @@ public class SysTray implements DeviceListener {
         final User userScan = BookingProc.getInstance().scanCard(cardUid);
         if (userScan == null) {
             errorMsg = String.format(Util.i18n("systray.scan.unknowncard"), cardUid);
+            LOGGER.info(String.format("The card %s is assigned to any member", cardUid));
         } else if (userScan.getBookings() == null || userScan.getBookings().size() <= 0) {
             errorMsg = String.format(Util.i18n("systray.scan.noresa"), userScan.getFirstName(), userScan.getLastName());
+            LOGGER.info(String.format("%s %s has not made any reservations", userScan.getFirstName(), userScan.getLastName()));
         }
         
         if (!Strings.isNullOrEmpty(errorMsg)) {
@@ -176,6 +178,7 @@ public class SysTray implements DeviceListener {
         }
         
         showInfoTooltip(String.format(Util.i18n("systray.scan.welcome"), userScan.getFirstName(), userScan.getLastName()));
+        LOGGER.info(String.format("Good CrossFit workout %s %s !", userScan.getFirstName(), userScan.getLastName()));
         Util.playSound(Resources.SOUND_CASH_REGISTER);
     }
     

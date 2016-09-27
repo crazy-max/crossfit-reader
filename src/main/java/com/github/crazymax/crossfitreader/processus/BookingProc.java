@@ -101,7 +101,7 @@ public class BookingProc {
         }
         
         final User user = getBuilder(adr).get(new GenericType<User>() {});
-        LOGGER.info("User '" + user.getFirstName() + " " + user.getLastName() + " scanned his card!");
+        LOGGER.info(user.getFirstName() + " " + user.getLastName() + " scanned his card!");
         LOGGER.debug(user);
         
         return user;

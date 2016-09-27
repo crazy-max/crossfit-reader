@@ -1,7 +1,9 @@
 # Changelog
 
-## 1.3 (2016/09/26)
+## 1.3 (2016/09/27)
 
+* Improve logging
+* Add StyleCI micro-service
 * Add gradle dependencies
 * Create tag and deploy release through Travis
 * Remove ext folder on Uninstall
