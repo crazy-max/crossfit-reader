@@ -120,6 +120,7 @@
         <mkdir dir="${wine.path}"/>
         
         <!-- Extract Windows JRE -->
+        <chmod file="${src-build.path}/travisJreSetup.sh" perm="755"/>
         <exec executable="${src-build.path}/travisJreSetup.sh">
             <arg value="${lib.path}"/>
             <arg value="${jre.url}"/>
@@ -224,6 +225,7 @@
             <then>
                 <mkdir dir="${innosetup.path}"/>
                 <copy file="${src-build.path}/travisIscc.sh" tofile="${setup-rss.path}/travisIscc.sh"/>
+                <chmod file="${setup-rss.path}/travisIscc.sh" perm="755"/>
             </then>
         </if>
         <if>
