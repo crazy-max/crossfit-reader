@@ -15,7 +15,7 @@ before_install:
 - wine --version
 - innoextract --version
 - chmod +x gradlew
-- chmod +x src-build/travisJdk.sh && sh src-build/travisJdk.sh
+- chmod +x src-build/travisSwitchJdk.sh && sh src-build/travisSwitchJdk.sh
 - source ~/.bash_profile
 - export APP_VERSION=`sed '/^\#/d' build.properties | grep '^app.version' | tail -n 1 | cut -d "=" -f2- | sed 's/^[[:space:]]*//;s/[[:space:]]*$//'`
 - echo $APP_VERSION
