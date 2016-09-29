@@ -1,5 +1,11 @@
 # Changelog
 
+## 1.4 (2016/09/29)
+
+* Remove ivy
+* Add gradlew
+* Travis deploy only if new version
+
 ## 1.3 (2016/09/27)
 
 * Improve logging

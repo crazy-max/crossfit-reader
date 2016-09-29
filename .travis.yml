@@ -14,19 +14,18 @@ before_install:
 - sleep 3
 - wine --version
 - innoextract --version
+- export PREVIOUS_VERSION=`git describe --abbrev=0 --tags | cut -c 2-`
+- echo $PREVIOUS_VERSION
 - export APP_VERSION=`sed '/^\#/d' build.properties | grep '^app.version' | tail -n 1 | cut -d "=" -f2- | sed 's/^[[:space:]]*//;s/[[:space:]]*$//'`
 - echo $APP_VERSION
 
 script:
-- gradle ant-clean getDeps ant-release
+- gradle antClean getDeps antRelease
 
 before_deploy:
-- git config --global user.email "builds@travis-ci.com"
-- git config --global user.name "Travis CI"
-- export GIT_TAG=v$APP_VERSION.$TRAVIS_BUILD_NUMBER
-- git tag $GIT_TAG -a -m "Generated tag from TravisCI for $GIT_TAG"
-- git push -q https://${GH_TOKEN}@github.com/crazy-max/crossfit-reader --tags
-- ls -R
+- chmod +x src-build/travisTags.sh
+- sh src-build/travisTags.sh
+- source ~/.bash_profile
 
 deploy:
   provider: releases
@@ -36,6 +35,7 @@ deploy:
   file:
     - ${HOME}/build/crazy-max/crossfit-reader/bin/setup/crossfit-reader-setup.exe
   on:
+    condition: $DO_DEPLOY = 1
     repo: crazy-max/crossfit-reader
     tags: false
 

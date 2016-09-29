@@ -18,10 +18,19 @@ Card reader application for ACR122U device affiliate to the [CrossFit Nancy](htt
 * ACR122U compliant
 * Supported tags: Mifare Classic 1K (only)
 * Java 1.8
-* Windows 7 operating system or later
-* Apache Ant, Apache Ivy and InnoSetup to build the project 
+* Windows 7 operating system or later 
 * Read card UID
 * Use remote webservices to associate / remove card UID for a crossfit member
+
+## Build
+
+`gradlew.bat antClean getDeps antRelease`
+
+Libraries used to build the project :
+* [Gradle](https://gradle.org/)
+* [Apache Ant](http://ant.apache.org/)
+* [Launch4j](http://launch4j.sourceforge.net/)
+* [InnoSetup](http://www.jrsoftware.org/isinfo.php) are used to build the project.
 
 ## About the ACR122U device
 
