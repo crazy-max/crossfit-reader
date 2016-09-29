@@ -7,7 +7,6 @@ version_gt() {
 
 echo "appVersion: $APP_VERSION"
 echo "previousVersion: $PREVIOUS_VERSION"
-echo "appVersion > previousVersion : $(version_gt $APP_VERSION $PREVIOUS_VERSION)"
 
 doDeploy=0
 if version_gt $APP_VERSION.0 $PREVIOUS_VERSION; then
