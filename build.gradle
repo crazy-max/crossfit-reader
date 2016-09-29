@@ -1,9 +1,9 @@
-apply from: file('gradle/java.gradle')
-
 ant.lifecycleLogLevel = "INFO"
 ant.importBuild('build.xml') { antTargetName ->
   'ant' + antTargetName.capitalize()
 }
+
+apply from: file('gradle/java.gradle')
 
 dependencies {
   compile 'com.google.guava:guava:19.0'
