@@ -30,7 +30,7 @@ apply from: file('gradle/ide.gradle')
 
 task getDeps(type: Copy) {
   from sourceSets.main.runtimeClasspath
-  into "$buildDir/gradle"
+  into "$buildDir/ant/gradle"
 }
 
 task wrapper(type: Wrapper) {
