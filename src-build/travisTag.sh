@@ -1,7 +1,7 @@
 #!/bin/sh
 echo "Start travisTag..."
 
-function version_gt() {
+function version_gt {
   test "$(echo "$@" | tr " " "\n" | sort -V | head -n 1)" != "$1";
 }
 
@@ -10,7 +10,7 @@ echo "previousVersion: $PREVIOUS_VERSION"
 echo "appVersion > previousVersion : $(version_gt $APP_VERSION $PREVIOUS_VERSION)"
 
 doDeploy=0
-if version_gt $APP_VERSION $PREVIOUS_VERSION; then
+if version_gt $APP_VERSION.0 $PREVIOUS_VERSION; then
   doDeploy=1
   git config --global user.email "builds@travis-ci.com"
   git config --global user.name "Travis CI"
