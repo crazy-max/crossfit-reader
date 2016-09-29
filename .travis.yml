@@ -18,9 +18,9 @@ before_install:
 - echo $PREVIOUS_VERSION
 - export APP_VERSION=`sed '/^\#/d' build.properties | grep '^app.version' | tail -n 1 | cut -d "=" -f2- | sed 's/^[[:space:]]*//;s/[[:space:]]*$//'`
 - echo $APP_VERSION
+- chmod +x gradlew
 
 script:
-- chmod +x gradlew
 - gradle antClean getDeps antRelease
 
 before_deploy:
