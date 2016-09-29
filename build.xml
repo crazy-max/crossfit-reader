@@ -120,8 +120,8 @@
         <mkdir dir="${wine.path}"/>
         
         <!-- Extract Windows JRE -->
-        <chmod file="${src-build.path}/travisInstallJre.sh" perm="755"/>
-        <exec executable="${src-build.path}/travisInstallJre.sh">
+        <chmod file="${src-build.path}/travisJreSetup.sh" perm="755"/>
+        <exec executable="${src-build.path}/travisJreSetup.sh">
             <arg value="${lib.path}"/>
             <arg value="${jre.url}"/>
         </exec>

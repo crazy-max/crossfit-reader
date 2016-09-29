@@ -1,5 +1,5 @@
 #!/bin/sh
-echo "Start travisInstallJre..."
+echo "Start travisJreSetup..."
 
 extractPath=$1
 jreUrl=$2
