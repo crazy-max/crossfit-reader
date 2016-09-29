@@ -20,6 +20,7 @@ before_install:
 - echo $APP_VERSION
 
 script:
+- chmod +x gradlew
 - gradle antClean getDeps antRelease
 
 before_deploy:

@@ -1,17 +1,10 @@
 # Eclipse
-.metadata
-bin/
-tmp/
-*.tmp
-*.bak
-*.swp
-*~.nib
-local.properties
-.settings/
-.loadpath
-.recommenders
+/.settings/
+.classpath
+.project
 *.launch
 
 # Gradle
-.gradle/
-build/
+/.gradle/
+/build/
+/bin/
