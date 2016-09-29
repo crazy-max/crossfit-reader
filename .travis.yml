@@ -14,8 +14,7 @@ before_install:
 - sleep 3
 - wine --version
 - innoextract --version
-- chmod +x gradlew
-- chmod +x src-build/travisSwitchJdk.sh && sh src-build/travisSwitchJdk.sh
+- sh src-build/travisSwitchJdk.sh
 - source ~/.bash_profile
 - export APP_VERSION=`sed '/^\#/d' build.properties | grep '^app.version' | tail -n 1 | cut -d "=" -f2- | sed 's/^[[:space:]]*//;s/[[:space:]]*$//'`
 - echo $APP_VERSION
@@ -26,7 +25,7 @@ script:
 after_success:
 - export PREVIOUS_VERSION=`git describe --abbrev=0 --tags | cut -c 2-`
 - echo $PREVIOUS_VERSION
-- chmod +x src-build/travisTag.sh && sh src-build/travisTag.sh
+- sh src-build/travisTag.sh
 - source ~/.bash_profile
 
 deploy:
