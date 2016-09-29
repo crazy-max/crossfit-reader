@@ -18,7 +18,7 @@ before_install:
 - wine --version
 - innoextract --version
 - chmod +x gradlew
-- wget --no-cookies --header "Cookie: oraclelicense=accept-securebackup-cookie" $JDK_URL -O /tmp/jdk.tar.gz
+- "wget --no-cookies --header \"Cookie: oraclelicense=accept-securebackup-cookie\" $JDK_URL -O /tmp/jdk.tar.gz"
 - tar -xzvf /tmp/jdk.tar.gz -C $HOME
 - export PATH=$PATH:$HOME/jdk1.8.0_66/bin
 - export JAVA_HOME=$HOME/jdk1.8.0_66
