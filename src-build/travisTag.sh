@@ -5,6 +5,10 @@ function version_gt() {
   test "$(echo "$@" | tr " " "\n" | sort -V | head -n 1)" != "$1";
 }
 
+echo "appVersion: $APP_VERSION"
+echo "previousVersion: $PREVIOUS_VERSION"
+echo "appVersion > previousVersion : $(version_gt $APP_VERSION $PREVIOUS_VERSION)"
+
 doDeploy=0
 if version_gt $APP_VERSION $PREVIOUS_VERSION; then
   doDeploy=1
@@ -16,4 +20,5 @@ if version_gt $APP_VERSION $PREVIOUS_VERSION; then
   ls -R
 fi
 
-echo 'export DO_DEPLOY=$doDeploy' >> ~/.bash_profile
+echo "doDeploy: $doDeploy"
+echo "export DO_DEPLOY=$doDeploy" >> ~/.bash_profile
