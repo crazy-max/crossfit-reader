@@ -1,8 +1,8 @@
-apply plugin: 'java'
+apply from: file('gradle/java.gradle')
 
 ant.lifecycleLogLevel = "INFO"
 ant.importBuild('build.xml') { antTargetName ->
-  'ant-' + antTargetName
+  'ant' + antTargetName.capitalize()
 }
 
 dependencies {
@@ -26,9 +26,11 @@ repositories {
   mavenCentral()
 }
 
+apply from: file('gradle/ide.gradle')
+
 task getDeps(type: Copy) {
   from sourceSets.main.runtimeClasspath
-  into "bin/gradle"
+  into "$buildDir/gradle"
 }
 
 task wrapper(type: Wrapper) {

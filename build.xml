@@ -1,7 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <project name="crossfit-reader" basedir="."
     xmlns:fx="javafx:com.sun.javafx.tools.ant"
-    xmlns:ivy="antlib:org.apache.ivy.ant"
     xmlns:l4j="launch4j:net.sf.launch4j.ant">
     
     <tstamp>
@@ -17,7 +16,6 @@
     <property name="bin.path" value="${basedir}/${bin.dir}"/>
     <property name="archives.path" value="${basedir}/${archives.dir}"/>
     <property name="classes.path" value="${basedir}/${classes.dir}"/>
-    <property name="ivy.path" value="${basedir}/${ivy.dir}"/>
     <property name="gradle.path" value="${basedir}/${gradle.dir}"/>
     <property name="lib.path" value="${basedir}/${lib.dir}"/>
     <property name="exe.path" value="${basedir}/${exe.dir}"/>
@@ -101,7 +99,7 @@
         </delete>
     </target>
     
-    <target name="load.lib" depends="preload, load.lib.antcontrib, load.lib.travis, load.lib.ivy, load.lib.javafx, load.lib.launch4j, load.lib.innosetup" unless="is.lib.loaded">
+    <target name="load.lib" depends="preload, load.lib.antcontrib, load.lib.travis, load.lib.javafx, load.lib.launch4j, load.lib.innosetup" unless="is.lib.loaded">
         <property name="is.lib.loaded" value="true"/>
     </target>
     
@@ -136,19 +134,6 @@
         </fail>
     </target>
     
-    <target name="load.lib.ivy">
-        <echo message="Load Ivy"/>
-        <delete file="bin/.ivy_resolution_cache" failonerror="true" />
-        
-        <get dest="${lib.path}/ivy.jar" src="${ivy.url}" skipexisting="true"/>
-        
-        <taskdef resource="org/apache/ivy/ant/antlib.xml" uri="antlib:org.apache.ivy.ant">
-            <classpath>
-                <pathelement location="${lib.path}/ivy.jar" />
-            </classpath>
-        </taskdef>
-    </target>
-        
     <target name="load.lib.javafx">
         <echo message="Load JavaFX"/>
         <path id="fx.classpath">
@@ -269,30 +254,8 @@
             <filterset refid="filterset.app" />
         </copy>
     </target>
-        
-    <target name="get.deps" depends="load.lib">
-        <if>
-          <not><available file="${gradle.path}" type="dir" /></not>
-          <then>
-              <delete dir="${ivy.path}"/>
-              <mkdir dir="${ivy.path}"/>
-              
-              <ivy:resolve file="ivy.xml" log="info" />
-              <ivy:retrieve pattern="${ivy.path}/[artifact]-[revision].[ext]"
-                  conf="master"
-                  sync="true"
-                  overwriteMode="newer"
-                  type="jar,bundle"
-              />
-          </then>
-        </if>
-        
-        <condition property="deps.path" value="${gradle.path}" else="${ivy.path}">
-            <available file="${gradle.path}" type="dir" />
-        </condition>
-    </target>
     
-    <target name="do.compile" depends="load.lib, get.deps">
+    <target name="do.compile" depends="load.lib">
         <mkdir dir="${classes.path}" />
         
         <javac
@@ -307,7 +270,7 @@
             <src path="${src.path}"/>
             <src path="${src-rss.path}"/>
             <classpath>
-                <fileset dir="${deps.path}">
+                <fileset dir="${gradle.path}">
                     <include name="*"/>
                 </fileset>
                 <filelist>
@@ -340,7 +303,7 @@
         <fx:jar destfile="${archives.path}/${jar.filename}">
             <fx:application refid="fx.application"/>
             <fx:resources>
-                <fx:fileset dir="${deps.path}" includes="*.jar"/>
+                <fx:fileset dir="${gradle.path}" includes="*.jar"/>
             </fx:resources>
             <fx:fileset dir="${classes.path}" includes="**"/>
             <fx:manifest>
@@ -359,7 +322,7 @@
         <!--echo message="Grouping in one JAR ${bin.path}/${app.id}.jar"/>
         <jar destfile="${bin.path}/${app.id}.jar">
             <zipgroupfileset dir="${archives.path}" includes="*.jar"/>
-            <zipgroupfileset dir="${deps.path}" includes="*.jar"/>
+            <zipgroupfileset dir="${gradle.path}" includes="*.jar"/>
             <zipgroupfileset dir="${java.home}/lib" includes="jfxrt.jar"/>
         </jar-->
     </target>
@@ -370,7 +333,7 @@
         <echo message="Copying files"/>
         <copy todir="${exe.path}/app">
             <fileset dir="${archives.path}" includes="*.jar"/>
-            <fileset dir="${deps.path}" includes="*.jar"/>
+            <fileset dir="${gradle.path}" includes="*.jar"/>
             <fileset dir="${java.home}/lib" includes="jfxrt.jar"/>
         </copy>
         <copy todir="${exe.path}">
