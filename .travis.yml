@@ -28,11 +28,11 @@ before_install:
 script:
 - gradle antClean getDeps antRelease
 
-after_success:
+before_deploy:
 - export PREVIOUS_VERSION=`git describe --abbrev=0 --tags | cut -c 2-`
 - echo $PREVIOUS_VERSION
-- chmod +x src-build/travisTags.sh
-- sh src-build/travisTags.sh
+- chmod +x src-build/travisTag.sh
+- sh src-build/travisTag.sh
 - source ~/.bash_profile
 
 deploy:
