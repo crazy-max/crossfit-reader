@@ -1,7 +1,7 @@
 #!/bin/sh
 echo "Start travisTag..."
 
-function version_gt {
+version_gt() {
   test "$(echo "$@" | tr " " "\n" | sort -V | head -n 1)" != "$1";
 }
 
