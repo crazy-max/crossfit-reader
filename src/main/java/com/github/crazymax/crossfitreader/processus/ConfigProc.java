@@ -27,6 +27,7 @@ public class ConfigProc {
     
     private static final String PROP_BOOKING_BASE_URL = "bookingBaseUrl";
     private static final String PROP_BOOKING_API_KEY = "bookingApiKey";
+    private static final String PROP_BOOKING_TIMEOUT = "bookingTimeout";
     private static final String PROP_BOOKING_USER_PROFILE_PATH = "bookingUserProfilePath";
     private static final String PROP_BOOKING_USER_LIST_PATH = "bookingUserListPath";
     private static final String PROP_BOOKING_SCAN_CARD_PATH = "bookingScanCardPath";
@@ -60,6 +61,7 @@ public class ConfigProc {
         Configuration result = new Configuration();
         result.setBookingBaseUrl("http://localhost/crossfit-reader");
         result.setBookingApiKey("rLhsoB0AwtUVFJ0dE7Z06R5CmgXYt8ZL");
+        result.setBookingTimeout(5000);
         result.setBookingUserProfilePath("/?userprofile&id=%s");
         result.setBookingUserListPath("/?userlist");
         result.setBookingScanCardPath("/?scancard");
@@ -77,6 +79,7 @@ public class ConfigProc {
                 
                 result.setBookingBaseUrl(propConfig.getProperty(PROP_BOOKING_BASE_URL).trim());
                 result.setBookingApiKey(propConfig.getProperty(PROP_BOOKING_API_KEY).trim());
+                result.setBookingTimeout(Integer.parseInt(propConfig.getProperty(PROP_BOOKING_TIMEOUT).trim()));
                 result.setBookingUserProfilePath(propConfig.getProperty(PROP_BOOKING_USER_PROFILE_PATH).trim());
                 result.setBookingUserListPath(propConfig.getProperty(PROP_BOOKING_USER_LIST_PATH).trim());
                 result.setBookingScanCardPath(propConfig.getProperty(PROP_BOOKING_SCAN_CARD_PATH).trim());
@@ -99,6 +102,7 @@ public class ConfigProc {
                 outputConfigProperties = new FileOutputStream(configPath.toFile());
                 propConfig.setProperty(PROP_BOOKING_BASE_URL, result.getBookingBaseUrl());
                 propConfig.setProperty(PROP_BOOKING_API_KEY, result.getBookingApiKey());
+                propConfig.setProperty(PROP_BOOKING_TIMEOUT, String.valueOf(result.getBookingTimeout()));
                 propConfig.setProperty(PROP_BOOKING_USER_PROFILE_PATH, result.getBookingUserProfilePath());
                 propConfig.setProperty(PROP_BOOKING_USER_LIST_PATH, result.getBookingUserListPath());
                 propConfig.setProperty(PROP_BOOKING_SCAN_CARD_PATH, result.getBookingScanCardPath());
