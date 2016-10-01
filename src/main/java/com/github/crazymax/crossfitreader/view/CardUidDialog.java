@@ -30,9 +30,11 @@ import javax.swing.SwingWorker;
 import javax.swing.border.EmptyBorder;
 import javax.swing.text.DefaultEditorKit;
 
+import com.github.crazymax.crossfitreader.booking.User;
 import com.github.crazymax.crossfitreader.device.Device;
 import com.github.crazymax.crossfitreader.device.DeviceListener;
 import com.github.crazymax.crossfitreader.enums.CardUidLayoutEnum;
+import com.github.crazymax.crossfitreader.processus.BookingProc;
 import com.github.crazymax.crossfitreader.tray.SysTray;
 import com.github.crazymax.crossfitreader.util.Resources;
 import com.github.crazymax.crossfitreader.util.Util;
@@ -64,6 +66,7 @@ public final class CardUidDialog
     private final JPanel cards;
     
     private String currentUid;
+    private String infoUid;
     
     public CardUidDialog(final SysTray systray, final String title) {
         super(new DummyFrame(title, ICONS));
@@ -153,6 +156,14 @@ public final class CardUidDialog
             }
         });
         
+        // Info UID
+        JLabel labelInfoUid = new JLabel(Util.i18n("cardmanager.intro"));
+        labelInfoUid.setHorizontalAlignment(JLabel.CENTER);
+        
+        final JPanel panelInfoUid = new JPanel();
+        panelInfoUid.add(labelInfoUid);
+        panelInfoUid.setPreferredSize(new Dimension(CONTENT_WIDTH, 20));
+        
         final JPanel panelBlank = new JPanel();
         panelBlank.setPreferredSize(new Dimension(CONTENT_WIDTH, 50));
         
@@ -160,6 +171,7 @@ public final class CardUidDialog
         panelUid.setPreferredSize(new Dimension(CONTENT_WIDTH - 100, CONTENT_HEIGHT - 100));
         panelUid.add(panelBlank);
         panelUid.add(uidField);
+        panelUid.add(panelInfoUid);
         
         // Buttons
         JButton btnCopy = new JButton(Util.i18n("common.copyuid"));
@@ -198,6 +210,7 @@ public final class CardUidDialog
                     @Override
                     protected Void doInBackground() {
                         uidField.setText(currentUid);
+                        labelInfoUid.setText(infoUid);
                         return null;
                     }
                 }.execute();
@@ -210,6 +223,12 @@ public final class CardUidDialog
     @Override
     public void cardInserted(final Card card, final String cardUid) {
         currentUid = cardUid;
+        final User userScan = BookingProc.getInstance().scanCard(cardUid);
+        if (userScan == null) {
+            infoUid = Util.i18n("carduid.nobody");
+        } else {
+            infoUid = String.format(Util.i18n("carduid.tomember"), userScan.getFirstName(), userScan.getLastName());
+        }
         switchLayout(CardUidLayoutEnum.RESULT);
     }
     

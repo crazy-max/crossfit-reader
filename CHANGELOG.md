@@ -1,7 +1,8 @@
 # Changelog
 
-## 1.5 (2016/09/29)
+## 1.5 (2016/10/01)
 
+* Display if card used by member on Card UID Viewer dialog (Issue #6)
 * Increase webservice timeout (Issue #4)
 
 ## 1.4 (2016/09/29)
