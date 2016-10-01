@@ -84,6 +84,7 @@ public class Configuration {
     @Override
     public String toString() {
         return "Configuration:\nbookingBaseUrl=" + bookingBaseUrl + "\nbookingApiKey=" + bookingApiKey
+                + "\nbookingTimeout=" + bookingTimeout
                 + "\nbookingUserProfilePath=" + bookingUserProfilePath + "\nbookingUserListPath=" + bookingUserListPath
                 + "\nbookingScanCardPath=" + bookingScanCardPath + "\nbookingAssociateCardPath="
                 + bookingAssociateCardPath + "\nbookingRemoveCardPath=" + bookingRemoveCardPath;
