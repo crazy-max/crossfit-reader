@@ -1,6 +1,7 @@
 package com.github.crazymax.crossfitreader.util;
 
 import java.io.File;
+import java.io.InputStream;
 import java.net.URL;
 import java.util.ResourceBundle;
 
@@ -44,6 +45,10 @@ public class Resources {
     
     public static URL getResource(final String resource) {
         return Main.class.getResource("ext/" + resource);
+    }
+    
+    public static InputStream getResourceAsStream(final String resource) {
+        return Main.class.getResourceAsStream(resource);
     }
     
     public static ImageIcon getImageIcon(final String img) {

@@ -1,5 +1,9 @@
 # Changelog
 
+## 1.5 (2016/09/29)
+
+* Increase webservice timeout (Issue #4)
+
 ## 1.4 (2016/09/29)
 
 * Remove ivy

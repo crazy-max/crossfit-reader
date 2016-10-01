@@ -29,6 +29,7 @@ public class BookingProc {
     
     private String baseUrl;
     private String apiKey;
+    private int timeout;
     private String userProfilePath;
     private String userListPath;
     private String scanCardPath;
@@ -48,6 +49,7 @@ public class BookingProc {
     private BookingProc() {
         baseUrl = ConfigProc.getInstance().getConfig().getBookingBaseUrl();
         apiKey = ConfigProc.getInstance().getConfig().getBookingApiKey();
+        timeout = ConfigProc.getInstance().getConfig().getBookingTimeout();
         userProfilePath = ConfigProc.getInstance().getConfig().getBookingUserProfilePath();
         userListPath = ConfigProc.getInstance().getConfig().getBookingUserListPath();
         scanCardPath = ConfigProc.getInstance().getConfig().getBookingScanCardPath();
@@ -55,8 +57,8 @@ public class BookingProc {
         removeCardPath = ConfigProc.getInstance().getConfig().getBookingRemoveCardPath();
         
         ClientConfig configuration = new ClientConfig();
-        configuration = configuration.property(ClientProperties.CONNECT_TIMEOUT, 1000);
-        configuration = configuration.property(ClientProperties.READ_TIMEOUT, 1000);
+        configuration = configuration.property(ClientProperties.CONNECT_TIMEOUT, timeout == 0 ? 5000 : timeout);
+        configuration = configuration.property(ClientProperties.READ_TIMEOUT, timeout == 0 ? 5000 : timeout);
         client = ClientBuilder.newClient(configuration);
     }
     

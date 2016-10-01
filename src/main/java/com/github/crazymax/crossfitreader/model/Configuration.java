@@ -10,6 +10,7 @@ public class Configuration {
     
     private String bookingBaseUrl;
     private String bookingApiKey;
+    private int bookingTimeout;
     private String bookingUserProfilePath;
     private String bookingUserListPath;
     private String bookingScanCardPath;
@@ -32,6 +33,14 @@ public class Configuration {
         this.bookingApiKey = bookingApiKey;
     }
     
+    public int getBookingTimeout() {
+        return bookingTimeout;
+    }
+
+    public void setBookingTimeout(int bookingTimeout) {
+        this.bookingTimeout = bookingTimeout;
+    }
+
     public String getBookingUserProfilePath() {
         return bookingUserProfilePath;
     }
