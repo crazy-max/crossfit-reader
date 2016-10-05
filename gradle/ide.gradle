@@ -14,7 +14,9 @@ eclipse.classpath {
   file {
     whenMerged { classpath ->
       classpath.entries.removeAll { entry -> entry.path.contains('StandardVMType/JavaSE') }
-      classpath.entries.removeAll { entry -> entry.kind == 'lib' }
+    }
+    beforeMerged { classpath ->
+      classpath.entries.removeAll { entry -> entry.kind == 'output' }
     }
   }
 }
