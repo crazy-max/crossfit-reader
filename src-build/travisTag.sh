@@ -15,7 +15,7 @@ if version_gt $APP_VERSION.0 $PREVIOUS_VERSION; then
   git config --global user.name "Travis CI"
   export GIT_TAG=v$APP_VERSION.$TRAVIS_BUILD_NUMBER
   git tag $GIT_TAG -a -m "Generated tag from TravisCI for $GIT_TAG"
-  git push -q https://${GH_TOKEN}@github.com/crazy-max/crossfit-reader --tags
+  git push -q https://github.com/crazy-max/crossfit-reader --tags
   ls -R
 fi
 
