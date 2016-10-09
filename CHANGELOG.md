@@ -1,5 +1,9 @@
 # Changelog
 
+## 1.6 (2016/10/09)
+
+* Test encryption token
+
 ## 1.5 (2016/10/01)
 
 * Display if card used by member on Card UID Viewer dialog (Issue #6)
