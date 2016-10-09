@@ -1,6 +1,10 @@
 # Changelog
 
-## 1.6 (2016/10/09)
+## 1.7 (2016/10/09)
+
+* Final release
+
+## 1.6 (2016/10/07)
 
 * Test encryption token
 
