@@ -336,11 +336,10 @@ public final class CardManagerDialog
                     currentUid,
                     selectedUser.getFirstName(),
                     selectedUser.getLastName()));
-            close();
         } else {
             Util.showErrorDialog(Util.i18n("cardmanager.assoc.error"));
-            switchLayout(CardManagerLayoutEnum.SELECT_USER);
         }
+        switchLayout(CardManagerLayoutEnum.SELECT_USER);
     }
     
     private void removeCard() {
@@ -349,10 +348,10 @@ public final class CardManagerDialog
             Util.showInfoDialog(String.format(Util.i18n("cardmanager.remove.success"),
                     selectedUser.getFirstName(),
                     selectedUser.getLastName()));
-            close();
         } else {
             Util.showErrorDialog(Util.i18n("cardmanager.remove.error"));
         }
+        switchLayout(CardManagerLayoutEnum.SELECT_USER);
     }
     
     private String getUserProfileLink() {
