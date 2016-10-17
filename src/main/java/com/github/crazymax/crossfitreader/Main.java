@@ -39,7 +39,7 @@ import com.github.crazymax.crossfitreader.util.Util;
  * Main class
  * @author crazy-max
  * @license MIT License
- \* @link https://github.com/crazy-max/crossfit-reader
+ * @link https://github.com/crazy-max/crossfit-reader
  */
 public class Main
         extends JPanel {
@@ -49,6 +49,7 @@ public class Main
     private static final Logger LOGGER = Logger.getLogger(Main.class);
     
     public static boolean envDev = false;
+    public static boolean noReader = false;
     
     public static Logger rootLogger = Logger.getRootLogger();
     
@@ -77,6 +78,13 @@ public class Main
         consoleAppender.setLayout(new PatternLayout("%d{ISO8601} %5p %c - %m%n"));
         consoleAppender.activateOptions();
         rootLogger.addAppender(consoleAppender);
+        
+        // Check args
+        for (String appArg : args) {
+            if (appArg.equalsIgnoreCase("noreader")) {
+                noReader = true;
+            }
+        }
         
         if (!SystemUtils.IS_OS_WINDOWS) {
             LOGGER.info("Must be run on Windows...");
@@ -249,6 +257,7 @@ public class Main
         final String[] infos = {
                 "Java:        " + System.getProperty("java.version"),
                 "Envdev:      " + (envDev ? "yes" : "no"),
+                "NoReader:    " + (noReader ? "yes" : "no"),
                 "Id:          " + appId,
                 "Name:        " + appName,
                 "Desc:        " + appDesc,
