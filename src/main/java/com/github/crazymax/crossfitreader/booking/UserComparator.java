@@ -14,7 +14,7 @@ public class UserComparator implements Comparator<User> {
     public int compare(User o1, User o2) {
         final String u1 = o1.getLastName() + " " + o1.getFirstName();
         final String u2 = o2.getLastName() + " " + o2.getFirstName();
-        return u1.compareTo(u2);
+        return u1.compareToIgnoreCase(u2);
     }
 
 }
