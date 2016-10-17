@@ -1,8 +1,10 @@
 # Changelog
 
-## 1.7 (2016/10/09)
+## 1.7 (2016/10/17)
 
-* Final release
+* Do not close panel on associate or remove action (Issue #10)
+* String compare ignoreCase (Issue #9)
+* Add flag to use application without reader
 
 ## 1.6 (2016/10/07)
 
