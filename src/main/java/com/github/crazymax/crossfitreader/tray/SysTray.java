@@ -97,7 +97,7 @@ public class SysTray implements DeviceListener {
             // Init ACR122
             try {
                 LOGGER.info("Init ACR122");
-                device = new Device(Util.getTerminal());
+                device = new Device(Main.noReader ? null : Util.getTerminal());
                 addCardListener();
                 showInfoTooltip(Util.i18n("systray.device.found"));
                 Util.playSound(Resources.SOUND_SUCCESS);
