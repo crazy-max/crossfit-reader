@@ -19,7 +19,7 @@ dependencies {
   compile 'org.glassfish.jersey.media:jersey-media-multipart:2.23.2'
   compile 'org.glassfish.jersey.media:jersey-media-moxy:2.23.2'
   compile 'org.glassfish.jersey.ext:jersey-entity-filtering:2.23.2'
-  compile 'com.fasterxml.jackson.jaxrs:jackson-jaxrs-json-provider:2.8.3'
+  compile 'com.fasterxml.jackson.jaxrs:jackson-jaxrs-json-provider:2.8.4'
 }
 
 repositories {
