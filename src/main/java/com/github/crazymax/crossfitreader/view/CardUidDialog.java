@@ -30,10 +30,13 @@ import javax.swing.SwingWorker;
 import javax.swing.border.EmptyBorder;
 import javax.swing.text.DefaultEditorKit;
 
+import org.apache.log4j.Logger;
+
 import com.github.crazymax.crossfitreader.booking.User;
 import com.github.crazymax.crossfitreader.device.Device;
 import com.github.crazymax.crossfitreader.device.DeviceListener;
 import com.github.crazymax.crossfitreader.enums.CardUidLayoutEnum;
+import com.github.crazymax.crossfitreader.exception.BookingException;
 import com.github.crazymax.crossfitreader.processus.BookingProc;
 import com.github.crazymax.crossfitreader.tray.SysTray;
 import com.github.crazymax.crossfitreader.util.Resources;
@@ -50,6 +53,8 @@ public final class CardUidDialog
         implements ActionListener, DeviceListener {
     
     private static final long serialVersionUID = -3969093045340980759L;
+    
+    private static final Logger LOGGER = Logger.getLogger(CardUidDialog.class);
 
     private static final List<Image> ICONS = Arrays.asList(
             Resources.ICON_BLUE_16.getImage(),
@@ -223,13 +228,22 @@ public final class CardUidDialog
     @Override
     public void cardInserted(final Card card, final String cardUid) {
         currentUid = cardUid;
-        final User userScan = BookingProc.getInstance().scanCard(cardUid);
-        if (userScan == null) {
-            infoUid = Util.i18n("carduid.nobody");
-        } else {
-            infoUid = String.format(Util.i18n("carduid.tomember"), userScan.getFirstName(), userScan.getLastName());
+        infoUid = null;
+        try {
+            final User userScan = BookingProc.getInstance().scanCard(cardUid);
+            if (userScan == null) {
+                LOGGER.warn(String.format("The card %s belongs to nobody", cardUid));
+                infoUid = Util.i18n("carduid.nobody");
+            } else {
+                LOGGER.info(String.format("This card belongs to %s %s", userScan.getFirstName(), userScan.getLastName()));
+                infoUid = String.format(Util.i18n("carduid.tomember"), userScan.getFirstName(), userScan.getLastName());
+            }
+        } catch (BookingException e) {
+            LOGGER.error(e.getMessage(), e);
+            infoUid = e.getMessage();
+        } finally {
+            switchLayout(CardUidLayoutEnum.RESULT);
         }
-        switchLayout(CardUidLayoutEnum.RESULT);
     }
     
     @Override

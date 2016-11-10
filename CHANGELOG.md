@@ -1,5 +1,14 @@
 # Changelog
 
+## 1.8 (2016/11/10)
+
+* Gérer les erreurs HTTP 5xx (Issue #12)
+* Double appels des webservices (Issue #11)
+* Revenir au panel de sélection des utilisateurs lors de la (dés)association d'une carte
+* Improve logging
+* Update dependencies
+* Renew Travis token
+
 ## 1.7 (2016/10/17)
 
 * Do not close panel on associate or remove action (Issue #10)

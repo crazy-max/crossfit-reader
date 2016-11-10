@@ -24,6 +24,7 @@ import com.github.crazymax.crossfitreader.Main;
 import com.github.crazymax.crossfitreader.booking.User;
 import com.github.crazymax.crossfitreader.device.Device;
 import com.github.crazymax.crossfitreader.device.DeviceListener;
+import com.github.crazymax.crossfitreader.exception.BookingException;
 import com.github.crazymax.crossfitreader.exception.FindDeviceException;
 import com.github.crazymax.crossfitreader.processus.BookingProc;
 import com.github.crazymax.crossfitreader.tray.menu.TrayMenuCardManager;
@@ -162,13 +163,19 @@ public class SysTray implements DeviceListener {
     @Override
     public void cardInserted(final Card card, final String cardUid) {
         String errorMsg = null;
-        final User userScan = BookingProc.getInstance().scanCard(cardUid);
-        if (userScan == null) {
-            errorMsg = String.format(Util.i18n("systray.scan.unknowncard"), cardUid);
-            LOGGER.info(String.format("The card %s is assigned to any member", cardUid));
-        } else if (userScan.getBookings() == null || userScan.getBookings().size() <= 0) {
-            errorMsg = String.format(Util.i18n("systray.scan.noresa"), userScan.getFirstName(), userScan.getLastName());
-            LOGGER.info(String.format("%s %s has not made any reservations", userScan.getFirstName(), userScan.getLastName()));
+        User userScan = null;
+        try {
+            userScan = BookingProc.getInstance().scanCard(cardUid);
+            if (userScan == null) {
+                errorMsg = String.format(Util.i18n("systray.scan.unknowncard"), cardUid);
+                LOGGER.warn(String.format("The card %s is assigned to any member", cardUid));
+            } else if (userScan.getBookings() == null || userScan.getBookings().size() <= 0) {
+                errorMsg = String.format(Util.i18n("systray.scan.noresa"), userScan.getFirstName(), userScan.getLastName());
+                LOGGER.warn(String.format("%s %s has not made any reservations", userScan.getFirstName(), userScan.getLastName()));
+            }
+        } catch (BookingException e) {
+            errorMsg = e.getMessage();
+            LOGGER.error(e.getMessage(), e);
         }
         
         if (!Strings.isNullOrEmpty(errorMsg)) {

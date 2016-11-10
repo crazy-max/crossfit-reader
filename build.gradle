@@ -6,8 +6,8 @@ ant.importBuild('build.xml') { antTargetName ->
 apply from: file('gradle/java.gradle')
 
 dependencies {
-  compile 'com.google.guava:guava:19.0'
-  compile 'org.apache.commons:commons-lang3:3.4'
+  compile 'com.google.guava:guava:20.0'
+  compile 'org.apache.commons:commons-lang3:3.5'
   compile 'commons-configuration:commons-configuration:1.10'
   compile 'commons-io:commons-io:2.5'
   
@@ -15,10 +15,10 @@ dependencies {
   compile 'log4j:apache-log4j-extras:1.2.17'
   
   compile 'javax.ws.rs:javax.ws.rs-api:2.0.1'
-  compile 'org.glassfish.jersey.core:jersey-client:2.23.2'
-  compile 'org.glassfish.jersey.media:jersey-media-multipart:2.23.2'
-  compile 'org.glassfish.jersey.media:jersey-media-moxy:2.23.2'
-  compile 'org.glassfish.jersey.ext:jersey-entity-filtering:2.23.2'
+  compile 'org.glassfish.jersey.core:jersey-client:2.24'
+  compile 'org.glassfish.jersey.media:jersey-media-multipart:2.24'
+  compile 'org.glassfish.jersey.media:jersey-media-moxy:2.24'
+  compile 'org.glassfish.jersey.ext:jersey-entity-filtering:2.24'
   compile 'com.fasterxml.jackson.jaxrs:jackson-jaxrs-json-provider:2.8.4'
 }
 
