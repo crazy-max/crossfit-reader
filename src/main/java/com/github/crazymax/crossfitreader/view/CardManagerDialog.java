@@ -33,12 +33,15 @@ import javax.swing.JPanel;
 import javax.swing.SwingWorker;
 import javax.swing.border.EmptyBorder;
 
+import org.apache.log4j.Logger;
+
 import com.github.crazymax.crossfitreader.booking.User;
 import com.github.crazymax.crossfitreader.booking.UserComparator;
 import com.github.crazymax.crossfitreader.device.Device;
 import com.github.crazymax.crossfitreader.device.DeviceListener;
 import com.github.crazymax.crossfitreader.enums.CardManagerLayoutEnum;
 import com.github.crazymax.crossfitreader.enums.CardScanTypeEnum;
+import com.github.crazymax.crossfitreader.exception.BookingException;
 import com.github.crazymax.crossfitreader.processus.BookingProc;
 import com.github.crazymax.crossfitreader.tray.SysTray;
 import com.github.crazymax.crossfitreader.util.Resources;
@@ -56,6 +59,8 @@ public final class CardManagerDialog
         implements ActionListener, DeviceListener {
     
     private static final long serialVersionUID = -4658875207238213753L;
+    
+    private static final Logger LOGGER = Logger.getLogger(CardManagerDialog.class);
     
     private static final List<Image> ICONS = Arrays.asList(
             Resources.ICON_BLUE_16.getImage(),
@@ -177,17 +182,13 @@ public final class CardManagerDialog
                 new SwingWorker<Void, Void>() {
                     @Override
                     protected Void doInBackground() {
-                        try {
-                            findUsers();
-                        } catch (Throwable t) {
-                            Util.logError(Util.i18n("cardmanager.error.search.users"), t);
-                        }
+                        findUsers();
                         return null;
                     }
                     
                     @Override
                     protected void done() {
-                        switchLayout(CardManagerLayoutEnum.SELECT_USER);
+                        switchLayout(userModel.getSize() > 0 ? CardManagerLayoutEnum.SELECT_USER : CardManagerLayoutEnum.INTRO);
                     }
                 }.execute();
             }
@@ -318,40 +319,58 @@ public final class CardManagerDialog
     }
     
     private void findUsers() {
-        final List<User> userList = bookingProc.getUserList();
-        if (userList == null) {
-            return;
-        }
-        
-        Collections.sort(userList, new UserComparator());
-        for (User user : userList) {
-            userModel.addElement(user);
+        try {
+            userModel.removeAllElements();
+            final List<User> userList = bookingProc.getUserList();
+            if (userList == null) {
+                return;
+            }
+            Collections.sort(userList, new UserComparator());
+            for (User user : userList) {
+                userModel.addElement(user);
+            }
+        } catch (BookingException e) {
+            Util.logError(e.getMessage(), e);
+        } catch (Throwable t) {
+            Util.logError(Util.i18n("cardmanager.error.search.users"), t);
         }
     }
     
     private void associateCard() {
-        final boolean result = bookingProc.associateCard(String.valueOf(selectedUser.getId()), currentUid);
-        if (result) {
-            Util.showInfoDialog(String.format(Util.i18n("cardmanager.assoc.success"),
-                    currentUid,
-                    selectedUser.getFirstName(),
-                    selectedUser.getLastName()));
-        } else {
-            Util.showErrorDialog(Util.i18n("cardmanager.assoc.error"));
+        try {
+            final boolean result = bookingProc.associateCard(String.valueOf(selectedUser.getId()), currentUid);
+            if (result) {
+                Util.showInfoDialog(String.format(Util.i18n("cardmanager.assoc.success"),
+                        currentUid,
+                        selectedUser.getFirstName(),
+                        selectedUser.getLastName()));
+            } else {
+                Util.showErrorDialog(Util.i18n("cardmanager.assoc.error"));
+            }
+        } catch (BookingException e) {
+            LOGGER.error(e.getMessage(), e);
+        } finally {
+            findUsers();
+            switchLayout(CardManagerLayoutEnum.SELECT_USER);
         }
-        switchLayout(CardManagerLayoutEnum.SELECT_USER);
     }
     
     private void removeCard() {
-        final boolean result = bookingProc.removeCard(String.valueOf(selectedUser.getId()));
-        if (result) {
-            Util.showInfoDialog(String.format(Util.i18n("cardmanager.remove.success"),
-                    selectedUser.getFirstName(),
-                    selectedUser.getLastName()));
-        } else {
-            Util.showErrorDialog(Util.i18n("cardmanager.remove.error"));
+        try {
+            final boolean result = bookingProc.removeCard(String.valueOf(selectedUser.getId()));
+            if (result) {
+                Util.showInfoDialog(String.format(Util.i18n("cardmanager.remove.success"),
+                        selectedUser.getFirstName(),
+                        selectedUser.getLastName()));
+            } else {
+                Util.showErrorDialog(Util.i18n("cardmanager.remove.error"));
+            }
+        } catch (BookingException e) {
+            LOGGER.error(e.getMessage(), e);
+        } finally {
+            findUsers();
+            switchLayout(CardManagerLayoutEnum.SELECT_USER);
         }
-        switchLayout(CardManagerLayoutEnum.SELECT_USER);
     }
     
     private String getUserProfileLink() {

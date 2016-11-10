@@ -537,4 +537,12 @@ public class Util {
         
         return outputCmd;
     }
+    
+    public static boolean startsWith(final int number1, final int number2) {
+        return startsWith(String.valueOf(number1), String.valueOf(number2));
+    }
+    
+    public static boolean startsWith(final String str1, final String str2) {
+        return str1.charAt(0) == str2.charAt(0);
+    }
 }
