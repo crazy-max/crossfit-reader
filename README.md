@@ -1,6 +1,6 @@
 [![Latest release](https://img.shields.io/github/release/crazy-max/crossfit-reader.svg?style=flat-square)](https://github.com/crazy-max/crossfit-reader/releases)
 [![Build Status](https://img.shields.io/travis/crazy-max/crossfit-reader/master.svg?style=flat-square)](https://travis-ci.org/crazy-max/crossfit-reader)
-[![Code Quality](https://img.shields.io/codacy/grade/36c80520410443b5abf935849d921c75.svg?style=flat-square)](https://www.codacy.com/app/crazy-max/crossfit-reader)
+[![Code Quality](https://img.shields.io/codacy/grade/3daf2e6395764406ab0c8fd2c2202581.svg?style=flat-square)](https://www.codacy.com/app/crazy-max/crossfit-reader)
 [![StyleCI](https://styleci.io/repos/68113444/shield?style=flat-square)](https://styleci.io/repos/68113444)
 [![Dependency Status](https://www.versioneye.com/user/projects/57e9398cbd6fa600512e3dab/badge.svg?style=flat-square)](https://www.versioneye.com/user/projects/57e9398cbd6fa600512e3dab)
 [![Donate Paypal](https://img.shields.io/badge/donate-paypal-blue.svg?style=flat-square)](https://www.paypal.me/crazyws)
