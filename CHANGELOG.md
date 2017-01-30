@@ -2,6 +2,7 @@
 
 ## 1.9 (2017/01/30)
 
+* Update Launch4j download urls
 * Update dependencies
 * Renew Travis token
 
