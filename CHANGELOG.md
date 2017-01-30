@@ -1,5 +1,10 @@
 # Changelog
 
+## 1.9 (2017/01/30)
+
+* Update dependencies
+* Renew Travis token
+
 ## 1.8 (2016/11/10)
 
 * Gérer les erreurs HTTP 5xx (Issue #12)
