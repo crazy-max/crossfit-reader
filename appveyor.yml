@@ -1,0 +1,48 @@
+version: '{build}'
+
+platform:
+  - x64
+
+clone_folder: C:\projects\crossfit-reader
+
+environment:
+  JAVA_HOME: C:\Program Files\Java\jdk1.8.0
+
+install:
+  - ps: choco install ant gradle
+  - java -version
+  - ant -version
+  - gradle --version
+
+configuration:
+  - Release
+
+build_script:
+  - gradle antClean getDeps antRelease
+
+after_build:
+  - ps: |
+      $env:APP_VERSION = Get-Content C:\projects\crossfit-reader\build\ant\version.dat -Raw
+      Write-Host "App version: $env:APP_VERSION"
+
+artifacts:
+  - path: 'build\ant\setup\*'
+    name: release
+
+deploy:
+  tag: $(APP_VERSION)
+  release: $(APP_VERSION)
+  description: 'New release: $(APP_VERSION)'
+  provider: GitHub
+  auth_token:
+    secure: BGz5Z+cKh7a/UOFxIfBfZYho8Ghf3bO3LvaX70mdgiG1UDJhtW3FUGDjBrwyZglf
+  artifact: release
+  draft: true
+  prerelease: false
+  on:
+    branch: master
+
+notifications:
+  - provider: Slack
+    incoming_webhook:
+      secure: 6wcIQdnN6haB2OhAPJVhAoMpU1lLRM7tHmVUCfv2RZ/3gZSBCm7wCBde4Bx7zNyv3Qw6//VrX97ZD3ejdoyxfmFaXBomoclkVKJRcvCyn3s=
