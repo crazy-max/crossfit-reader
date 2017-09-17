@@ -22,12 +22,12 @@
     <maxHeapSize>64</maxHeapSize>
   </jre>
   <versionInfo>
-    <fileVersion>@APP_VERSION@.@APP_RELEASE@</fileVersion>
-    <txtFileVersion>@APP_VERSION@.@APP_RELEASE@</txtFileVersion>
+    <fileVersion>@APP_VERSION@.0</fileVersion>
+    <txtFileVersion>@APP_VERSION@</txtFileVersion>
     <fileDescription>@APP_DESC@</fileDescription>
     <copyright>@APP_MANUFACTURER@</copyright>
-    <productVersion>@APP_VERSION@.@APP_RELEASE@</productVersion>
-    <txtProductVersion>@APP_VERSION@.@APP_RELEASE@</txtProductVersion>
+    <productVersion>@APP_VERSION@.0</productVersion>
+    <txtProductVersion>@APP_VERSION@</txtProductVersion>
     <productName>@APP_NAME@</productName>
     <internalName>@APP_ID@</internalName>
     <originalFilename>@APP_ID@.exe</originalFilename>
