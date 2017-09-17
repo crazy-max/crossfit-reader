@@ -29,8 +29,8 @@ artifacts:
     name: release
 
 deploy:
-  tag: $(APP_VERSION)
-  release: $(APP_VERSION)
+  tag: v$(APP_VERSION)
+  release: v$(APP_VERSION)
   description: 'New release: $(APP_VERSION)'
   provider: GitHub
   auth_token:
