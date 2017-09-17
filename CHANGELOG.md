@@ -1,5 +1,9 @@
 # Changelog
 
+## 1.9.110 (2017/09/17)
+
+* Bad version format
+
 ## 1.9.109 (2017/09/17)
 
 * Switch to AppVeyor instead of Travis
