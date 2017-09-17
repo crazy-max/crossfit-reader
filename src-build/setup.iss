@@ -1,7 +1,7 @@
 #define AppGuid "{@APP_GUID@"
 #define AppId "@APP_ID@"
 #define AppName "@APP_NAME@"
-#define AppVersion "@APP_VERSION@.@APP_RELEASE@"
+#define AppVersion "@APP_VERSION@"
 #define AppProvider "@APP_MANUFACTURER@"
 #define AppDesc "@APP_DESC@"
 #define AppPath "@APP_PATH@"
@@ -90,10 +90,10 @@ var
   PercentLabel: TNewStaticText;
   ElapsedLabel: TNewStaticText;
   RemainingLabel: TNewStaticText;
-  
+
 function GetTickCount: DWORD;
   external 'GetTickCount@kernel32.dll stdcall';
-  
+
 function TicksToStr(Value: DWORD): string;
 var
   I: DWORD;
@@ -156,7 +156,7 @@ begin
         Result := CompareInner(temp1, temp2);
       end;
 end;
- 
+
 function CompareVersion(str1, str2: String): Integer;
 var
   temp1, temp2: String;
@@ -207,7 +207,7 @@ begin
   Result := True;
   IsSilent := False;
   CurrentDate := GetDateTimeString('yyyy-mm-dd-hhnnss', #0, #0);
-  
+
   // Perform install args
   for j := 1 to ParamCount do begin
     if CompareText(ParamStr(j), '/SILENT') = 0 then begin
@@ -271,14 +271,14 @@ begin
 end;
 
 procedure CurUninstallStepChanged(CurUninstallStep: TUninstallStep);
-var 
+var
   LogFilePath: String;
   PidFilePath: String;
 begin
   LogFilePath := ExpandConstant('{#AppLogPath}/uninstall.' + CurrentDate + '.log');
   if CurUninstallStep = usUninstall then begin
     PidFilePath := ExpandConstant('{#AppPath}/{#AppId}.pid');
-  
+
     SaveStringToFile(LogFilePath, 'Check PID file: ' + PidFilePath + #13#10, True);
     if FileExists(PidFilePath) then begin
       SaveStringToFile(LogFilePath, 'PID file found. Stopping app.' + #13#10, True);
@@ -318,7 +318,7 @@ begin
         DeleteFile(PidFilePath);
         Sleep(5000);
       end;
-    
+
       Exec(RemoveQuotes(UninstallStr), '/SILENT /NORESTART /SUPPRESSMSGBOXES /UNINSTALLUPGRADE=1', '', SW_HIDE, ewWaitUntilTerminated, ResultCode);
       Log('Uninstall previous version: ' + IntToStr(ResultCode));
     end;
