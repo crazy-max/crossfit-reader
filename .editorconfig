@@ -14,6 +14,6 @@ trim_trailing_whitespace = true
 [*.md]
 trim_trailing_whitespace = false
 
-[{*.gradle,.travis.yml}]
+[{build.xml,*.gradle,appveyor.yml}]
 indent_size = 2
 indent_style = space
