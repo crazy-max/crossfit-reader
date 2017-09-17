@@ -5,7 +5,7 @@
 [![Dependency Status](https://www.versioneye.com/user/projects/57e9398cbd6fa600512e3dab/badge.svg?style=flat-square)](https://www.versioneye.com/user/projects/57e9398cbd6fa600512e3dab)
 [![Donate Paypal](https://img.shields.io/badge/donate-paypal-blue.svg?style=flat-square)](https://www.paypal.me/crazyws)
 
-# Crossfit Reader
+# 💳 Crossfit Reader
 
 ![](res/logo.png?raw=true)
 
