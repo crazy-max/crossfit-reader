@@ -1,31 +1,38 @@
 # Changelog
 
-## 1.9 (2017/01/30)
+## 1.9.109 (2017/09/17)
+
+* Switch to AppVeyor instead of Travis
+* Upgrade to Gradle 4.1
+* Update dependencies
+
+## 1.9.105 (2017/01/30)
 
 * Update Launch4j download urls
-* Update dependencies
-* Renew Travis token
 
-## 1.8 (2016/11/10)
+## 1.8.103 (2016/11/10)
+
+* Update dependencies
+
+## 1.8.101 (2016/11/10)
 
 * Gérer les erreurs HTTP 5xx (Issue #12)
 * Double appels des webservices (Issue #11)
 * Revenir au panel de sélection des utilisateurs lors de la (dés)association d'une carte
 * Improve logging
-* Update dependencies
 * Renew Travis token
 
-## 1.7 (2016/10/17)
+## 1.7.100 (2016/10/17)
 
 * Do not close panel on associate or remove action (Issue #10)
 * String compare ignoreCase (Issue #9)
 * Add flag to use application without reader
 
-## 1.6 (2016/10/07)
+## 1.6.97 (2016/10/07)
 
-* Test encryption token
+* Use encrypted token for Travis
 
-## 1.5 (2016/10/01)
+## 1.5.95 (2016/10/01)
 
 * Display if card used by member on Card UID Viewer dialog (Issue #6)
 * Increase webservice timeout (Issue #4)
