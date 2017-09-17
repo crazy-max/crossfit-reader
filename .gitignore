@@ -1,9 +1,6 @@
-# Eclipse
-/.settings/
-.classpath
-.project
-*.launch
+# Jetbrains
+/.idea
+/build
 
 # Gradle
-/.gradle/
-/build/
+/.gradle
