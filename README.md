@@ -1,17 +1,18 @@
-[![Latest release](https://img.shields.io/github/release/crazy-max/crossfit-reader.svg?style=flat-square)](https://github.com/crazy-max/crossfit-reader/releases)
-[![Build Status](https://img.shields.io/travis/crazy-max/crossfit-reader/master.svg?style=flat-square)](https://travis-ci.org/crazy-max/crossfit-reader)
-[![Code Quality](https://img.shields.io/codacy/grade/3daf2e6395764406ab0c8fd2c2202581.svg?style=flat-square)](https://www.codacy.com/app/crazy-max/crossfit-reader)
-[![StyleCI](https://styleci.io/repos/68113444/shield?style=flat-square)](https://styleci.io/repos/68113444)
-[![Dependency Status](https://www.versioneye.com/user/projects/57e9398cbd6fa600512e3dab/badge.svg?style=flat-square)](https://www.versioneye.com/user/projects/57e9398cbd6fa600512e3dab)
-[![Donate Paypal](https://img.shields.io/badge/donate-paypal-blue.svg?style=flat-square)](https://www.paypal.me/crazyws)
+<p align="center"><a href="https://github.com/crazy-max/crossfit-reader" target="_blank"><img width="256" src="https://github.com/crazy-max/crossfit-reader/blob/master/res/logo.png"></a></p>
 
-# 💳 Crossfit Reader
-
-![](res/logo.png?raw=true)
+<p align="center">
+  <a href="https://github.com/crazy-max/crosffit-reader/releases/latest"><img src="https://img.shields.io/github/release/crazy-max/crossfit-reader.svg?style=flat-square" alt="GitHub release"></a>
+  <a href="https://github.com/crazy-max/crosffit-reader/releases/latest"><img src="https://img.shields.io/github/downloads/crazy-max/crossfit-reader/total.svg?style=flat-square" alt="Total downloads"></a>
+  <a href="https://ci.appveyor.com/project/crazy-max/crossfit-reader"><img src="https://img.shields.io/appveyor/ci/crazy-max/crossfit-reader.svg?style=flat-square" alt="AppVeyor"></a>
+  <a href="https://www.codacy.com/app/crazy-max/crossfit-reader"><img src="https://img.shields.io/codacy/grade/3daf2e6395764406ab0c8fd2c2202581.svg?style=flat-square" alt="Code Quality"></a>
+  <a href="https://www.versioneye.com/user/projects/57e9398cbd6fa600512e3dab"><img src="https://www.versioneye.com/user/projects/57e9398cbd6fa600512e3dab/badge.svg?style=flat-square" alt="Dependency Status"></a>
+  <a href="https://www.paypal.me/crazyws"><img src="https://img.shields.io/badge/donate-paypal-blue.svg?style=flat-square" alt="Donate Paypal"></a>
+  <a href="https://flattr.com/submit/auto?user_id=crazymax&url=https://github.com/crazy-max/crossfit-reader"><img src="https://img.shields.io/badge/flattr-this-green.svg?style=flat-square" alt="Flattr this!"></a>
+</p>
 
 ## About
 
-Card reader application for ACR122U device affiliate to the [CrossFit Nancy](http://www.crossfit-nancy.fr/) booking application.
+💳 Crossfit Reader is a card reader application for ACR122U device affiliate to the [CrossFit Nancy](http://www.crossfit-nancy.fr/) booking application.
 
 ## Features
 
