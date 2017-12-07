@@ -1,5 +1,9 @@
 # Changelog
 
+## 1.10.120 (2017/09/17)
+
+* Update libs
+
 ## 1.10.119 (2017/09/17)
 
 * Get first valid terminal found (default ACS ACR122)
