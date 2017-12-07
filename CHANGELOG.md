@@ -1,6 +1,6 @@
 # Changelog
 
-## 1.10.111(2017/09/17)
+## 1.10.119 (2017/09/17)
 
 * Get first valid terminal found (default ACS ACR122)
 
