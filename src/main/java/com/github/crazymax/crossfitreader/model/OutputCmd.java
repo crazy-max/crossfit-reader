@@ -7,7 +7,7 @@ import com.google.common.base.Strings;
 
 /**
  * OutputCmd model
- * @author crazy-max
+ * @author CrazyMax
  * @license MIT License
  * @link https://github.com/crazy-max/crossfit-reader
  */

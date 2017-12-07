@@ -7,7 +7,7 @@ import javax.swing.JFrame;
 
 /**
  * Dummy frame for dialog
- * @author crazy-max
+ * @author CrazyMax
  * @license MIT License
  * @link https://github.com/crazy-max/crossfit-reader
  */
@@ -23,5 +23,5 @@ public class DummyFrame extends JFrame {
         pack();
         setLocationRelativeTo(null);
     }
-    
+
 }

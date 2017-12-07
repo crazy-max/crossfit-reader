@@ -21,14 +21,14 @@ import com.github.crazymax.crossfitreader.util.Util;
 
 /**
  * Booking WS client proc
- * @author crazy-max
+ * @author CrazyMax
  * @license MIT License
  * @link https://github.com/crazy-max/crossfit-reader
  */
 public class BookingProc {
-    
+
     private static final Logger LOGGER = Logger.getLogger(BookingProc.class);
-    
+
     private String baseUrl;
     private String apiKey;
     private int timeout;
@@ -37,17 +37,17 @@ public class BookingProc {
     private String scanCardPath;
     private String associateCardPath;
     private String removeCardPath;
-    
+
     private final Client client;
-    
+
     private static class BookingProcessusHandler {
         private final static BookingProc instance = new BookingProc();
     }
-    
+
     public static BookingProc getInstance() {
         return BookingProcessusHandler.instance;
     }
-    
+
     private BookingProc() {
         baseUrl = ConfigProc.getInstance().getConfig().getBookingBaseUrl();
         apiKey = ConfigProc.getInstance().getConfig().getBookingApiKey();
@@ -57,23 +57,23 @@ public class BookingProc {
         scanCardPath = ConfigProc.getInstance().getConfig().getBookingScanCardPath();
         associateCardPath = ConfigProc.getInstance().getConfig().getBookingAssociateCardPath();
         removeCardPath = ConfigProc.getInstance().getConfig().getBookingRemoveCardPath();
-        
+
         ClientConfig configuration = new ClientConfig();
         configuration = configuration.property(ClientProperties.CONNECT_TIMEOUT, timeout == 0 ? 2000 : timeout);
         configuration = configuration.property(ClientProperties.READ_TIMEOUT, timeout == 0 ? 2000 : timeout);
         client = ClientBuilder.newClient(configuration);
     }
-    
+
     private Builder getBuilder(final String adresseRelative) {
         return client.target(String.format(baseUrl) + adresseRelative)
                 .request()
                 .header("X-Access-Token", apiKey);
     }
-    
+
     public String getUserProfileUrl(final String id) {
         return baseUrl + String.format(userProfilePath, id);
     }
-    
+
     public List<User> getUserList() throws BookingException {
         final Response response = getBuilder(userListPath).get();
         if (Util.startsWith(response.getStatus(), 5)) {
@@ -89,7 +89,7 @@ public class BookingProc {
         LOGGER.debug(Arrays.toString(userList.toArray(new User[userList.size()])));
         return userList;
     }
-    
+
     public User scanCard(final String cardUid) throws BookingException, ProcessingException {
         final Response response = getBuilder(String.format(scanCardPath, cardUid)).get();
         if (Util.startsWith(response.getStatus(), 5)) {
@@ -108,7 +108,7 @@ public class BookingProc {
         LOGGER.debug(user);
         return user;
     }
-    
+
     public boolean associateCard(final String userId, final String cardUid) throws BookingException {
         final Response response = getBuilder(String.format(associateCardPath, userId))
                 .put(Entity.text(cardUid), Response.class);
@@ -122,7 +122,7 @@ public class BookingProc {
         }
         return true;
     }
-    
+
     public boolean removeCard(final String userId) throws BookingException {
         final Response response = getBuilder(String.format(removeCardPath, userId))
                 .put(Entity.text(""), Response.class);

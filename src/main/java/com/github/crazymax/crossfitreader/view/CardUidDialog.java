@@ -44,16 +44,16 @@ import com.github.crazymax.crossfitreader.util.Util;
 
 /**
  * Card UID dialog
- * @author crazy-max
+ * @author CrazyMax
  * @license MIT License
  * @link https://github.com/crazy-max/crossfit-reader
  */
 public final class CardUidDialog
         extends JDialog
         implements ActionListener, DeviceListener {
-    
+
     private static final long serialVersionUID = -3969093045340980759L;
-    
+
     private static final Logger LOGGER = Logger.getLogger(CardUidDialog.class);
 
     private static final List<Image> ICONS = Arrays.asList(
@@ -61,34 +61,34 @@ public final class CardUidDialog
             Resources.ICON_BLUE_32.getImage(),
             Resources.ICON_BLUE_48.getImage()
     );
-    
+
     private static final int CONTENT_WIDTH = 500;
     private static final int CONTENT_HEIGHT = 210;
-    
+
     private SysTray systray;
     private Device device;
-    
+
     private final JPanel cards;
-    
+
     private String currentUid;
     private String infoUid;
-    
+
     public CardUidDialog(final SysTray systray, final String title) {
         super(new DummyFrame(title, ICONS));
-        
+
         this.systray = systray;
         this.systray.removeCardListener();
         this.device = systray.getDevice();
         this.device.addCardListener(this);
-        
+
         cards = new JPanel(new CardLayout());
         cards.add(getPanelScanCard(), CardUidLayoutEnum.SCAN_CARD.getName());
         cards.add(getPanelResult(), CardUidLayoutEnum.RESULT.getName());
-        
+
         JPanel panneauPrincipal = new JPanel(new BorderLayout());
         panneauPrincipal.setOpaque(true);
         panneauPrincipal.add(cards, BorderLayout.CENTER);
-        
+
         ((java.awt.Frame)getOwner()).setIconImage(Resources.ICON_BLUE_32.getImage());
         setTitle(title);
         setContentPane(panneauPrincipal);
@@ -100,43 +100,43 @@ public final class CardUidDialog
         });
         pack();
     }
-    
+
     @Override
     public void actionPerformed(ActionEvent e) {
         close();
     }
-    
+
     private void close() {
         device.removeCardListener(this);
         systray.addCardListener();
         ((DummyFrame)getParent()).dispose();
         dispose();
     }
-    
+
     private void switchLayout(CardUidLayoutEnum layout) {
         CardLayout cl = (CardLayout) (cards.getLayout());
         cl.show(cards, layout.getName());
     }
-    
+
     private JPanel getPanelScanCard() {
         // Text
         final JLabel labelTextScanCard = new JLabel(Util.i18n("cardmanager.wait.card"));
         labelTextScanCard.setHorizontalAlignment(JLabel.CENTER);
-        
+
         // Loading icon
         final JLabel labelResultScanCard = new JLabel();
         labelResultScanCard.setIcon(Resources.ICON_LOADER);
         labelResultScanCard.setHorizontalAlignment(JLabel.CENTER);
-        
+
         final JPanel panelScanCard = new JPanel(new BorderLayout());
         panelScanCard.setBorder(new EmptyBorder(10, 10, 10, 10));
         panelScanCard.setPreferredSize(new Dimension(CONTENT_WIDTH, CONTENT_HEIGHT));
         panelScanCard.add(labelTextScanCard, BorderLayout.NORTH);
         panelScanCard.add(labelResultScanCard, BorderLayout.CENTER);
-        
+
         return panelScanCard;
     }
-    
+
     private JPanel getPanelResult() {
         // Popup UID field
         final JPopupMenu uidMenu = new JPopupMenu();
@@ -144,7 +144,7 @@ public final class CardUidDialog
         copy.putValue(Action.NAME, "Copy");
         copy.putValue(Action.ACCELERATOR_KEY, KeyStroke.getKeyStroke("control C"));
         uidMenu.add(copy);
-        
+
         // UID field
         final JTextField uidField = new JTextField();
         uidField.setComponentPopupMenu(uidMenu);
@@ -160,24 +160,24 @@ public final class CardUidDialog
                 uidField.selectAll();
             }
         });
-        
+
         // Info UID
         JLabel labelInfoUid = new JLabel(Util.i18n("cardmanager.intro"));
         labelInfoUid.setHorizontalAlignment(JLabel.CENTER);
-        
+
         final JPanel panelInfoUid = new JPanel();
         panelInfoUid.add(labelInfoUid);
         panelInfoUid.setPreferredSize(new Dimension(CONTENT_WIDTH, 20));
-        
+
         final JPanel panelBlank = new JPanel();
         panelBlank.setPreferredSize(new Dimension(CONTENT_WIDTH, 50));
-        
+
         final JPanel panelUid = new JPanel();
         panelUid.setPreferredSize(new Dimension(CONTENT_WIDTH - 100, CONTENT_HEIGHT - 100));
         panelUid.add(panelBlank);
         panelUid.add(uidField);
         panelUid.add(panelInfoUid);
-        
+
         // Buttons
         JButton btnCopy = new JButton(Util.i18n("common.copyuid"));
         btnCopy.addActionListener(new ActionListener() {
@@ -186,7 +186,7 @@ public final class CardUidDialog
                 Util.copyToClipboard(currentUid);
             }
         });
-        
+
         JButton btnRescan = new JButton(Util.i18n("carduid.rescan"));
         btnRescan.addActionListener(new ActionListener() {
             @Override
@@ -194,15 +194,15 @@ public final class CardUidDialog
                 switchLayout(CardUidLayoutEnum.SCAN_CARD);
             }
         });
-        
+
         JButton btnClose = new JButton(Util.i18n("common.close"));
         btnClose.addActionListener(this);
-        
+
         JPanel panelBtn = new JPanel();
         panelBtn.add(btnCopy);
         panelBtn.add(btnRescan);
         panelBtn.add(btnClose);
-        
+
         final JPanel panel = new JPanel(new BorderLayout());
         panel.setBorder(new EmptyBorder(10, 10, 10, 10));
         panel.setPreferredSize(new Dimension(CONTENT_WIDTH, CONTENT_HEIGHT));
@@ -221,10 +221,10 @@ public final class CardUidDialog
                 }.execute();
             }
         });
-        
+
         return panel;
     }
-    
+
     @Override
     public void cardInserted(final Card card, final String cardUid) {
         currentUid = cardUid;
@@ -245,7 +245,7 @@ public final class CardUidDialog
             switchLayout(CardUidLayoutEnum.RESULT);
         }
     }
-    
+
     @Override
     public void cardRemoved() {
         // N/A

@@ -11,18 +11,18 @@ import com.github.crazymax.crossfitreader.util.Util;
 
 /**
  * Exit menu on system tray
- * @author crazy-max
+ * @author CrazyMax
  * @license MIT License
  * @link https://github.com/crazy-max/crossfit-reader
  */
 public class TrayMenuExit
         extends JMenuItem {
-    
+
     private static final long serialVersionUID = 3844467863834228080L;
-    
+
     public TrayMenuExit(final SysTray sysTray) {
         super();
-        
+
         setText(Util.i18n("traymenu.exit.text"));
         setIcon(Resources.ICON_EXIT);
         addActionListener(new ActionListener() {

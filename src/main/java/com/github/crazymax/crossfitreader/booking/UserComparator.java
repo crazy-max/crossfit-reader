@@ -4,7 +4,7 @@ import java.util.Comparator;
 
 /**
  * Booking User comparator
- * @author crazy-max
+ * @author CrazyMax
  * @license MIT License
  * @link https://github.com/crazy-max/crossfit-reader
  */

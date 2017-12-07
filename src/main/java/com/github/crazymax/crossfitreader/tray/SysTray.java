@@ -18,6 +18,7 @@ import javax.smartcardio.Card;
 import javax.swing.JDialog;
 import javax.swing.JPopupMenu;
 
+import com.github.crazymax.crossfitreader.processus.ConfigProc;
 import org.apache.log4j.Logger;
 
 import com.github.crazymax.crossfitreader.Main;
@@ -36,48 +37,48 @@ import com.google.common.base.Strings;
 
 /**
  * System Tray icon notification
- * @author crazy-max
+ * @author CrazyMax
  * @license MIT License
  * @link https://github.com/crazy-max/crossfit-reader
  */
 public class SysTray implements DeviceListener {
-    
+
     private static final Logger LOGGER = Logger.getLogger(SysTray.class);
-    
+
     private static SysTray instance = null;
     private Device device = null;
-    
+
     private SystemTray systemTray;
     private TrayIcon trayIcon;
     private JPopupMenu popupMenu;
     private JDialog hiddenDialog;
-    
+
     private SysTray() {
         super();
     }
-    
+
     public static SysTray getInstance() {
         if (instance == null) {
             instance = new SysTray();
         }
         return instance;
     }
-    
+
     public void init() {
         systemTray = SystemTray.getSystemTray();
         trayIcon = new TrayIcon(Resources.ICON_BLUE_32.getImage(), Main.appName, null);
         trayIcon.setImageAutoSize(true);
-        
+
         final TrayMenuExit trayMenuExit = new TrayMenuExit(instance);
         final TrayMenuCardManager trayMenuCardManager = new TrayMenuCardManager(instance);
         final TrayMenuCardUid trayMenuCardUid = new TrayMenuCardUid(instance);
-        
+
         popupMenu = new JPopupMenu();
         popupMenu.add(trayMenuCardManager);
         popupMenu.add(trayMenuCardUid);
         popupMenu.addSeparator();
         popupMenu.add(trayMenuExit);
-        
+
         trayIcon.addMouseListener(new MouseAdapter() {
             @Override
             public void mouseReleased(final MouseEvent e) {
@@ -90,14 +91,14 @@ public class SysTray implements DeviceListener {
                 }
             }
         });
-        
+
         try {
             systemTray.add(trayIcon);
             Util.createPidFile();
-            
-            // Init ACR122
+
+            // Init terminal
             try {
-                LOGGER.info("Init ACR122");
+                LOGGER.info("Init " + ConfigProc.getInstance().getConfig().getTerminalName());
                 device = new Device(Main.noReader ? null : Util.getTerminal());
                 addCardListener();
                 showInfoTooltip(Util.i18n("systray.device.found"));
@@ -109,7 +110,7 @@ public class SysTray implements DeviceListener {
                 removeTray();
                 System.exit(0);
             }
-            
+
             // Check device connected
             final ScheduledExecutorService scheduledExecutorDevice = Executors.newSingleThreadScheduledExecutor();
             scheduledExecutorDevice.scheduleAtFixedRate(new Runnable() {
@@ -122,7 +123,7 @@ public class SysTray implements DeviceListener {
                     }
                 }
             }, 0, 500, TimeUnit.MILLISECONDS);
-            
+
             // Check app exited outside
             final ScheduledExecutorService scheduledExecutorExit = Executors.newSingleThreadScheduledExecutor();
             scheduledExecutorExit.scheduleAtFixedRate(new Runnable() {
@@ -134,11 +135,11 @@ public class SysTray implements DeviceListener {
                     }
                 }
             }, 0, 100, TimeUnit.MILLISECONDS);
-            
+
         } catch (AWTException e) {
             Util.logErrorExit(Util.i18n("systray.error.load"), e);
         }
-        
+
         hiddenDialog = new JDialog();
         hiddenDialog.setSize(10, 10);
         hiddenDialog.addWindowFocusListener(new WindowFocusListener() {
@@ -148,18 +149,18 @@ public class SysTray implements DeviceListener {
                 popupMenu.setVisible(false);
                 popupMenu.setInvoker(null);
             }
-            
+
             @Override
             public void windowGainedFocus(final WindowEvent we) {
-                
+
             }
         });
     }
-    
+
     public Device getDevice() {
         return device;
     }
-    
+
     @Override
     public void cardInserted(final Card card, final String cardUid) {
         String errorMsg = null;
@@ -177,27 +178,27 @@ public class SysTray implements DeviceListener {
             errorMsg = e.getMessage();
             LOGGER.error(e.getMessage(), e);
         }
-        
+
         if (!Strings.isNullOrEmpty(errorMsg)) {
             showErrorTooltip(errorMsg);
             Util.playSound(Resources.SOUND_MIRROR_SHATTERING);
             return;
         }
-        
+
         showInfoTooltip(String.format(Util.i18n("systray.scan.welcome"), userScan.getFirstName(), userScan.getLastName()));
         LOGGER.info(String.format("Good CrossFit workout %s %s !", userScan.getFirstName(), userScan.getLastName()));
         Util.playSound(Resources.SOUND_CASH_REGISTER);
     }
-    
+
     @Override
     public void cardRemoved() {
         // N/A
     }
-    
+
     public void addCardListener() {
         device.addCardListener(this);
     }
-    
+
     public void removeCardListener() {
         device.removeCardListener(this);
     }
@@ -206,23 +207,23 @@ public class SysTray implements DeviceListener {
         systemTray.remove(trayIcon);
         trayIcon = null;
     }
-    
+
     public void setImage(final Image image) {
         trayIcon.setImage(image);
     }
-    
+
     private void showTooltip(final String message, final MessageType type) {
         trayIcon.displayMessage(Main.appName, message, type);
     }
-    
+
     public void showInfoTooltip(final String message) {
         showTooltip(message, MessageType.INFO);
     }
-    
+
     public void showWarningTooltip(final String message) {
         showTooltip(message, MessageType.WARNING);
     }
-    
+
     public void showErrorTooltip(final String message) {
         showTooltip(message, MessageType.ERROR);
     }

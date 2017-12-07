@@ -12,18 +12,18 @@ import com.github.crazymax.crossfitreader.view.CardManagerDialog;
 
 /**
  * Associate menu on system tray
- * @author crazy-max
+ * @author CrazyMax
  * @license MIT License
  * @link https://github.com/crazy-max/crossfit-reader
  */
 public class TrayMenuCardManager
         extends JMenuItem {
-    
+
     private static final long serialVersionUID = 3844467863834228080L;
-    
+
     public TrayMenuCardManager(final SysTray sysTray) {
         super();
-        
+
         setText(Util.i18n("traymenu.cardmanager.text"));
         setIcon(Resources.ICON_ASSOCIATE);
         addActionListener(new ActionListener() {

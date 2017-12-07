@@ -37,22 +37,22 @@ import com.github.crazymax.crossfitreader.util.Util;
 
 /**
  * Main class
- * @author crazy-max
+ * @author CrazyMax
  * @license MIT License
  * @link https://github.com/crazy-max/crossfit-reader
  */
 public class Main
         extends JPanel {
-    
+
     private static final long serialVersionUID = -721149712768531919L;
 
     private static final Logger LOGGER = Logger.getLogger(Main.class);
-    
+
     public static boolean envDev = false;
     public static boolean noReader = false;
-    
+
     public static Logger rootLogger = Logger.getRootLogger();
-    
+
     public static String appId = "crossfit-reader";
     public static String appName = "Crossfit Reader";
     public static String appDesc = "Card reader for ACR122U device affiliate to Crossfit Nancy";
@@ -60,16 +60,16 @@ public class Main
     public static String appGuid = "{}";
     public static String appAuthor = "crazy-max";
     public static String appUrl = "https://github.com/crazy-max/crossfit-reader";
-    
+
     public static String appNameVersion = appName + " " + appVersion;
     public static Path appPath;
     public static Path appJarPath;
     public static Path appLogsPath;
     public static Path appRssPath;
     public static String appPid;
-    
+
     public static Device device;
-    
+
     public static void main(final String[] args) {
         // Default logger
         final ConsoleAppender consoleAppender = new ConsoleAppender();
@@ -78,42 +78,42 @@ public class Main
         consoleAppender.setLayout(new PatternLayout("%d{ISO8601} %5p %c - %m%n"));
         consoleAppender.activateOptions();
         rootLogger.addAppender(consoleAppender);
-        
+
         // Check args
         for (String appArg : args) {
             if (appArg.equalsIgnoreCase("noreader")) {
                 noReader = true;
             }
         }
-        
+
         if (!SystemUtils.IS_OS_WINDOWS) {
             LOGGER.info("Must be run on Windows...");
             return;
         }
-        
+
         try {
             UIManager.setLookAndFeel(UIManager.getSystemLookAndFeelClassName());
         } catch (Exception e) {
             LOGGER.error(Util.i18n("common.error.lnf"), e);
         }
-        
+
         try {
             initApp();
         } catch (Exception e) {
             LOGGER.error(Util.i18n("common.error.initapp"), e);
         }
-        
+
         LOGGER.info("--------------------------------");
         LOGGER.info("Starting app...");
         logInfos();
         LOGGER.info("---");
-        
+
         SwingUtilities.invokeLater(new Runnable() {
             @Override
             public void run() {
                 Main main = new Main();
                 main.setOpaque(true);
-                
+
                 // Start app
                 try {
                     if (!SystemTray.isSupported()) {
@@ -129,7 +129,7 @@ public class Main
             }
         });
     }
-    
+
     public Main() {
         try {
             ConfigProc.getInstance().loadConfig();
@@ -137,14 +137,14 @@ public class Main
             LOGGER.error(t.getMessage(), t);
         }
     }
-    
+
     private static void initApp()
             throws IOException {
         final String className = Main.class.getSimpleName() + ".class";
         final String classPath = Main.class.getResource(className).toString();
         final String jarPath = Main.class.getProtectionDomain().getCodeSource().getLocation().getFile();
         final String rssFilter = "com/github/crazymax/crossfitreader/ext/";
-        
+
         appPid = Util.getPID();
         appPath = Paths.get(System.getProperty("user.dir"));
         if (!classPath.startsWith("jar")) {
@@ -154,12 +154,12 @@ public class Main
                 appPath.toFile().mkdir();
             }
         }
-        
+
         appLogsPath = appPath.resolve("logs");
         if (!appLogsPath.toFile().exists()) {
             appLogsPath.toFile().mkdir();
         }
-        
+
         if (envDev) {
             appRssPath = Paths.get(System.getProperty("user.dir"))
                     .resolve("src")
@@ -168,7 +168,7 @@ public class Main
                     .resolve(rssFilter);
             return;
         }
-        
+
         // Log4j
         final RollingFileAppender fileAppender = new RollingFileAppender();
         fileAppender.setName("file");
@@ -179,7 +179,7 @@ public class Main
         fileAppender.setThreshold(Level.INFO);
         fileAppender.activateOptions();
         rootLogger.addAppender(fileAppender);
-        
+
         // Extract resources
         appRssPath = appPath.resolve("ext");
         if (!Files.exists(appRssPath)) {
@@ -187,23 +187,23 @@ public class Main
                 if (!appRssPath.toFile().exists()) {
                     appRssPath.toFile().mkdir();
                 }
-                
+
                 final JarFile jarFile = new JarFile(jarPath);
                 final FileInputStream fin = new FileInputStream(jarPath);
                 final JarInputStream jin = new JarInputStream(new BufferedInputStream(fin));
-                
+
                 BufferedOutputStream dest = null;
                 JarEntry je = null;
-                
+
                 while ((je = jin.getNextJarEntry()) != null) {
                     final String name = je.getName().replaceFirst(rssFilter, "");
                     if (!je.getName().startsWith(rssFilter) && !StringUtils.isEmpty(name)) {
                         continue;
                     }
-                    
+
                     LOGGER.debug(String.format("Extracting %s", name));
                     final String destPath = appRssPath + File.separator + name;
-                    
+
                     if (je.isDirectory()) {
                         final File folder = new File(destPath);
                         if (!folder.isDirectory()) {
@@ -229,7 +229,7 @@ public class Main
                 Util.logErrorExit(Util.i18n("main.error.extractjar"), e);
             }
         }
-        
+
         // Extract infos from MANIFEST
         String manifestPath = null;
         InputStream manifestStream = null;
@@ -252,7 +252,7 @@ public class Main
             }
         }
     }
-    
+
     private static void logInfos() {
         final String[] infos = {
                 "Java:        " + System.getProperty("java.version"),
@@ -270,7 +270,7 @@ public class Main
                 "Ext Path:    " + appRssPath,
                 "PID:         " + appPid
         };
-        
+
         for (final String info : infos) {
             LOGGER.info(info);
         }

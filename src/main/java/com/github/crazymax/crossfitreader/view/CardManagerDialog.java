@@ -50,58 +50,58 @@ import com.google.common.base.Strings;
 
 /**
  * Card manager dialog
- * @author crazy-max
+ * @author CrazyMax
  * @license MIT License
  * @link https://github.com/crazy-max/crossfit-reader
  */
 public final class CardManagerDialog
         extends JDialog
         implements ActionListener, DeviceListener {
-    
+
     private static final long serialVersionUID = -4658875207238213753L;
-    
+
     private static final Logger LOGGER = Logger.getLogger(CardManagerDialog.class);
-    
+
     private static final List<Image> ICONS = Arrays.asList(
             Resources.ICON_BLUE_16.getImage(),
             Resources.ICON_BLUE_32.getImage(),
             Resources.ICON_BLUE_48.getImage()
     );
-    
+
     private static final int CONTENT_WIDTH = 500;
     private static final int CONTENT_HEIGHT = 210;
-    
+
     private SysTray systray;
     private Device device;
     private BookingProc bookingProc;
-    
+
     private final JPanel cards;
     private DefaultComboBoxModel<User> userModel;
-    
+
     private CardManagerLayoutEnum currentLayout = CardManagerLayoutEnum.INTRO;
     private CardScanTypeEnum currentScanType;
     private User selectedUser;
     private String currentUid;
-    
+
     public CardManagerDialog(final SysTray systray, final String title) {
         super(new DummyFrame(title, ICONS));
-        
+
         this.systray = systray;
         this.systray.removeCardListener();
         this.device = systray.getDevice();
         this.device.addCardListener(this);
         this.bookingProc = BookingProc.getInstance();
-        
+
         cards = new JPanel(new CardLayout());
         cards.add(getPanelIntro(), CardManagerLayoutEnum.INTRO.getName());
         cards.add(getPanelSearchUsers(), CardManagerLayoutEnum.SEARCH_USERS.getName());
         cards.add(getPanelSelectUser(), CardManagerLayoutEnum.SELECT_USER.getName());
         cards.add(getPanelScanCard(), CardManagerLayoutEnum.SCAN_CARD.getName());
-        
+
         JPanel panneauPrincipal = new JPanel(new BorderLayout());
         panneauPrincipal.setOpaque(true);
         panneauPrincipal.add(cards, BorderLayout.CENTER);
-        
+
         ((java.awt.Frame)getOwner()).setIconImage(Resources.ICON_BLUE_32.getImage());
         setTitle(title);
         setContentPane(panneauPrincipal);
@@ -113,30 +113,30 @@ public final class CardManagerDialog
         });
         pack();
     }
-    
+
     @Override
     public void actionPerformed(ActionEvent e) {
         close();
     }
-    
+
     private void close() {
         device.removeCardListener(this);
         systray.addCardListener();
         ((DummyFrame)getParent()).dispose();
         dispose();
     }
-    
+
     private void switchLayout(CardManagerLayoutEnum layout) {
         currentLayout = layout;
         CardLayout cl = (CardLayout) (cards.getLayout());
         cl.show(cards, layout.getName());
     }
-    
+
     private JPanel getPanelIntro() {
         // Text
         JLabel labelText = new JLabel(Util.i18n("cardmanager.intro"));
         labelText.setHorizontalAlignment(JLabel.CENTER);
-        
+
         // Buttons
         JButton btnContinue = new JButton(Util.i18n("common.next"));
         btnContinue.addActionListener(new ActionListener() {
@@ -145,14 +145,14 @@ public final class CardManagerDialog
                 switchLayout(CardManagerLayoutEnum.SEARCH_USERS);
             }
         });
-        
+
         JButton btnCancel = new JButton(Util.i18n("common.cancel"));
         btnCancel.addActionListener(this);
-        
+
         JPanel panelBtn = new JPanel();
         panelBtn.add(btnContinue);
         panelBtn.add(btnCancel);
-        
+
         JPanel panel = new JPanel(new BorderLayout());
         panel.setBorder(new EmptyBorder(10, 10, 10, 10));
         panel.setPreferredSize(new Dimension(CONTENT_WIDTH, CONTENT_HEIGHT));
@@ -160,17 +160,17 @@ public final class CardManagerDialog
         panel.add(panelBtn, BorderLayout.SOUTH);
         return panel;
     }
-    
+
     private JPanel getPanelSearchUsers() {
         // Texte
         JLabel labelTexte = new JLabel(Util.i18n("cardmanager.search.users"));
         labelTexte.setHorizontalAlignment(JLabel.CENTER);
-        
+
         // Icone chargement
         JLabel loader = new JLabel();
         loader.setIcon(Resources.ICON_LOADER);
         loader.setHorizontalAlignment(JLabel.CENTER);
-        
+
         JPanel panel = new JPanel(new BorderLayout());
         panel.setBorder(new EmptyBorder(10, 10, 10, 10));
         panel.setPreferredSize(new Dimension(CONTENT_WIDTH, CONTENT_HEIGHT));
@@ -185,7 +185,7 @@ public final class CardManagerDialog
                         findUsers();
                         return null;
                     }
-                    
+
                     @Override
                     protected void done() {
                         switchLayout(userModel.getSize() > 0 ? CardManagerLayoutEnum.SELECT_USER : CardManagerLayoutEnum.INTRO);
@@ -193,17 +193,17 @@ public final class CardManagerDialog
                 }.execute();
             }
         });
-        
+
         return panel;
     }
-    
+
     @SuppressWarnings({ "unchecked", "rawtypes" })
     private JPanel getPanelSelectUser() {
         // Text
         final JLabel labelText = new JLabel(Util.i18n("cardmanager.select.user"));
         final JPanel panelText = new JPanel();
         panelText.add(labelText);
-        
+
         // Label user profile
         final JLabel labelUserProfile = new JLabel();
         labelUserProfile.setCursor(new Cursor(Cursor.HAND_CURSOR));
@@ -220,7 +220,7 @@ public final class CardManagerDialog
         });
         final JPanel panelUserProfile = new JPanel();
         panelUserProfile.add(labelUserProfile);
-        
+
         // Buttons actions
         final JButton btnAssociate = new JButton(Util.i18n("cardmanager.card.associate"));
         btnAssociate.setEnabled(false);
@@ -244,7 +244,7 @@ public final class CardManagerDialog
         final JPanel panelBtnActions = new JPanel();
         panelBtnActions.add(btnAssociate);
         panelBtnActions.add(btnRemove);
-        
+
         // Combo
         userModel = new DefaultComboBoxModel(new Vector());
         final JComboBox comboUser = new JComboBox(userModel);
@@ -254,10 +254,10 @@ public final class CardManagerDialog
             public void actionPerformed(ActionEvent e) {
                 if (comboUser.getSelectedItem() instanceof User) {
                     selectedUser = (User) comboUser.getSelectedItem();
-                    
+
                     // Change user profile link
                     labelUserProfile.setText(String.format(Util.i18n("cardmanager.userprofile"), getUserProfileLink()));
-                    
+
                     // Change buttons actions
                     btnAssociate.setEnabled(true);
                     btnRemove.setEnabled(!Strings.isNullOrEmpty(selectedUser.getCardUuid()));
@@ -271,7 +271,7 @@ public final class CardManagerDialog
         });
         JPanel panelCombo = new JPanel();
         panelCombo.add(comboUser);
-        
+
         // Panel north
         JPanel panelNorth = new JPanel();
         panelNorth.setLayout(new BoxLayout(panelNorth, BoxLayout.Y_AXIS));
@@ -281,43 +281,43 @@ public final class CardManagerDialog
         panelNorth.add(new JPanel());
         panelNorth.add(new JPanel());
         panelNorth.add(panelBtnActions);
-        
+
         // Button cancel
         JButton btnCancel = new JButton(Util.i18n("common.cancel"));
         btnCancel.addActionListener(this);
-        
+
         // Panel button cancel
         JPanel panelBtnCancel = new JPanel();
         panelBtnCancel.add(btnCancel);
-        
+
         JPanel panel = new JPanel(new BorderLayout());
         panel.setBorder(new EmptyBorder(10, 10, 10, 10));
         panel.setPreferredSize(new Dimension(CONTENT_WIDTH, CONTENT_HEIGHT));
         panel.add(panelNorth, BorderLayout.NORTH);
         panel.add(panelBtnCancel, BorderLayout.SOUTH);
-        
+
         return panel;
     }
-    
+
     private JPanel getPanelScanCard() {
         // Text
         final JLabel labelTextScanCard = new JLabel(Util.i18n("cardmanager.wait.card"));
         labelTextScanCard.setHorizontalAlignment(JLabel.CENTER);
-        
+
         // Loading icon
         final JLabel labelResultScanCard = new JLabel();
         labelResultScanCard.setIcon(Resources.ICON_LOADER);
         labelResultScanCard.setHorizontalAlignment(JLabel.CENTER);
-        
+
         final JPanel panelScanCard = new JPanel(new BorderLayout());
         panelScanCard.setBorder(new EmptyBorder(10, 10, 10, 10));
         panelScanCard.setPreferredSize(new Dimension(CONTENT_WIDTH, CONTENT_HEIGHT));
         panelScanCard.add(labelTextScanCard, BorderLayout.NORTH);
         panelScanCard.add(labelResultScanCard, BorderLayout.CENTER);
-        
+
         return panelScanCard;
     }
-    
+
     private void findUsers() {
         try {
             userModel.removeAllElements();
@@ -335,7 +335,7 @@ public final class CardManagerDialog
             Util.logError(Util.i18n("cardmanager.error.search.users"), t);
         }
     }
-    
+
     private void associateCard() {
         try {
             final boolean result = bookingProc.associateCard(String.valueOf(selectedUser.getId()), currentUid);
@@ -354,7 +354,7 @@ public final class CardManagerDialog
             switchLayout(CardManagerLayoutEnum.SELECT_USER);
         }
     }
-    
+
     private void removeCard() {
         try {
             final boolean result = bookingProc.removeCard(String.valueOf(selectedUser.getId()));
@@ -372,15 +372,15 @@ public final class CardManagerDialog
             switchLayout(CardManagerLayoutEnum.SELECT_USER);
         }
     }
-    
+
     private String getUserProfileLink() {
         if (selectedUser != null) {
             return bookingProc.getUserProfileUrl(String.valueOf(selectedUser.getId()));
         }
-        
+
         return null;
     }
-    
+
     @Override
     public void cardInserted(final Card card, final String cardUid) {
         currentUid = cardUid;
@@ -390,7 +390,7 @@ public final class CardManagerDialog
             }
         }
     }
-    
+
     @Override
     public void cardRemoved() {
         // N/A

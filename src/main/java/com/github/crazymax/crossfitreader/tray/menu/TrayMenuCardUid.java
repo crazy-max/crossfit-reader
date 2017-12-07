@@ -12,18 +12,18 @@ import com.github.crazymax.crossfitreader.view.CardUidDialog;
 
 /**
  * View card UID
- * @author crazy-max
+ * @author CrazyMax
  * @license MIT License
  * @link https://github.com/crazy-max/crossfit-reader
  */
 public class TrayMenuCardUid
         extends JMenuItem {
-    
+
     private static final long serialVersionUID = 3844467863834228080L;
-    
+
     public TrayMenuCardUid(final SysTray sysTray) {
         super();
-        
+
         setText(Util.i18n("traymenu.carduid.text"));
         setIcon(Resources.ICON_CARDUID);
         addActionListener(new ActionListener() {

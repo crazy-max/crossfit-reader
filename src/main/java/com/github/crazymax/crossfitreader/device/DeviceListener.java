@@ -4,12 +4,12 @@ import javax.smartcardio.Card;
 
 /**
  * The ACR122 device listener
- * @author crazy-max
+ * @author CrazyMax
  * @license MIT License
  * @link https://github.com/crazy-max/crossfit-reader
  */
 public interface DeviceListener {
-    
+
     /**
      * Card is inserted into the reader terminal.
      * Use Card object to read data from the eID card.

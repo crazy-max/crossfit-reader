@@ -11,12 +11,12 @@ import com.google.common.base.Strings;
 
 /**
  * User renderer for comobo box
- * @author crazy-max
+ * @author CrazyMax
  * @license MIT License
  * @link https://github.com/crazy-max/crossfit-reader
  */
 public class UserRenderer extends BasicComboBoxRenderer {
-    
+
     private static final long serialVersionUID = 1885739695085981197L;
 
     @SuppressWarnings("rawtypes")
@@ -24,7 +24,7 @@ public class UserRenderer extends BasicComboBoxRenderer {
             final boolean isSelected, final boolean cellHasFocus) {
         super.getListCellRendererComponent(list, value, index,
                 isSelected, cellHasFocus);
-        
+
         if (value instanceof User) {
             User user = (User) value;
             setText(user.getLastName() + " " + user.getFirstName());
@@ -37,7 +37,7 @@ public class UserRenderer extends BasicComboBoxRenderer {
             setIcon(null);
             setText("");
         }
-        
+
         return this;
     }
 }

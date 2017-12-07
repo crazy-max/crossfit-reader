@@ -2,19 +2,19 @@ package com.github.crazymax.crossfitreader.exception;
 
 /**
  * Exception for device searching
- * @author crazy-max
+ * @author CrazyMax
  * @license MIT License
  * @link https://github.com/crazy-max/crossfit-reader
  */
 public class FindDeviceException
         extends Exception {
-    
+
     private static final long serialVersionUID = 5315777055564060L;
-    
+
     public FindDeviceException() {
         super();
     }
-    
+
     /**
      * @param message
      * @param cause
@@ -25,7 +25,7 @@ public class FindDeviceException
             final boolean writableStackTrace) {
         super(message, cause, enableSuppression, writableStackTrace);
     }
-    
+
     /**
      * @param message
      * @param cause
@@ -33,19 +33,19 @@ public class FindDeviceException
     public FindDeviceException(final String message, final Throwable cause) {
         super(message, cause);
     }
-    
+
     /**
      * @param message
      */
     public FindDeviceException(final String message) {
         super(message);
     }
-    
+
     /**
      * @param cause
      */
     public FindDeviceException(final Throwable cause) {
         super(cause);
     }
-    
+
 }

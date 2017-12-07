@@ -2,12 +2,13 @@ package com.github.crazymax.crossfitreader.model;
 
 /**
  * Configuration model
- * @author crazy-max
+ * @author CrazyMax
  * @license MIT License
  * @link https://github.com/crazy-max/crossfit-reader
  */
 public class Configuration {
-    
+
+    private String terminalName;
     private String bookingBaseUrl;
     private String bookingApiKey;
     private int bookingTimeout;
@@ -16,6 +17,14 @@ public class Configuration {
     private String bookingScanCardPath;
     private String bookingAssociateCardPath;
     private String bookingRemoveCardPath;
+
+    public String getTerminalName() {
+        return terminalName;
+    }
+
+    public void setTerminalName(String terminalName) {
+        this.terminalName = terminalName;
+    }
 
     public String getBookingBaseUrl() {
         return bookingBaseUrl;
@@ -32,7 +41,7 @@ public class Configuration {
     public void setBookingApiKey(String bookingApiKey) {
         this.bookingApiKey = bookingApiKey;
     }
-    
+
     public int getBookingTimeout() {
         return bookingTimeout;
     }
@@ -80,13 +89,18 @@ public class Configuration {
     public void setBookingRemoveCardPath(String bookingRemoveCardPath) {
         this.bookingRemoveCardPath = bookingRemoveCardPath;
     }
-    
+
     @Override
     public String toString() {
-        return "Configuration:\nbookingBaseUrl=" + bookingBaseUrl + "\nbookingApiKey=" + bookingApiKey
+        return "Configuration:"
+                + "\nterminalName=" + terminalName
+                + "\nbookingBaseUrl=" + bookingBaseUrl
+                + "\nbookingApiKey=" + bookingApiKey
                 + "\nbookingTimeout=" + bookingTimeout
-                + "\nbookingUserProfilePath=" + bookingUserProfilePath + "\nbookingUserListPath=" + bookingUserListPath
-                + "\nbookingScanCardPath=" + bookingScanCardPath + "\nbookingAssociateCardPath="
-                + bookingAssociateCardPath + "\nbookingRemoveCardPath=" + bookingRemoveCardPath;
+                + "\nbookingUserProfilePath=" + bookingUserProfilePath
+                + "\nbookingUserListPath=" + bookingUserListPath
+                + "\nbookingScanCardPath=" + bookingScanCardPath
+                + "\nbookingAssociateCardPath=" + bookingAssociateCardPath
+                + "\nbookingRemoveCardPath=" + bookingRemoveCardPath;
     }
 }

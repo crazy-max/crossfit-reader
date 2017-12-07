@@ -15,20 +15,20 @@ import com.google.common.base.Strings;
 
 /**
  * The ACR122 device
- * @author crazy-max
+ * @author CrazyMax
  * @license MIT License
  * @link https://github.com/crazy-max/crossfit-reader
  */
 public class Device {
-    
+
     private static final Logger LOGGER = Logger.getLogger(Device.class);
-    
+
     private CardTerminal terminal;
     private volatile Card card;
     private volatile String cardUid;
     private CopyOnWriteArrayList<DeviceListener> listeners;
     private Thread listenerThread;
-    
+
     public Device(final CardTerminal terminal) {
         this.terminal = terminal;
         listeners = new CopyOnWriteArrayList<DeviceListener>();
@@ -102,10 +102,10 @@ public class Device {
                 }
             }
         });
-        
+
         listenerThread.start();
     }
-    
+
     private void resetTerminal() throws FindDeviceException {
         this.terminal = Util.getTerminal();
     }
@@ -159,7 +159,7 @@ public class Device {
         card = null;
         cardUid = null;
     }
-    
+
     private boolean isCardPresent() throws CardException {
         return terminal.isCardPresent();
     }

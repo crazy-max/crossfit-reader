@@ -1,5 +1,9 @@
 # Changelog
 
+## 1.10.111(2017/09/17)
+
+* Get first valid terminal found (default ACS ACR122)
+
 ## 1.9.110 (2017/09/17)
 
 * Bad version format
