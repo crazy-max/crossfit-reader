@@ -7,7 +7,7 @@ environment:
 
 install:
   - ps: choco install ant
-  - SET PATH=%JAVA_HOME%\bin;%PATH%
+  - ps: $env:Path = [System.Environment]::GetEnvironmentVariable("Path","Machine") + ";" + [System.Environment]::GetEnvironmentVariable("Path","User")
   - java -version
   - gradlew.bat --version
   - ant -version
@@ -16,7 +16,7 @@ configuration:
   - Release
 
 build_script:
-  - gradlew.bat antClean getDeps antRelease -u -i -S
+  - gradlew.bat antClean getDeps antRelease -u -d -S
 
 after_build:
   - ps: |
