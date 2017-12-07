@@ -18,7 +18,7 @@ configuration:
   - Release
 
 build_script:
-  - gradlew antClean getDeps antRelease
+  - gradlew.bat antClean getDeps antRelease
 
 after_build:
   - ps: |
