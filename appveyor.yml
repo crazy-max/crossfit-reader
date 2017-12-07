@@ -3,13 +3,15 @@ version: '{build}'
 clone_folder: C:\projects\crossfit-reader
 
 environment:
-  JAVA_HOME: C:\Program Files\Java\jdk1.8.0
+  JAVA_HOME: C:\jdk
 
 install:
-  - ps: choco install ant
-  - ps: $env:Path = [System.Environment]::GetEnvironmentVariable("Path","Machine") + ";" + [System.Environment]::GetEnvironmentVariable("Path","User")
-  - set
-  - set JAVA_HOME=%JAVA%
+  - ps: |
+      choco install ant
+      choco install jdk8 --version 8.0.152 -params 'installdir=C:\\jdk'
+      refreshenv
+      $env:Path = [System.Environment]::GetEnvironmentVariable("Path","Machine") + ";" + [System.Environment]::GetEnvironmentVariable("Path","User")
+      refreshenv
   - java -version
   - gradlew.bat --version
   - ant -version
