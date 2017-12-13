@@ -1,10 +1,14 @@
 # Changelog
 
-## 1.10.120 (2017/09/17)
+## 1.10.121 (2017/12/13)
+
+* Bug with latest release of Jersey (See this [stackoverflow issue](https://stackoverflow.com/questions/44088493/jersey-stopped-working-with-injectionmanagerfactory-not-found))
+
+## 1.10.120 (2017/12/07)
 
 * Update libs
 
-## 1.10.119 (2017/09/17)
+## 1.10.119 (2017/12/07)
 
 * Get first valid terminal found (default ACS ACR122)
 
