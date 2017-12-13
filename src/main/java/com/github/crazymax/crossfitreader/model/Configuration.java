@@ -8,6 +8,7 @@ package com.github.crazymax.crossfitreader.model;
  */
 public class Configuration {
 
+    private String sentryDSN;
     private String terminalName;
     private String bookingBaseUrl;
     private String bookingApiKey;
@@ -17,6 +18,14 @@ public class Configuration {
     private String bookingScanCardPath;
     private String bookingAssociateCardPath;
     private String bookingRemoveCardPath;
+
+    public String getSentryDSN() {
+        return sentryDSN;
+    }
+
+    public void setSentryDSN(String sentryDSN) {
+        this.sentryDSN = sentryDSN;
+    }
 
     public String getTerminalName() {
         return terminalName;
@@ -93,14 +102,15 @@ public class Configuration {
     @Override
     public String toString() {
         return "Configuration:"
-                + "\nterminalName=" + terminalName
-                + "\nbookingBaseUrl=" + bookingBaseUrl
-                + "\nbookingApiKey=" + bookingApiKey
-                + "\nbookingTimeout=" + bookingTimeout
-                + "\nbookingUserProfilePath=" + bookingUserProfilePath
-                + "\nbookingUserListPath=" + bookingUserListPath
-                + "\nbookingScanCardPath=" + bookingScanCardPath
-                + "\nbookingAssociateCardPath=" + bookingAssociateCardPath
-                + "\nbookingRemoveCardPath=" + bookingRemoveCardPath;
+            + "\nsentryDSN=" + sentryDSN
+            + "\nterminalName=" + terminalName
+            + "\nbookingBaseUrl=" + bookingBaseUrl
+            + "\nbookingApiKey=" + bookingApiKey
+            + "\nbookingTimeout=" + bookingTimeout
+            + "\nbookingUserProfilePath=" + bookingUserProfilePath
+            + "\nbookingUserListPath=" + bookingUserListPath
+            + "\nbookingScanCardPath=" + bookingScanCardPath
+            + "\nbookingAssociateCardPath=" + bookingAssociateCardPath
+            + "\nbookingRemoveCardPath=" + bookingRemoveCardPath;
     }
 }

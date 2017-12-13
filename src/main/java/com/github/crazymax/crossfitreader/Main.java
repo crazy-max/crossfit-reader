@@ -12,6 +12,7 @@ import java.net.URL;
 import java.nio.file.Files;
 import java.nio.file.Path;
 import java.nio.file.Paths;
+import java.util.Properties;
 import java.util.jar.Attributes;
 import java.util.jar.JarEntry;
 import java.util.jar.JarFile;
@@ -22,15 +23,12 @@ import javax.swing.JPanel;
 import javax.swing.SwingUtilities;
 import javax.swing.UIManager;
 
+import io.sentry.Sentry;
+import io.sentry.log4j.SentryAppender;
 import org.apache.commons.lang.SystemUtils;
 import org.apache.commons.lang3.StringUtils;
-import org.apache.log4j.ConsoleAppender;
-import org.apache.log4j.Level;
-import org.apache.log4j.Logger;
-import org.apache.log4j.PatternLayout;
-import org.apache.log4j.RollingFileAppender;
+import org.apache.log4j.*;
 
-import com.github.crazymax.crossfitreader.device.Device;
 import com.github.crazymax.crossfitreader.processus.ConfigProc;
 import com.github.crazymax.crossfitreader.tray.SysTray;
 import com.github.crazymax.crossfitreader.util.Util;
@@ -56,22 +54,19 @@ public class Main
     public static String appId = "crossfit-reader";
     public static String appName = "Crossfit Reader";
     public static String appDesc = "Card reader for ACR122U device affiliate to Crossfit Nancy";
-    public static String appVersion = "DEV";
+    public static String appVersion = "1.0.0";
     public static String appGuid = "{}";
     public static String appAuthor = "crazy-max";
     public static String appUrl = "https://github.com/crazy-max/crossfit-reader";
 
     public static String appNameVersion = appName + " " + appVersion;
     public static Path appPath;
-    public static Path appJarPath;
     public static Path appLogsPath;
     public static Path appRssPath;
     public static String appPid;
 
-    public static Device device;
-
     public static void main(final String[] args) {
-        // Default logger
+        // Console appender
         final ConsoleAppender consoleAppender = new ConsoleAppender();
         consoleAppender.setName("console");
         consoleAppender.setTarget("System.out");
@@ -113,6 +108,20 @@ public class Main
             public void run() {
                 Main main = new Main();
                 main.setOpaque(true);
+
+                // Sentry
+                Properties props = System.getProperties();
+                props.setProperty("sentry.dsn", ConfigProc.getInstance().getConfig().getSentryDSN());
+                props.setProperty("sentry.release", appVersion);
+                props.setProperty("sentry.environment", envDev ? "dev" : "production");
+                props.setProperty("stacktrace.app.packages", "");
+
+                Sentry.init();
+                final SentryAppender sentryAppender = new SentryAppender();
+                sentryAppender.setName("sentry");
+                sentryAppender.setThreshold(Priority.INFO);
+                sentryAppender.activateOptions();
+                rootLogger.addAppender(sentryAppender);
 
                 // Start app
                 try {
@@ -169,7 +178,7 @@ public class Main
             return;
         }
 
-        // Log4j
+        // File appender
         final RollingFileAppender fileAppender = new RollingFileAppender();
         fileAppender.setName("file");
         fileAppender.setLayout(new PatternLayout("%d{ISO8601} %5p %c - %m%n"));

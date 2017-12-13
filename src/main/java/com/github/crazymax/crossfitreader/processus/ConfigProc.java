@@ -26,6 +26,7 @@ public class ConfigProc {
     private static final Logger LOGGER = Logger.getLogger(ConfigProc.class);
 
     private static final String PROP_TERMINAL_NAME = "terminalName";
+    private static final String PROP_SENTRY_DSN = "sentryDSN";
     private static final String PROP_BOOKING_BASE_URL = "bookingBaseUrl";
     private static final String PROP_BOOKING_API_KEY = "bookingApiKey";
     private static final String PROP_BOOKING_TIMEOUT = "bookingTimeout";
@@ -60,6 +61,7 @@ public class ConfigProc {
         loadFile();
 
         Configuration result = new Configuration();
+        result.setSentryDSN("https://public:private@host:port/1");
         result.setTerminalName("ACS ACR122");
         result.setBookingBaseUrl("http://localhost/crossfit-reader");
         result.setBookingApiKey("rLhsoB0AwtUVFJ0dE7Z06R5CmgXYt8ZL");
@@ -79,6 +81,7 @@ public class ConfigProc {
                 inputConfigProperties = new FileInputStream(configPath.toFile());
                 propConfig.load(inputConfigProperties);
 
+                result.setSentryDSN(propConfig.getProperty(PROP_SENTRY_DSN, result.getSentryDSN()).trim());
                 result.setTerminalName(propConfig.getProperty(PROP_TERMINAL_NAME, result.getTerminalName()).trim());
                 result.setBookingBaseUrl(propConfig.getProperty(PROP_BOOKING_BASE_URL, result.getBookingBaseUrl()).trim());
                 result.setBookingApiKey(propConfig.getProperty(PROP_BOOKING_API_KEY, result.getBookingApiKey()).trim());
@@ -103,6 +106,7 @@ public class ConfigProc {
             LOGGER.info("Init configuration file: " + configPath);
             try {
                 outputConfigProperties = new FileOutputStream(configPath.toFile());
+                propConfig.setProperty(PROP_SENTRY_DSN, result.getSentryDSN());
                 propConfig.setProperty(PROP_TERMINAL_NAME, result.getTerminalName());
                 propConfig.setProperty(PROP_BOOKING_BASE_URL, result.getBookingBaseUrl());
                 propConfig.setProperty(PROP_BOOKING_API_KEY, result.getBookingApiKey());
