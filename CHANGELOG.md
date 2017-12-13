@@ -3,9 +3,6 @@
 ## 1.10.122 (2017/12/13)
 
 * Add [Sentry](https://sentry.io) error tracking service
-
-## 1.10.121 (2017/12/13)
-
 * Bug with latest release of Jersey (See this [stackoverflow issue](https://stackoverflow.com/questions/44088493/jersey-stopped-working-with-injectionmanagerfactory-not-found))
 
 ## 1.10.120 (2017/12/07)
