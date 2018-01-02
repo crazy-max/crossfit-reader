@@ -1,5 +1,5 @@
-apply plugin: 'idea'
-apply plugin: 'eclipse'
+apply plugin: "idea"
+apply plugin: "eclipse"
 
 idea.module {
   downloadSources = true
@@ -10,13 +10,13 @@ eclipse.classpath {
   downloadSources = true
   downloadJavadoc = true
   defaultOutputDir = file("$buildDir/eclipse")
-  containers 'org.eclipse.jdt.launching.JRE_CONTAINER'
+  containers "org.eclipse.jdt.launching.JRE_CONTAINER"
   file {
     whenMerged { classpath ->
-      classpath.entries.removeAll { entry -> entry.path.contains('StandardVMType/JavaSE') }
+      classpath.entries.removeAll { entry -> entry.path.contains("StandardVMType/JavaSE") }
     }
     beforeMerged { classpath ->
-      classpath.entries.removeAll { entry -> entry.kind == 'output' }
+      classpath.entries.removeAll { entry -> entry.kind == "output" }
     }
   }
 }

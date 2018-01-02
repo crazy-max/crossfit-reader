@@ -1,45 +1,45 @@
-apply plugin: 'java'
+apply plugin: "java"
 
 sourceCompatibility = 1.8
 targetCompatibility = 1.8
 
-[compileJava, compileTestJava]*.options*.encoding = 'utf8'
+[compileJava, compileTestJava]*.options*.encoding = "utf8"
 
 test {
   ignoreFailures = false
   // exclusion of the test suites prevents double execution of test cases.
-  exclude '**/*Suite.class'
+  exclude "**/*Suite.class"
 }
 
 javadoc {
   failOnError = false
   exclude "**/gen/**"
 
-  if(System.properties.'java.home'.contains('1.8')) {
-    options.addStringOption('Xdoclint:none', '-quiet') // works only if using JDK 8
-  } 
-  
-  options.addStringOption('-quiet')
+  if(System.properties."java.home".contains("1.8")) {
+    options.addStringOption("Xdoclint:none", "-quiet") // works only if using JDK 8
+  }
+
+  options.addStringOption("-quiet")
   options.links = [
-    'http://docs.oracle.com/javase/8/docs/api/'
+    "http://docs.oracle.com/javase/8/docs/api/"
   ]
 }
 
 task javadocJar(type: Jar, dependsOn:javadoc) {
   description "Assembles a jar archive containing the javadoc files"
-  classifier = 'javadoc'
+  classifier = "javadoc"
   from javadoc
 }
 
 task sourcesJar(type: Jar, dependsOn:classes) {
   description "Assembles a jar archive containing the source files"
-  classifier = 'sources'
+  classifier = "sources"
   from sourceSets.main.allSource
 }
 
 task testSourcesJar(type: Jar) {
   description "Assembles a jar archive containing the source files"
-  classifier = 'test-sources'
+  classifier = "test-sources"
   from sourceSets.test.allSource
 }
 
