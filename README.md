@@ -6,7 +6,8 @@
   <a href="https://ci.appveyor.com/project/crazy-max/crossfit-reader"><img src="https://img.shields.io/appveyor/ci/crazy-max/crossfit-reader.svg?style=flat-square" alt="AppVeyor"></a>
   <a href="https://www.codacy.com/app/crazy-max/crossfit-reader"><img src="https://img.shields.io/codacy/grade/3daf2e6395764406ab0c8fd2c2202581.svg?style=flat-square" alt="Code Quality"></a>
   <a href="https://libraries.io/github/crazy-max/crossfit-reader"><img src="https://img.shields.io/librariesio/github/crazy-max/crossfit-reader.svg?style=flat-square" alt="Dependency Status"></a>
-  <a href="https://www.paypal.me/crazyws"><img src="https://img.shields.io/badge/donate-paypal-7057ff.svg?style=flat-square" alt="Donate Paypal"></a>
+  <a href="https://beerpay.io/crazy-max/crossfit-reader"><img src="https://img.shields.io/beerpay/crazy-max/crossfit-reader.svg?style=flat-square" alt="Beerpay"></a>
+  <a href="https://www.paypal.com/cgi-bin/webscr?cmd=_s-xclick&hosted_button_id=3V3HYV9Z95AW2"><img src="https://img.shields.io/badge/donate-paypal-7057ff.svg?style=flat-square" alt="Donate Paypal"></a>
 </p>
 
 ## About
@@ -51,8 +52,16 @@ The [ACR122U](http://www.acs.com.hk/en/products/3/acr122u-usb-nfc-reader/) is ma
 * Size: 98 mm x 65 mm x 12.8 mm
 * Weight: 70 g
 
+## How can i help ?
+
+All kinds of contributions are welcomed :raised_hands:!<br />
+The most basic way to show your support is to star :star2: the project, or to raise issues :speech_balloon:<br />
+But we're not gonna lie to each other, I'd rather you buy me a beer or two :beers:!
+
+[![Beerpay](https://beerpay.io/crazy-max/crossfit-reader/badge.svg?style=beer-square)](https://beerpay.io/crazy-max/crossfit-reader)
+or [![Paypal](res/paypal.svg)](https://www.paypal.com/cgi-bin/webscr?cmd=_s-xclick&hosted_button_id=WQD7AQGPDEPSG)
+
 ## License
 
 MIT. See `LICENSE` for more details.<br />
 Icons credit to [Recep Kütük](http://recepkutuk.com/).
-
