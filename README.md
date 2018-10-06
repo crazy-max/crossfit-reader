@@ -5,7 +5,6 @@
   <a href="https://github.com/crazy-max/crosffit-reader/releases/latest"><img src="https://img.shields.io/github/downloads/crazy-max/crossfit-reader/total.svg?style=flat-square" alt="Total downloads"></a>
   <a href="https://ci.appveyor.com/project/crazy-max/crossfit-reader"><img src="https://img.shields.io/appveyor/ci/crazy-max/crossfit-reader.svg?style=flat-square" alt="AppVeyor"></a>
   <a href="https://www.codacy.com/app/crazy-max/crossfit-reader"><img src="https://img.shields.io/codacy/grade/3daf2e6395764406ab0c8fd2c2202581.svg?style=flat-square" alt="Code Quality"></a>
-  <a href="https://libraries.io/github/crazy-max/crossfit-reader"><img src="https://img.shields.io/librariesio/github/crazy-max/crossfit-reader.svg?style=flat-square" alt="Dependency Status"></a>
   <a href="https://www.paypal.com/cgi-bin/webscr?cmd=_s-xclick&hosted_button_id=3V3HYV9Z95AW2"><img src="https://img.shields.io/badge/donate-paypal-7057ff.svg?style=flat-square" alt="Donate Paypal"></a>
 </p>
 
