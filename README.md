@@ -9,6 +9,10 @@
   <a href="https://www.paypal.me/crazyws"><img src="https://img.shields.io/badge/donate-paypal-00457c.svg?logo=paypal&style=flat-square" alt="Donate Paypal"></a>
 </p>
 
+## :warning: Abandoned project
+
+This project is not maintained anymore and is abandoned. Feel free to fork and make your own changes if needed.
+
 ## About
 
 💳 Crossfit Reader is a card reader application for ACR122U device affiliate to the [CrossFit Nancy](http://www.crossfit-nancy.fr/) booking application.
@@ -51,7 +55,7 @@ The [ACR122U](http://www.acs.com.hk/en/products/3/acr122u-usb-nfc-reader/) is ma
 * Size: 98 mm x 65 mm x 12.8 mm
 * Weight: 70 g
 
-## How can i help ?
+## How can I help ?
 
 All kinds of contributions are welcome :raised_hands:! The most basic way to show your support is to star :star2: the project, or to raise issues :speech_balloon: You can also support this project by [**becoming a sponsor on GitHub**](https://github.com/sponsors/crazy-max) :clap: or by making a [Paypal donation](https://www.paypal.me/crazyws) to ensure this journey continues indefinitely! :rocket:
 
